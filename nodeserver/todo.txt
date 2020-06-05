@@ -1,0 +1,2 @@
+1. Add a picture field to model professional
+https://grokonez.com/node-js/nodejs-save-file-image-to-mysql-by-sequelize-with-blob-type 
