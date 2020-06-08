@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('datesDB', 'root', null, {
+const sequelize = new Sequelize('elrincon-project', 'root', 'ylenia', {
     host: 'localhost',
     dialect: 'mysql',
-    port:3307,
     pool: {
         max: 5,
         min: 0,

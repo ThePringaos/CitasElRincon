@@ -22,11 +22,12 @@ app.use(require('./src/routes/departmentRoutes'));
 app.use(require('./src/routes/roleRoutes'));
 app.use(require('./src/routes/dateStateRoutes'));
 app.use(require('./src/routes/dateTypeRoutes'));
+app.use(require('./src/routes/tutorRoutes'));
 app.use(require('./src/routes/professionalRoutes'));
 app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 
 
-app.listen(app.get('PORT'),'192.168.1.122', ()=>{
+app.listen(app.get('PORT'),'192.168.1.48', ()=>{
     console.log(`SERVER IN PORT ${app.get('PORT')}`);
 });

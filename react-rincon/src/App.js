@@ -10,6 +10,7 @@ import Edit from './module/edit';
 import Add from './module/add';
 import Home from './module/home';
 
+import Profile from './module/profile';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
       <Route path="/list" exact component={List}></Route>
       <Route path="/edit/:id" component={Edit}></Route>
       <Route path="/add" component={Add}></Route>
+
+      <Route path="/profile" component={Profile}></Route>
     </div>
     </Router>
   );
