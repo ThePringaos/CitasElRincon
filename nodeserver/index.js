@@ -28,6 +28,6 @@ app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 
 
-app.listen(app.get('PORT'),'192.168.1.48', ()=>{
+app.listen(app.get('PORT'),'192.168.1.122', ()=>{
     console.log(`SERVER IN PORT ${app.get('PORT')}`);
 });
