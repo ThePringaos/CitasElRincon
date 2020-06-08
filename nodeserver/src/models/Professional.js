@@ -5,6 +5,7 @@ const database = require('../database/database');
 const Department = require('./Department');
 const Role = require('./Role');
 const Image = require('./Image');
+const Tutor = require('./Tutor');
 
 const tableName = 'professionals';
 const Professional = database.define(tableName,{
@@ -40,6 +41,15 @@ const Professional = database.define(tableName,{
             key: 'id'
         }
     },
+    //Foreign key
+    tutorId:{
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { 
+            model: Tutor,
+            key: 'id'
+        }
+    },
     comment: Sequelize.STRING,
     //Foreign key
     imageId:{
@@ -61,5 +71,6 @@ const Professional = database.define(tableName,{
 Professional.belongsTo(Department);
 Professional.belongsTo(Role);
 Professional.belongsTo(Image);
+Professional.belongsTo(Tutor);
 
 module.exports = Professional;
