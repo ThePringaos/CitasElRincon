@@ -14,7 +14,7 @@ Image.sync({ force: false })
     console.log('SYNC MODEL IMAGE');
 });
 
-Professional.sync({ force: false })
+Professional.sync({ force: true })
     .then(() => {
         console.log('SYNC MODEL PROFESSIONAL');
     });

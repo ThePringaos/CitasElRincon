@@ -25,6 +25,7 @@ app.use(require('./src/routes/dateTypeRoutes'));
 app.use(require('./src/routes/professionalRoutes'));
 app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
+app.use(require('./src/routes/tutorRoutes'));
 
 
 app.listen(app.get('PORT'),'192.168.1.122', ()=>{
