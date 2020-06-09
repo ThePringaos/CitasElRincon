@@ -17,8 +17,10 @@ class profileComponent extends React.Component {
         super(props);
         this.state = {
             departments: [],
+            roles: [],
+            tutors: [],
             name: "",
-            departamentId: -1,
+            departmentId: -1,
             roleId: -1,
             email: "",
             tutorId: -1,
@@ -30,6 +32,60 @@ class profileComponent extends React.Component {
                 data: ""
             }
         };
+    }
+
+    componentDidMount() {
+        this.queryDepartments();
+        this.queryRoles();
+        this.queryTutors();
+    }
+
+    queryDepartments() {
+        DepartmentService.getAll()
+            .then(res => {
+                
+                if (res.data.success) {
+                    const data = res.data.data;
+                    this.setState({ departments: data });
+                } else {
+                    alert('Error web service');
+                }
+            })
+            .catch(err => {
+                alert('ERROR server' + err);
+            });
+    }
+
+    queryRoles() {
+        RoleService.getAll()
+            .then(res => {
+        
+                if (res.data.success) {
+                    const data = res.data.data;
+                    this.setState({ roles: data });
+                } else {
+                    alert('Error web service');
+                }
+            })
+            .catch(err => {
+                alert('ERROR server' + err);
+            });
+    }
+
+    queryTutors(){
+        TutorService.getAll()
+            .then(res => {
+        
+                if (res.data.success) {
+                    const data = res.data.data;
+                    this.setState({ tutors: data });
+                } else {
+                    alert('Error web service');
+                }
+            })
+            .catch(err => {
+                alert('ERROR server' + err);
+            });
     }
 
     render() {
@@ -50,9 +106,10 @@ class profileComponent extends React.Component {
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <select class="form-control">
+                                            <select class="form-control" 
+                                            onChange={(value) => this.setState({ departmentId: value.target.value })} >
                                                 <option selected disabled>Departamento</option>
-                                                {this.loadDepartmentOptions()}
+                                                {this.loadDepartments()}
                                         
                                             </select>
                                         </div>
@@ -60,17 +117,20 @@ class profileComponent extends React.Component {
 
                                     <div class="col-lg-2">
                                         <div class="form-group">
-                                            <select class="form-control">
+                                        <select class="form-control" 
+                                            onChange={(value) => this.setState({ roleId: value.target.value })} >
                                                 <option selected disabled >Rol</option>
+                                                {this.loadRoles()}
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <select class="form-control">
+                                        <select class="form-control" 
+                                            onChange={(value) => this.setState({ tutorId: value.target.value })} >
                                                 <option selected disabled >Tutoría</option>
-                                                <option>Algo</option>
+                                                {this.loadTutors()}
                                             </select>
                                         </div>
                                     </div>
@@ -78,7 +138,7 @@ class profileComponent extends React.Component {
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success">Añadir</button>
+                                    <button type="submit" class="btn btn-success" onClick={()=>this.addProfessional()}>Añadir</button>
                                 </div>
                             </div>
                         </div>
@@ -111,31 +171,78 @@ class profileComponent extends React.Component {
         );
     }
 
-    loadDepartmentOptions() {
-        DepartmentService.getAll()
-            .then(res => {
-                console.log("alert"+res);
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ departments: data });
-                } else {
-                    alert('Error web service');
-                }
-            })
-            .catch(err => {
-                alert('ERROR server' + err);
-            });
-
+    loadDepartments() {
         return this.state.departments.map(data => {
             if (data) {
                 return (
-                    <option value="">{data.name}</option>                
+                    <option value={data.id}>{data.name}</option>                
                 );
             }else{
                 return <div></div>;
             }
         });
     }
+
+    loadRoles() {
+        return this.state.roles.map(data => {
+            if (data) {
+                return (
+                    <option value={data.id}>{data.name}</option>                
+                );
+            }else{
+                return <div></div>;
+            }
+        });
+    }
+
+    loadTutors() {
+        return this.state.tutors.map(data => {
+            if (data) {
+                return (
+                    <option value={data.id}>{data.name}</option>               
+                );
+            }else{
+                return <div></div>;
+            }
+        });
+    }
+
+    addProfessional(){
+        // parametros de datos post
+        const datapost = {
+        name : this.state.name,
+            departmentId: this.state.departmentId,
+            roleId: this.state.roleId,
+            email: "kkk",
+            tutorId: this.state.tutorId,
+            comment: null,
+            imageId: null,
+            image: null
+        }
+        alert(JSON.stringify(datapost));
+        
+        ProfessionalService.create(datapost)
+        .then(res=>{
+        if (res.data.success) {
+            //alert(res.data.message);
+            Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: 'Profesional añadido correctamente!',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            //this.props.history.push('/list'); 
+        }
+        else {
+            alert("Error");
+        }
+        }).catch(error=>{
+        alert("Error 34 "+error);
+        }); 
+    }
 }
+
+
 
 export default profileComponent;
