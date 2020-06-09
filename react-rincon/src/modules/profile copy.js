@@ -13,6 +13,10 @@ import Swal from 'sweetalert2';
 
 class profileComponent extends React.Component {
 
+    formatImage = (value) => {
+        console.log(value.target.files[0]);
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +30,7 @@ class profileComponent extends React.Component {
             tutorId: -1,
             comment: "",
             imageId: -1,
+            myImage: null,
             image: {
                 name: "",
                 type: "",
@@ -156,12 +161,11 @@ class profileComponent extends React.Component {
                                         </div>
                                         <div class="d-flex">
                                             <div class="btn btn-mdb-color btn-rounded float-left">
-                                                <input type="file" />
+                                                <input type="file" onChange={(value)=> {this.loadImage(value.target.files[0])}} />
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                                <button type="submit" class="btn btn-success">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -207,7 +211,17 @@ class profileComponent extends React.Component {
         });
     }
 
+    loadImage(myValue){
+        //https://www.youtube.com/watch?v=XeiOnkEI7XI
+        const fd = new FormData();
+        fd.append('image',myValue,myValue.name);
+        console.log(myValue);
+    }
+
     addProfessional(){
+
+        //uploadImage;
+
         // parametros de datos post
         const datapost = {
         name : this.state.name,

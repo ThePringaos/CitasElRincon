@@ -7,7 +7,7 @@ const sequelize = new Sequelize('datesDB', 'root', null, {
     pool: {
         max: 5,
         min: 0,
-        acquire: 30000
+        //acquire: 30000
         //idle: 10000
     }
 });
