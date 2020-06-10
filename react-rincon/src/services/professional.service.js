@@ -11,7 +11,11 @@ class ProfessionalDataService {
   }
 
   create(data) {
-    return http.post("/professional/", data);
+    return http.post("/professional/", data, {
+      onUploadProgress: progressEvent => {
+        console.log("Subida de foto: "+Math.round(progressEvent.loaded*100/progressEvent.total)+"%");
+      }
+    });
   }
 
   update(id, data) {

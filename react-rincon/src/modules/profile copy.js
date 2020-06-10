@@ -7,9 +7,9 @@ import ProfessionalService from '../services/professional.service';
 import DepartmentService from '../services/department.service';
 import TutorService from '../services/tutor.service';
 import RoleService from '../services/role.service';
-import ImageService from '../services/image.service';
 
 import Swal from 'sweetalert2';
+import $ from 'jquery';
 
 class profileComponent extends React.Component {
 
@@ -29,8 +29,6 @@ class profileComponent extends React.Component {
             email: "",
             tutorId: -1,
             comment: "",
-            imageId: -1,
-            myImage: null,
             image: {
                 name: "",
                 type: "",
@@ -96,6 +94,7 @@ class profileComponent extends React.Component {
     render() {
         return (
             <div class="container p-4">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="card">
@@ -156,12 +155,24 @@ class profileComponent extends React.Component {
                                     <div class="file-field">
                                         <div class="md-4">
                                             <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+                                                ref={profilePicture => this.myProfilePicture = profilePicture}
+                                                id="blah"
                                                 class="rounded-circle z-depth-1-half avatar-pic img-fluid img-thumbnail" alt="avatar"
                                             />
                                         </div>
                                         <div class="d-flex">
                                             <div class="btn btn-mdb-color btn-rounded float-left">
-                                                <input type="file" onChange={(value)=> {this.loadImage(value.target.files[0])}} />
+                                                <input ref={(myElement) => this.myFileElement = myElement}
+                                                    //style={{display:'none'}}
+                                                    type="file" 
+                                                    id="imgInput"
+                                                    onChange={(value)=> {this.readURL(value.target)}} 
+                                                />
+                                                {/*}
+                                                <button onClick={()=> this.myFileElement.click()}
+                                                    class="btn btn-primary">Seleccionar Imagen
+                                                </button>
+                                                */}
                                             </div>
                                         </div>
                                     </div>
@@ -211,17 +222,39 @@ class profileComponent extends React.Component {
         });
     }
 
+    readURL(input) {
+        alert("entro");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            if(input.files[0].type.includes("image")){
+                reader.onload = function(e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                
+                this.loadImage(input.files[0]);
+            }else{
+            }
+          
+            
+        }
+    }
+    
+
     loadImage(myValue){
+        alert('XD');
         //https://www.youtube.com/watch?v=XeiOnkEI7XI
-        const fd = new FormData();
-        fd.append('image',myValue,myValue.name);
+        this.myProfilePicture = myValue;
+        this.state.image = {
+            name: myValue.name,
+            type: myValue.type,
+            data: myValue
+        }
         console.log(myValue);
     }
 
     addProfessional(){
-
-        //uploadImage;
-
         // parametros de datos post
         const datapost = {
         name : this.state.name,
@@ -230,8 +263,7 @@ class profileComponent extends React.Component {
             email: "kkk",
             tutorId: this.state.tutorId,
             comment: null,
-            imageId: null,
-            image: null
+            image: this.state.image
         }
         alert(JSON.stringify(datapost));
         

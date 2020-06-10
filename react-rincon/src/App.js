@@ -11,7 +11,7 @@ import List from './modules/list';
 import Edit from './modules/edit';
 import Add from './modules/add';
 import Home from './modules/home';*/
-import Profile from './modules/profile copy';
+import Profile from './modules/profile';
 
 
 function App() {

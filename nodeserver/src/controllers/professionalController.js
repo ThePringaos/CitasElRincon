@@ -51,12 +51,12 @@ professionalController.getId = (req, res) => {
         })
 };
 
-professionalController.add = (req, res) => {
-    const { email,name,departmentId,roleId,comment,image } = req.body;
+professionalController.add = async (req, res) => {
+    const { email,name,departmentId,roleId,comment,image,tutorId} = req.body;
 
     let imageId = null;
     if(image!=null){
-        Image.create(image).then(each => {
+        await Image.create(image).then(each => {
             imageId = each.id;
         });
     }
@@ -67,7 +67,8 @@ professionalController.add = (req, res) => {
         departmentId: departmentId,
         roleId: roleId,
         comment: comment,
-        imageId: imageId
+        imageId: imageId,
+        tutorId: tutorId
     })
         .then(each => {
             if (each.id) {
@@ -83,7 +84,7 @@ professionalController.add = (req, res) => {
 }
 
 professionalController.edit = (req, res) => {
-    const { id,email,name,departmentId,roleId,comment,imageId, image} = req.body;
+    const { id,email,name,departmentId,roleId,comment,imageId, image,tutorId} = req.body;
 
     //saved image on DB
     if(image!=null && imageId!=null){
@@ -105,7 +106,8 @@ professionalController.edit = (req, res) => {
         departmentId: departmentId,
         roleId: roleId,
         comment: comment,
-        imageId: imageId
+        imageId: imageId,
+        tutorId,tutorId
     },
         { 
             where: { id } 
