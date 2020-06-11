@@ -1,7 +1,6 @@
 import http from "../http-common";
 
 class ProfessionalDataService {
-
   getAll() {
     return http.get("/professional/list");
   }

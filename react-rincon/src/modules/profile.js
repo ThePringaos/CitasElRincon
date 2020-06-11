@@ -23,11 +23,11 @@ class profileComponent extends React.Component {
             departments: [],
             roles: [],
             tutors: [],
-            name: "",
-            departmentId: -1,
-            roleId: -1,
-            email: "",
-            tutorId: -1,
+            name: sessionStorage.getItem("userName"),
+            departmentId: null,
+            roleId: null,
+            email: sessionStorage.getItem("userEmail"),
+            tutorId: null,
             comment: "",
             image: null
         };
@@ -253,7 +253,45 @@ class profileComponent extends React.Component {
         }
     }
 
+    validateFields(){
+        let emptyFields = "";
+        let count = 0;
+        const nombre = this.state.name;
+        
+        if(nombre.replace(/\s/g, "").length==0){
+            emptyFields+=" Nombre ";
+            count++;
+        }
+        if(this.state.departmentId==null){
+            emptyFields+=" Departamento ";
+            count++;
+        }
+        if(this.state.roleId==null){
+            emptyFields+=" Rol ";
+            count++;
+        }
+
+        //If there are errors
+        if(count>0){
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: (count==1?"Falta el campo":"Faltan los campos: ")+emptyFields,
+                showConfirmButton: false,
+                timer: 2000
+            })
+            return false;
+        }else{
+            return true;
+        }
+        
+    }
+
     addProfessional() {
+        if(this.validateFields()==false){
+            return;
+        }
+
         // parametros de datos post
         const datapost = {
             name: this.state.name,

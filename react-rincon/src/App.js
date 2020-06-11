@@ -12,6 +12,7 @@ import Edit from './modules/edit';
 import Add from './modules/add';
 import Home from './modules/home';*/
 import Profile from './modules/profile';
+import Sesion from './modules/signin';
 
 
 function App() {
@@ -26,7 +27,9 @@ function App() {
       <Route path="/edit/:id" component={Edit}></Route>
       <Route path="/add" component={Add}></Route>
       */}
-      <Route path="/" component={Profile}></Route>
+      <Route path="/crear-perfil" component={Profile}></Route>
+      <Route path="/iniciar-sesion" component={Sesion}></Route>
+      
 
     </div>
     </Router>
