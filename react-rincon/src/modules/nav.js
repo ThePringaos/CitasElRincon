@@ -2,13 +2,13 @@ import React from 'react';
 
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
+import { GoogleLogout } from 'react-google-login';
 
-class navComponent extends React.Component  {
-  render()
-  {
+class navComponent extends React.Component {
+  render() {
     return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Employees</a>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">IES EL RINCON</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,7 +23,15 @@ class navComponent extends React.Component  {
             <li class="nav-item active">
               <a class="nav-link" href="/add">Añadir</a>
             </li>
-            {/*{#if links.username}*}
+            {this.controlSignOut()}
+          </ul>
+        </div>
+      </nav>
+    );
+  }
+
+  controlSignOut() {
+    /*{#if links.username}*}
             <li class="nav-item active">
                 <a class="nav-link" href="/signout">Salir</a>
             </li>
@@ -34,11 +42,18 @@ class navComponent extends React.Component  {
                 {/*{else}*}
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Not Logged</a>
             </li>
-            {/*{/if}*/}
-          </ul>
-        </div>
-        </nav>
-    );
+            {/*{/if}*/
+
+    if (sessionStorage.getItem("userName")) {
+      return (
+        <li class="nav-item active">
+          <GoogleLogout
+            clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
+            buttonText="Salir"
+          ></GoogleLogout>
+        </li>
+      );
+    }
   }
 }
 
