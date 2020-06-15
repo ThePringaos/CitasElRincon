@@ -1,11 +1,9 @@
 import React from 'react';
 
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import axios from 'axios';
-
-import EmployeeService from '../services/employee.service';
 
 import Swal from 'sweetalert2';
 
@@ -58,26 +56,6 @@ class addComponent extends React.Component{
         salary : this.state.salary,
         }
 
-        
-        EmployeeService.create(datapost)
-        .then(res=>{
-        if (res.data.success) {
-            //alert(res.data.message);
-            Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: 'Empleado añadido correctamente!',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            this.props.history.push('/list'); 
-        }
-        else {
-            alert("Error");
-        }
-        }).catch(error=>{
-        alert("Error 34 "+error);
-        }); 
     }
 }
 
