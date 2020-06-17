@@ -4,7 +4,10 @@ const app = express();
 //process.env.PORT -> enviroment variable hosted in our pc
 app.set('PORT', process.env.PORT || 8000);
 
-app.use(express.json());
+
+//This limit is for the profile pictures 
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 
 // Configure headers and cors

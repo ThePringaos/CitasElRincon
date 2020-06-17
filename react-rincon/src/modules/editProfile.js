@@ -60,7 +60,7 @@ class profileComponent extends React.Component {
                         ImageService.get(imageId).then(res => {
                             this.setState({ image: res.data.data[0] });
                             //console.log("MI IMAGEN "+JSON.stringify(this.state.image));
-                            this.cargarImagen(this.state.image);
+                            this.cargarImagenDeBBDD(this.state.image);
 
                         }).catch(err => {
                             console.log('ERROR server ' + err);
@@ -281,18 +281,15 @@ class profileComponent extends React.Component {
                     type: myValue.type
                 }
 
-                reader.onload = (event) => {
-                    console.log("imagen ya lista para cargar exitosamente");
-                    console.log(event.target.result);
-                    $('#blah').attr('src', event.target.result);
-                }
-                reader.readAsDataURL(myValue); // convert to base64 string, al finalizar llama a onloadend
-                reader.onloadend = async () => {
-                    //IMAGEN EN BASE 64 = reader.result
-                    miImagen.data = await reader.result;
+                reader.readAsDataURL(myValue); 
+                reader.onload = async (event) => {
+                    console.log("imagen leída exitosamente");
+                    miImagen.data = await event.target.result;
                     this.state.image = miImagen;
-                    console.log("imagen pasada a base 64");
-                    console.log(this.state.image.data);
+                    $('#blah').attr('src', this.state.image.data);
+                }
+                reader.onerror = (err) => {
+                    console.log('Error en lectura de imagen --> '+err);
                 }
             } else {
                 Swal.fire({
@@ -306,21 +303,16 @@ class profileComponent extends React.Component {
         }
     }
 
-    cargarImagen(imagenDeBBDD) {
+    cargarImagenDeBBDD(imagenDeBBDD) {
         if (imagenDeBBDD.type.includes("image")) {
             //CONSEGUIR IMAGEN
             console.log("imagen traida de bbdd");
             console.log(imagenDeBBDD);
-            
-            //EN LA BBDD GUARDO COD BASE 64 pero me devuelve un buffered array :(
-            
-            //const blob = new Blob([imagenDeBBDD.data.data], { type: "image/jpeg" });
-            //console.log("imagen en formato blob");
-            //console.log(blob);
 
-            //CARGAR IMAGEN
-            const imagenListaParaLeer = "";
-            //$('#blah').attr('src', imagenListaParaLeer);
+            //Pasar buffer a string
+            let bufferOriginal = Buffer.from(imagenDeBBDD.data);
+            //cambiar el src de imagen del render
+            $('#blah').attr('src', bufferOriginal.toString('utf8'));
         } else {
             Swal.fire({
                 position: 'top',

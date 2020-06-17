@@ -12,6 +12,7 @@
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
+    "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.20",
     "react-popper": "^2.2.3",
