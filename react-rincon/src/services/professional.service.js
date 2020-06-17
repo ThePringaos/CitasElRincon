@@ -9,6 +9,10 @@ class ProfessionalDataService {
     return http.get(`/professional/${id}`);
   }
 
+  getWithEmail(correo){
+    return http.post('/professional-email', correo);
+  }
+
   create(data) {
     return http.post("/professional/", data, {
       onUploadProgress: progressEvent => {
@@ -17,8 +21,8 @@ class ProfessionalDataService {
     });
   }
 
-  update(id, data) {
-    return http.put(`/professional/${id}`, data);
+  update(data) {
+    return http.put(`/professional/`, data);
   }
 
   delete(id) {

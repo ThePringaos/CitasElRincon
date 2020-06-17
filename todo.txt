@@ -3,3 +3,6 @@ https://grokonez.com/node-js/nodejs-save-file-image-to-mysql-by-sequelize-with-b
 
 Add button images cool super power de la vida
 https://www.youtube.com/watch?v=XeiOnkEI7XI
+
+CAMBIAR CREAR professional alerts por console.log
+

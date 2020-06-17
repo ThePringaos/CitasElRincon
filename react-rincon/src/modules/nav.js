@@ -45,21 +45,6 @@ class navComponent extends React.Component {
   }
 
   controlSignOut() {
-    /*{#if links.username}*}
-            <li class="nav-item active">
-                <a class="nav-link" href="/signout">Salir</a>
-            </li>
-            {/*{/if}*}
-            <li class="nav-item">
-                {/*{#if links.username}*}
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{links.username}</a>
-                {/*{else}*}
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Not Logged</a>
-            </li>
-            {/*{/if}*/
-
-    console.log("AUTh"+ authController.isAuthenticated());
-
     if (authController.isAuthenticated()=="true") {
       return (
         <ul class="navbar-nav">
@@ -76,7 +61,6 @@ class navComponent extends React.Component {
           </li>
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{sessionStorage.getItem("userName")}</a>
         </ul>
-
       );
     }
   }

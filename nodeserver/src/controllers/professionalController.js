@@ -2,7 +2,10 @@ const Professional = require('../models/Professional');
 
 const Department = require('../models/Department');
 const Role = require('../models/Role');
-const Image = require('../models/Image')
+const Image = require('../models/Image');
+const Tutor = require('../models/Tutor');
+
+
 
 /**
  * SYNC ALL MODELS WITH DB
@@ -35,9 +38,7 @@ professionalController.getAll = async (req, res) => {
 
 professionalController.getId = (req, res) => {
     const { id } = req.params;
-    Professional.findAll({
-        include: [Role,Department,Image]
-    },{ where: { id } })
+    Professional.findAll({ where: { id } })
         .then(each => {
             if (each.length > 0) {
                 const data = JSON.parse(JSON.stringify(each));
@@ -49,6 +50,22 @@ professionalController.getId = (req, res) => {
         .catch(err => {
             console.log(err)
         })
+};
+
+professionalController.getWithEmail = (req, res) => {
+    const { email } = req.body;
+    Professional.findAll({where : {email}})
+    .then(each => {
+        if (each.length > 0) {
+            const data = JSON.parse(JSON.stringify(each));
+            return res.json({ success: true, data: data });
+        } else {
+            res.json({ status: `The email doesn't exist` });
+        }
+    })
+    .catch(err => {
+        console.log(err)
+    })
 };
 
 professionalController.add = async (req, res) => {
@@ -83,20 +100,23 @@ professionalController.add = async (req, res) => {
 
 }
 
-professionalController.edit = (req, res) => {
-    const { id,email,name,departmentId,roleId,comment,imageId, image,tutorId} = req.body;
+professionalController.edit = async (req, res) => {
+    const { id,email,name,departmentId,roleId,comment,imageId,image,tutorId} = req.body;
+    let finalImageId = imageId;
 
     //saved image on DB
     if(image!=null && imageId!=null){
-        Image.update(image,{
+        await Image.update(image,{
             where: {
                 id: imageId
             }
         });
         //new image to save on DB
-    }else if(imageId!= null && imageId==null){
-        Image.create(image).then(each => {
-            imageId = each.id;
+    }else if(image!= null && imageId==null){
+        await Image.create(image).then(each => {
+            finalImageId = each.id;
+        }).catch(err => {
+            console.log(err)
         });
     }
     
@@ -106,15 +126,14 @@ professionalController.edit = (req, res) => {
         departmentId: departmentId,
         roleId: roleId,
         comment: comment,
-        imageId: imageId,
-        tutorId,tutorId
+        imageId: finalImageId,
+        tutorId: tutorId
     },
         { 
             where: { id } 
         })
         .then(each => {
             const data = JSON.parse(JSON.stringify(each));
-            console.log(data);
             if (data.length > 0) {
                 res.json({ success: true, message: 'Successfully updated' });
             } else {

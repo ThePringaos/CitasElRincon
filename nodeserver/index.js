@@ -18,6 +18,8 @@ app.use((req, res, next) => {
 
 
 //routes
+
+app.use(require('./src/routes/imageRoutes'));
 app.use(require('./src/routes/departmentRoutes'));
 app.use(require('./src/routes/roleRoutes'));
 app.use(require('./src/routes/dateStateRoutes'));

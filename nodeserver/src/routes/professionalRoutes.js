@@ -10,6 +10,9 @@ router.get('/professional/list', professionalController.getAll);
 //GET WITH ID
 router.get('/professional/:id',professionalController.getId);
 
+//GET WITH EMAIL
+router.post('/professional-email',professionalController.getWithEmail);
+
 //CREATE
 router.post('/professional', professionalController.add);
 
