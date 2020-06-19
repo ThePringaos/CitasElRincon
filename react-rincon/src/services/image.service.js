@@ -14,8 +14,8 @@ class ImageDataService {
     return http.post("/image/", data);
   }
 
-  update(id, data) {
-    return http.put(`/image/${id}`, data);
+  update(data) {
+    return http.put(`/image/`, data);
   }
 
   delete(id) {

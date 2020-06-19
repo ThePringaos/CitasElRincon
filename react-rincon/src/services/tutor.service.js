@@ -14,8 +14,8 @@ class TutorDataService {
     return http.post("/tutor/", data);
   }
 
-  update(id, data) {
-    return http.put(`/tutor/${id}`, data);
+  update(data) {
+    return http.put(`/tutor/`, data);
   }
 
   delete(id) {

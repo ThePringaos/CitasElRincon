@@ -14,8 +14,8 @@ class DepartmentDataService {
     return http.post("/department/", data);
   }
 
-  update(id, data) {
-    return http.put(`/department/${id}`, data);
+  update(data) {
+    return http.put(`/department`, data);
   }
 
   delete(id) {

@@ -10,6 +10,7 @@ import CreateProfile from './modules/createProfile';
 import EditProfile from './modules/editProfile';
 import Signin from './modules/signin';
 import CreateTimeTable from './modules/createTimetable';
+import ShowDates from './modules/showDates';
 import {ProtectedRoute} from './modules/protected.route';
 
 
@@ -23,6 +24,7 @@ class App extends React.Component {
               <ProtectedRoute exact path="/crear-perfil" component={CreateProfile}></ProtectedRoute>
               <ProtectedRoute exact path="/editar-perfil" component={EditProfile}></ProtectedRoute>
               <ProtectedRoute exact path="/definir-horario" component={CreateTimeTable}></ProtectedRoute>
+              <ProtectedRoute exact path="/mostrar-citas" component={ShowDates}></ProtectedRoute>
 
               <Route exact path="/signin" component={Signin}></Route>
               <Route path="*" component={() => "404 NOT FOUND"} />

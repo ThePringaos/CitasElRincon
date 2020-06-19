@@ -14,8 +14,8 @@ class RoleDataService {
     return http.post("/role/", data);
   }
 
-  update(id, data) {
-    return http.put(`/role/${id}`, data);
+  update(data) {
+    return http.put(`/role/`, data);
   }
 
   delete(id) {

@@ -271,9 +271,6 @@ class profileComponent extends React.Component {
         if (input.files && input.files[0]) {
             const myValue = input.files[0];
 
-            console.log('antes de cargar');
-            console.log(myValue);
-
             if (myValue.type.includes("image")) {
                 const reader = new FileReader();
                 let miImagen = {
@@ -283,7 +280,6 @@ class profileComponent extends React.Component {
 
                 reader.readAsDataURL(myValue); 
                 reader.onload = async (event) => {
-                    console.log("imagen leída exitosamente");
                     miImagen.data = await event.target.result;
                     this.state.image = miImagen;
                     $('#blah').attr('src', this.state.image.data);
@@ -305,10 +301,6 @@ class profileComponent extends React.Component {
 
     cargarImagenDeBBDD(imagenDeBBDD) {
         if (imagenDeBBDD.type.includes("image")) {
-            //CONSEGUIR IMAGEN
-            console.log("imagen traida de bbdd");
-            console.log(imagenDeBBDD);
-
             //Pasar buffer a string
             let bufferOriginal = Buffer.from(imagenDeBBDD.data);
             //cambiar el src de imagen del render
