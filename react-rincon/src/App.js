@@ -24,7 +24,7 @@ class App extends React.Component {
               <ProtectedRoute exact path="/crear-perfil" component={CreateProfile}></ProtectedRoute>
               <ProtectedRoute exact path="/editar-perfil" component={EditProfile}></ProtectedRoute>
               <ProtectedRoute exact path="/definir-horario" component={CreateTimeTable}></ProtectedRoute>
-              <ProtectedRoute exact path="/mostrar-citas" component={ShowDates}></ProtectedRoute>
+              <ProtectedRoute exact path="/" component={ShowDates}></ProtectedRoute>
 
               <Route exact path="/signin" component={Signin}></Route>
               <Route path="*" component={() => "404 NOT FOUND"} />

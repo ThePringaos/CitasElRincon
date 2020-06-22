@@ -5,12 +5,14 @@ class DateDataService {
     return http.get("/date/list");
   }
 
+  //This is with Date ID
   get(id) {
     return http.get(`/date/${id}`);
   }
 
-  getConfirmedDatesWithProfessionalId(id){
-    return http.post(`/date/get-date-by-professional-id`,id);
+  //This is with Professional ID and Day
+  getDates(data){
+    return http.post(`/date/get-date`,data);
   }
 
   update(data) {

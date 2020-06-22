@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../database/database');
 
-const tableName = 'date-type';
+const tableName = 'dateType';
 const DateType = database.define(tableName,{
     //attributes
     id:{

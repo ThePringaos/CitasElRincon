@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../database/database');
 
-const tableName = 'date-states';
+const tableName = 'dateStates';
 const DateState = database.define(tableName,{
     //attributes
     id:{

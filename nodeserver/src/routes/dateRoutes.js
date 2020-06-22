@@ -10,6 +10,9 @@ router.get('/date/list', dateController.getAll);
 //GET WITH ID
 router.get('/date/:id',dateController.getId);
 
+//OBTAIN DATES WITH PROF ID
+router.post('/date/get-date', dateController.getDate);
+
 //CREATE
 router.post('/date', dateController.add);
 

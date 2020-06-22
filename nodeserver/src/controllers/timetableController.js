@@ -41,12 +41,28 @@ timetableController.getId = (req, res) => {
         })
 };
 
+timetableController.getWithProfessionalId = (req, res) => {
+    const { professionalId } = req.body;
+    Timetable.findAll({ where: { professionalId } })
+        .then(each => {
+            if (each.length > 0) {
+                const data = JSON.parse(JSON.stringify(each));
+                return res.json({ success: true, data: data });
+            } else {
+                res.json({ status: `The timetable doesn't exist` });
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+};
+
 timetableController.add = (req, res) => {
     const { professionalId,monday,tuesday,wednesday,thursday,friday} = req.body;
     Timetable.create({ professionalId,monday,tuesday,wednesday,thursday,friday})
         .then(each => {
             if (each.id) {
-                res.json({ success: true, message: `Successfully added, id: ${each.id}` });
+                res.json({ success: true, message: `Successfully added, id: ${each.id}`,id:each.id});
             } else {
                 res.json({ status: 'Error' });
             }
