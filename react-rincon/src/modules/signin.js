@@ -43,8 +43,9 @@ class signinComponent extends React.Component {
                                     buttonText="Iniciar sesion"
                                     onSuccess={ (res) => {
                                         this.responseGoogle(res);
-                                        authController.login(()=>
+                                        authController.login(()=>{
                                             this.setState({redirect: "/crear-perfil"})
+                                        }
                                         );
                                     }}
                                 

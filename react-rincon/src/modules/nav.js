@@ -16,10 +16,14 @@ class navComponent extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) {
+    console.log("REDIRECT "+JSON.stringify(this.state.redirect));
+    if (this.state.redirect!=null) {
+      let aux = this.state.redirect;
+      this.setState({redirect:null});
       console.log("BARRA NAV, REDIRECTED");
-      return <Redirect to={this.state.redirect} />
+      return <Redirect to={aux} />
     }
+
     return (
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">IES EL RINCON</a>
@@ -29,13 +33,13 @@ class navComponent extends React.Component {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/definir-horario">Horario</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/list">Ver Empleados </a>
+              <a class="nav-link" href="/">Citas</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/add">Añadir</a>
+              <a class="nav-link" href="/editar-perfil">Editar Perfil <span class="sr-only">(current)</span></a>
             </li>
             {this.controlSignOut()}
           </ul>
@@ -46,22 +50,29 @@ class navComponent extends React.Component {
 
   controlSignOut() {
     if (authController.isAuthenticated()=="true") {
+      console.log("AUTH IS TRUE");
       return (
         <ul class="navbar-nav">
           <li class="nav-item active">
             <GoogleLogout
               clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
+              render={renderProps => (
+                <a role="button" class="nav-link" onClick={renderProps.onClick}>Salir</a>
+              )}
               buttonText="Salir"
               onLogoutSuccess={() => {
                 authController.logout(() =>
                   this.setState({ redirect: "/signin" })
                 );
+              
               }}
             ></GoogleLogout>
           </li>
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{sessionStorage.getItem("userName")}</a>
         </ul>
       );
+    }else{
+      console.log("AUTH IS FALSE");
     }
   }
 }
