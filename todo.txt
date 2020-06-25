@@ -1,12 +1,5 @@
-1. Add a picture field to model professional
-https://grokonez.com/node-js/nodejs-save-file-image-to-mysql-by-sequelize-with-blob-type 
-
 Add button images cool super power de la vida
 https://www.youtube.com/watch?v=XeiOnkEI7XI
-
-CAMBIAR CREAR alerts por console.log y los errores a error.log
-
-Añadir hover a los elementos del menu
 
 Arreglar primera carga del menu, boton salir 
 

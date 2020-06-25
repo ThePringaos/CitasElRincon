@@ -17,11 +17,9 @@ class signinComponent extends React.Component {
     }
 
     responseGoogle (response) {
-        console.log(response);
         sessionStorage["userName"] = response.profileObj.name;
         sessionStorage["userEmail"] = response.profileObj.email;
         sessionStorage["userUrl"] = response.profileObj.imageUrl;
-        console.log(`CAMPOS: ${sessionStorage.getItem("userName")}`);
     }
     
     render() {
@@ -49,7 +47,7 @@ class signinComponent extends React.Component {
                                         );
                                     }}
                                 
-                                    onFailure={ () => console.log('error crack')}
+                                    onFailure={ () => console.error('error crack')}
                                     cookiePolicy={'single_host_origin'}
                                 />}
                             </div>

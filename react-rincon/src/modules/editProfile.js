@@ -59,23 +59,21 @@ class profileComponent extends React.Component {
                     if (imageId != null) {
                         ImageService.get(imageId).then(res => {
                             this.setState({ image: res.data.data[0] });
-                            //console.log("MI IMAGEN "+JSON.stringify(this.state.image));
                             this.cargarImagenDeBBDD(this.state.image);
 
                         }).catch(err => {
-                            console.log('ERROR server ' + err);
+                            console.error('ERROR server ' + err);
                         });
                     } else {
-                        console.log('No hay imagen asociada a esta cuenta.');
+                        console.error('No hay imagen asociada a esta cuenta.');
 
                     }
-                    //this.setState(id,name,departmentId,roleId,tutorId,comment,imageId);
                 } else {
-                    console.log('Error quering professional EDIT');
+                    console.error('Error quering professional EDIT');
                 }
             })
             .catch(err => {
-                console.log('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
@@ -87,11 +85,11 @@ class profileComponent extends React.Component {
                     const data = res.data.data;
                     this.setState({ departments: data });
                 } else {
-                    console.log('Error quering departments EDIT');
+                    console.error('Error quering departments EDIT');
                 }
             })
             .catch(err => {
-                console.log('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
@@ -103,11 +101,11 @@ class profileComponent extends React.Component {
                     const data = res.data.data;
                     this.setState({ roles: data });
                 } else {
-                    console.log('Error quering roles EDIT');
+                    console.error('Error quering roles EDIT');
                 }
             })
             .catch(err => {
-                console.log('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
@@ -119,11 +117,11 @@ class profileComponent extends React.Component {
                     const data = res.data.data;
                     this.setState({ tutors: data });
                 } else {
-                    console.log('Error quering tutors EDIT');
+                    console.error('Error quering tutors EDIT');
                 }
             })
             .catch(err => {
-                console.log('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
@@ -285,7 +283,7 @@ class profileComponent extends React.Component {
                     $('#blah').attr('src', this.state.image.data);
                 }
                 reader.onerror = (err) => {
-                    console.log('Error en lectura de imagen --> '+err);
+                    console.error('Error en lectura de imagen --> '+err);
                 }
             } else {
                 Swal.fire({
@@ -367,14 +365,10 @@ class profileComponent extends React.Component {
             image: this.state.image,
             imageId: this.state.imageId
         }
-        console.log("imagen introducida en bbdd");
-        console.log(datapost.image);
-        console.log(JSON.stringify(datapost));
 
         ProfessionalService.update(datapost)
             .then(res => {
                 if (res.data.success) {
-                    //alert(res.data.message);
                     Swal.fire({
                         position: 'top',
                         icon: 'success',
@@ -382,13 +376,12 @@ class profileComponent extends React.Component {
                         showConfirmButton: false,
                         timer: 2000
                     })
-                    //this.props.history.push('/list'); 
                 }
                 else {
-                    alert("Error");
+                    console.error("Error");
                 }
             }).catch(error => {
-                alert("Error 34 " + error);
+                console.error("Error 34 " + error);
             });
     }
 }

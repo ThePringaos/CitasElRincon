@@ -63,7 +63,6 @@ class homeComponent extends React.Component {
         let aux = this.state.daysToQuery;
         if(aux.length==0){
             aux = [this.filterDate(new Date())];
-            console.log("hehe");
         }
 
         async function asyncForEach(array, callback) {
@@ -75,10 +74,8 @@ class homeComponent extends React.Component {
         await asyncForEach(aux, async (each) => {
             await DateService.getDates({ id: this.state.id ,day: each})
             .then(res => {
-                console.log(res)
                 if (res.data.success) {
                     const data = res.data.data[0];
-                    console.log(data);
                     myDates.push({ dates: data });
                 } else {
                     console.error('Error loading dates service');
@@ -89,11 +86,7 @@ class homeComponent extends React.Component {
             });
           })
 
-
-        console.log("VACIO"+JSON.stringify(myDates));
         this.setState({dates: myDates});
-        console.log('this.state');
-        console.log(this.state);
     }
 
     async setStartDate(date){
@@ -195,7 +188,6 @@ class homeComponent extends React.Component {
     loadFillData() {
         return this.state.dates.map(each => {
             if (each.dates) {
-                console.log(each);
                 return (
                     <tr>
                         <td >{each.dates.date}</td>

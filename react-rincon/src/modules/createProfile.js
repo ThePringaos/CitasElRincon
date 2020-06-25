@@ -57,48 +57,45 @@ class profileComponent extends React.Component {
     queryDepartments() {
         DepartmentService.getAll()
             .then(res => {
-
                 if (res.data.success) {
                     const data = res.data.data;
                     this.setState({ departments: data });
                 } else {
-                    alert('Error web service');
+                    console.error('Error web service');
                 }
             })
             .catch(err => {
-                alert('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
     queryRoles() {
         RoleService.getAll()
             .then(res => {
-
                 if (res.data.success) {
                     const data = res.data.data;
                     this.setState({ roles: data });
                 } else {
-                    alert('Error web service');
+                    console.error('Error web service');
                 }
             })
             .catch(err => {
-                alert('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
     queryTutors() {
         TutorService.getAll()
             .then(res => {
-
                 if (res.data.success) {
                     const data = res.data.data;
                     this.setState({ tutors: data });
                 } else {
-                    alert('Error web service');
+                    console.error('Error web service');
                 }
             })
             .catch(err => {
-                alert('ERROR server' + err);
+                console.error('ERROR server' + err);
             });
     }
 
@@ -252,7 +249,6 @@ class profileComponent extends React.Component {
 
             if (myValue.type.includes("image")) {
                 reader.onload = (event) => $('#blah').attr('src', event.target.result);
-
                 reader.readAsDataURL(myValue); // convert to base64 string
 
                 this.state.image = {
@@ -313,7 +309,6 @@ class profileComponent extends React.Component {
             return;
         }
 
-        // parametros de datos post
         const datapost = {
             name: this.state.name,
             departmentId: this.state.departmentId,
@@ -323,12 +318,10 @@ class profileComponent extends React.Component {
             comment: this.state.comment,
             image: this.state.image
         }
-        //alert(JSON.stringify(datapost));
 
         ProfessionalService.create(datapost)
             .then(async res => {
                 if (res.data.success) {
-                    //alert(res.data.message);
                     await Swal.fire({
                         position: 'top',
                         icon: 'success',
@@ -340,10 +333,10 @@ class profileComponent extends React.Component {
                     this.setState({ redirect: "/" });
                 }
                 else {
-                    alert("Error");
+                    console.error("Error");
                 }
             }).catch(error => {
-                alert("Error 34 " + error);
+                console.error("Error 34 " + error);
             });
     }
 }

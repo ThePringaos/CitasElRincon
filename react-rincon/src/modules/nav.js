@@ -20,7 +20,6 @@ class navComponent extends React.Component {
     if (this.state.redirect!=null) {
       let aux = this.state.redirect;
       this.setState({redirect:null});
-      console.log("BARRA NAV, REDIRECTED");
       return <Redirect to={aux} />
     }
 
@@ -52,7 +51,6 @@ class navComponent extends React.Component {
 
   controlSignOut() {
     if (authController.isAuthenticated()=="true") {
-      console.log("AUTH IS TRUE");
       return (
         <ul class="navbar-nav">
           <li class="nav-item">

@@ -65,7 +65,6 @@ class App extends Component {
             if (res.data.success) {
                 const { id, monday, tuesday, wednesday, thursday, friday } = (res.data.data[0]);
                 this.state.tableId = id;
-                console.log(res.data.data[0]);
 
                 if (monday != null) {
                     this.state.mondayDDBB = monday;
@@ -468,7 +467,7 @@ class App extends Component {
                     console.error("error creando timetable")
                 );
         }
-        console.log('ENTRO');
+        
         switch (day) {
             case 'monday':
                 if (this.state.monday.from && this.state.monday.to) {
@@ -622,7 +621,6 @@ class App extends Component {
             }
         });
     }
-
 }
 
 export default App;
