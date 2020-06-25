@@ -10,8 +10,6 @@ Añadir hover a los elementos del menu
 
 Arreglar primera carga del menu, boton salir 
 
-Arreglar horas citas default vacias
-
 Arraglar foto cambio de nombre bug
 
 Hay que crear profesional antes de nada

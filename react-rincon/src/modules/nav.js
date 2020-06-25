@@ -25,20 +25,22 @@ class navComponent extends React.Component {
     }
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">IES EL RINCON</a>
+      <nav class="navbar navbar-expand-lg navbar-light" style={{'background-color':'#4d88ff'}}>
+         <img src={require("../images/rincon-icon.png")}
+          width="30" height="30" class="d-inline-block align-top rounded-circle z-depth-1-half img-fluid img-thumbnail "></img>
+        <a class="navbar-brand mx-2" href="#">IES EL RINCON</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/definir-horario">Horario</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/">Citas</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/editar-perfil">Editar Perfil <span class="sr-only">(current)</span></a>
             </li>
             {this.controlSignOut()}
@@ -53,7 +55,7 @@ class navComponent extends React.Component {
       console.log("AUTH IS TRUE");
       return (
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <GoogleLogout
               clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
               render={renderProps => (
