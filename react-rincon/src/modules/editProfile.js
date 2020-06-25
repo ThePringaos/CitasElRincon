@@ -303,6 +303,8 @@ class profileComponent extends React.Component {
             let bufferOriginal = Buffer.from(imagenDeBBDD.data);
             //cambiar el src de imagen del render
             $('#blah').attr('src', bufferOriginal.toString('utf8'));
+            //actualizar el state
+            this.setState({ image: bufferOriginal.toString('utf8')});
         } else {
             Swal.fire({
                 position: 'top',
