@@ -1,6 +1,9 @@
 Add button images cool super power de la vida
 https://www.youtube.com/watch?v=XeiOnkEI7XI
 
+
+---------------------------------------------
+
 Arreglar primera carga del menu, boton salir 
 
 Arraglar foto cambio de nombre bug

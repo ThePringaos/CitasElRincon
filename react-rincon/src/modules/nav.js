@@ -16,23 +16,31 @@ class navComponent extends React.Component {
   }
 
   render() {
-    console.log("REDIRECT "+JSON.stringify(this.state.redirect));
-    if (this.state.redirect!=null) {
+    console.log("REDIRECT " + JSON.stringify(this.state.redirect));
+    if (this.state.redirect != null) {
       let aux = this.state.redirect;
-      this.setState({redirect:null});
+      this.setState({ redirect: null });
       return <Redirect to={aux} />
     }
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light" style={{'background-color':'#4d88ff'}}>
-         <img src={require("../images/rincon-icon.png")}
+      <nav class="navbar navbar-expand-lg navbar-light" style={{ 'background-color': '#4d88ff' }}>
+        <img src={require("../images/rincon-icon.png")}
           width="30" height="30" class="d-inline-block align-top rounded-circle z-depth-1-half img-fluid img-thumbnail "></img>
         <a class="navbar-brand mx-2" href="#">IES EL RINCON</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+        {this.controlUserSignedIn()}
+      </nav>
+    );
+  }
+
+  controlUserSignedIn() {
+    if (authController.isAuthenticated() == "true") {
+      return (
+        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+          <ul class="navbar-nav navbar-collapse">
             <li class="nav-item">
               <a class="nav-link" href="/definir-horario">Horario</a>
             </li>
@@ -42,36 +50,27 @@ class navComponent extends React.Component {
             <li class="nav-item">
               <a class="nav-link" href="/editar-perfil">Editar Perfil <span class="sr-only">(current)</span></a>
             </li>
-            {this.controlSignOut()}
+            <li class="nav-item mr-auto"></li>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{sessionStorage.getItem("userName")}</a>
+            <li class="nav-item">
+              <GoogleLogout
+                clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
+                render={renderProps => (
+                  <a role="button" class="nav-link" onClick={renderProps.onClick}>Salir</a>
+                )}
+                buttonText="Salir"
+                onLogoutSuccess={() => {
+                  authController.logout(() =>
+                    this.setState({ redirect: "/signin" })
+                  );
+
+                }}
+              ></GoogleLogout>
+            </li>
           </ul>
         </div>
-      </nav>
-    );
-  }
-
-  controlSignOut() {
-    if (authController.isAuthenticated()=="true") {
-      return (
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <GoogleLogout
-              clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
-              render={renderProps => (
-                <a role="button" class="nav-link" onClick={renderProps.onClick}>Salir</a>
-              )}
-              buttonText="Salir"
-              onLogoutSuccess={() => {
-                authController.logout(() =>
-                  this.setState({ redirect: "/signin" })
-                );
-              
-              }}
-            ></GoogleLogout>
-          </li>
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{sessionStorage.getItem("userName")}</a>
-        </ul>
       );
-    }else{
+    } else {
       console.log("AUTH IS FALSE");
     }
   }
