@@ -17,33 +17,33 @@ class App extends Component {
             tableId: null,
             periodLenght: 30,
             monday: {
-                myDateFrom: new Date(),
+                myDateFrom: null,
                 from: "",
-                myDateTo: new Date(),
+                myDateTo: null,
                 to: ""
             },
             tuesday: {
-                myDateFrom: new Date(),
+                myDateFrom: null,
                 from: "",
-                myDateTo: new Date(),
+                myDateTo: null,
                 to: ""
             },
             wednesday: {
-                myDateFrom: new Date(),
+                myDateFrom: null,
                 from: "",
-                myDateTo: new Date(),
+                myDateTo: null,
                 to: ""
             },
             thursday: {
-                myDateFrom: new Date(),
+                myDateFrom: null,
                 from: "",
-                myDateTo: new Date(),
+                myDateTo: null,
                 to: ""
             },
             friday: {
-                myDateFrom: new Date(),
+                myDateFrom: null,
                 from: "",
-                myDateTo: new Date(),
+                myDateTo: null,
                 to: ""
             },
             mondayDDBB: null,
@@ -144,6 +144,8 @@ class App extends Component {
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
                                                     timeCaption="Time"
+                                                    disabledKeyboardNavigation
+                                                    timeFormat="HH:mm"
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
@@ -157,6 +159,8 @@ class App extends Component {
                                                 showTimeSelectOnly
                                                 timeIntervals={this.state.periodLenght}
                                                 timeCaption="Time"
+                                                disabledKeyboardNavigation
+                                                timeFormat="HH:mm"
                                                 dateFormat="h:mm aa"
                                             />
                                         </div>
@@ -192,6 +196,8 @@ class App extends Component {
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
                                                     timeCaption="Time"
+                                                    disabledKeyboardNavigation
+                                                    timeFormat="HH:mm"
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
@@ -205,6 +211,8 @@ class App extends Component {
                                                 showTimeSelectOnly
                                                 timeIntervals={this.state.periodLenght}
                                                 timeCaption="Time"
+                                                disabledKeyboardNavigation
+                                                timeFormat="HH:mm"
                                                 dateFormat="h:mm aa"
                                             />
                                         </div>
@@ -240,6 +248,8 @@ class App extends Component {
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
                                                     timeCaption="Time"
+                                                    disabledKeyboardNavigation
+                                                    timeFormat="HH:mm"
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
@@ -253,6 +263,8 @@ class App extends Component {
                                                 showTimeSelectOnly
                                                 timeIntervals={this.state.periodLenght}
                                                 timeCaption="Time"
+                                                disabledKeyboardNavigation
+                                                timeFormat="HH:mm"
                                                 dateFormat="h:mm aa"
                                             />
                                         </div>
@@ -288,6 +300,8 @@ class App extends Component {
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
                                                     timeCaption="Time"
+                                                    timeFormat="HH:mm"
+                                                    disabledKeyboardNavigation
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
@@ -301,6 +315,8 @@ class App extends Component {
                                                 showTimeSelectOnly
                                                 timeIntervals={this.state.periodLenght}
                                                 timeCaption="Time"
+                                                timeFormat="HH:mm"
+                                                disabledKeyboardNavigation
                                                 dateFormat="h:mm aa"
                                             />
                                         </div>
@@ -336,6 +352,8 @@ class App extends Component {
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
                                                     timeCaption="Time"
+                                                    timeFormat="HH:mm"
+                                                    disabledKeyboardNavigation
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
@@ -349,6 +367,8 @@ class App extends Component {
                                                 showTimeSelectOnly
                                                 timeIntervals={this.state.periodLenght}
                                                 timeCaption="Time"
+                                                timeFormat="HH:mm"
+                                                disabledKeyboardNavigation
                                                 dateFormat="h:mm aa"
                                             />
                                         </div>
@@ -369,6 +389,8 @@ class App extends Component {
     }
 
     handleChange = async (time, day) => {
+        if(time==null)return;
+        
         const filteredTime = await String(time).match(/\d{2}:\d{2}/g)[0];
         switch (day) {
             case "mondayFrom":
