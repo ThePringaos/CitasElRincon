@@ -10,9 +10,6 @@ router.get('/timetable/list', timetableController.getAll);
 //GET WITH ID
 router.get('/timetable/:id',timetableController.getId);
 
-//GET WITH PROFESSIONAL ID
-router.post('/timetable/get-with-professional-id',timetableController.getWithProfessionalId);
-
 //CREATE
 router.post('/timetable', timetableController.add);
 

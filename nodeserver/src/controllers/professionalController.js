@@ -4,6 +4,7 @@ const Department = require('../models/Department');
 const Role = require('../models/Role');
 const Image = require('../models/Image');
 const Tutor = require('../models/Tutor');
+const Timetable = require('../models/Timetable');
 
 
 
@@ -38,7 +39,10 @@ professionalController.getAll = async (req, res) => {
 
 professionalController.getId = (req, res) => {
     const { id } = req.params;
-    Professional.findAll({ where: { id } })
+    Professional.findAll({ 
+        include: [{model: Timetable}],
+        where: { id }
+     })
         .then(each => {
             if (each.length > 0) {
                 const data = JSON.parse(JSON.stringify(each));
@@ -101,7 +105,7 @@ professionalController.add = async (req, res) => {
 }
 
 professionalController.edit = async (req, res) => {
-    const { id,email,name,departmentId,roleId,comment,imageId,image,tutorId} = req.body;
+    const { id,email,name,departmentId,timetableId,roleId,comment,imageId,image,tutorId} = req.body;
     let finalImageId = imageId;
 
     //saved image on DB
@@ -124,6 +128,7 @@ professionalController.edit = async (req, res) => {
         email: email,
         name: name,
         departmentId: departmentId,
+        timetableId: timetableId,
         roleId: roleId,
         comment: comment,
         imageId: finalImageId,

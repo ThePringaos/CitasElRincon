@@ -10,10 +10,6 @@ class TimetableDataService {
     return http.get(`/timetable/${id}`);
   }
 
-  getWithProfessionalId(professionalId) {
-    return http.post(`/timetable/get-with-professional-id`,professionalId);
-  }
-
   create(data) {
     return http.post("/timetable/", data);
   }

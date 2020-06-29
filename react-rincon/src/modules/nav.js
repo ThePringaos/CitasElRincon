@@ -89,10 +89,12 @@ class navComponent extends React.Component {
                 )}
                 buttonText="Salir"
                 onLogoutSuccess={() => {
-                  authController.logout(() =>
-                    this.setState({ redirect: "/signin" })
-                  );
-
+                  sessionStorage['isUserRegistered']=false;
+                  sessionStorage['userEmail']=null;
+                  sessionStorage['userId']=null;
+                  sessionStorage['userName']=null;
+                  sessionStorage['userUrl']=null;
+                  authController.logout(() => this.setState({ redirect: "/signin" }));
                 }}
               ></GoogleLogout>
             </li>

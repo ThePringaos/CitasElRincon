@@ -14,10 +14,7 @@ Timetable.sync({ force: false })
 const timetableController = {};
 
 timetableController.getAll = async (req, res) => {
-    Timetable.findAll({
-        include: [Professional]
-    })
-        .then(each => {
+    Timetable.findAll().then(each => {
             const data = JSON.parse(JSON.stringify(each));
             return res.json({ success: true, data: data });
         }).catch(err => {
@@ -41,25 +38,9 @@ timetableController.getId = (req, res) => {
         })
 };
 
-timetableController.getWithProfessionalId = (req, res) => {
-    const { professionalId } = req.body;
-    Timetable.findAll({ where: { professionalId } })
-        .then(each => {
-            if (each.length > 0) {
-                const data = JSON.parse(JSON.stringify(each));
-                return res.json({ success: true, data: data });
-            } else {
-                res.json({ status: `The timetable doesn't exist` });
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-};
-
 timetableController.add = (req, res) => {
-    const { professionalId,monday,tuesday,wednesday,thursday,friday} = req.body;
-    Timetable.create({ professionalId,monday,tuesday,wednesday,thursday,friday})
+    const { monday,tuesday,wednesday,thursday,friday} = req.body;
+    Timetable.create({monday,tuesday,wednesday,thursday,friday})
         .then(each => {
             if (each.id) {
                 res.json({ success: true, message: `Successfully added, id: ${each.id}`,id:each.id});
@@ -74,9 +55,9 @@ timetableController.add = (req, res) => {
 }
 
 timetableController.edit = (req, res) => {
-    const { id,professionalId,monday,tuesday,wednesday,thursday,friday} = req.body;
+    const { id,monday,tuesday,wednesday,thursday,friday} = req.body;
     
-    Timetable.update({professionalId,monday,tuesday,wednesday,thursday,friday},
+    Timetable.update({monday,tuesday,wednesday,thursday,friday},
         { 
             where: { id } 
         })

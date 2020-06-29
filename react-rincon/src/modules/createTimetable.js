@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import ProfessionalService from '../services/professional.service';
 import TimetableService from '../services/timetable.service';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
@@ -16,6 +17,7 @@ class App extends Component {
         this.state = {
             reloadTable: null,
             redirect: null,
+            myUser:null,
             userId: sessionStorage.getItem("userId"),
             tableId: null,
             periodLenght: 30,
@@ -70,12 +72,11 @@ class App extends Component {
     }
 
     queryTimetable() {
-        TimetableService.getWithProfessionalId({ professionalId: this.state.userId }
-        ).then(res => {
+        ProfessionalService.get(this.state.userId).then(res => {
             if (res.data.success) {
-                const { id, monday, tuesday, wednesday, thursday, friday } = (res.data.data[0]);
+                this.setState({myUser: res.data.data[0]});
+                const {id, monday, tuesday, wednesday, thursday, friday } = (this.state.myUser.timetable);
                 this.state.tableId = id;
-
                 if (monday != null) {
                     this.state.mondayDDBB = monday;
                     $('#mondayRow').text(monday);
@@ -99,8 +100,7 @@ class App extends Component {
             } else {
                 console.error('Error quering timetable');
             }
-        })
-            .catch(err => {
+        }).catch(err => {
                 console.error('ERROR server' + err);
             });
     }
@@ -111,6 +111,7 @@ class App extends Component {
         } 
         if (this.state.reloadTable) {
             this.queryTimetable();
+            this.setState({reloadTable:false});
         }
         return (
             <div><Nav />
@@ -622,19 +623,37 @@ class App extends Component {
     }
 
     updateTimetable(data) {
-        TimetableService.update(data).then((res) => {
-            if (res.data.success == true) {
-                this.setState({ reloadTable: true })
-                Swal.fire({
-                    toast: true,
-                    title: "Horario actualizado",
-                    position: 'top-end',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000
+        if(this.state.tableId==null){
+            TimetableService.create(data).then((res)=> {
+                this.state.myUser.timetableId = res.data.id;
+                ProfessionalService.update(this.state.myUser).then(()=>{
+                    Swal.fire({
+                        toast: true,
+                        title: "Horario actualizado",
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                 });
-            }
-        });
+
+            })
+        }else{
+            TimetableService.update(data).then((res) => {
+                if (res.data.success == true) {
+                    this.setState({ reloadTable: true })
+                    Swal.fire({
+                        toast: true,
+                        title: "Horario actualizado",
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        }
+        
     }
 }
 

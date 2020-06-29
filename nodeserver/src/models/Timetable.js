@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('../database/database');
 
-//Other models 
-const Professional = require('./Professional');
-
 const tableName = 'timetables'
 
 const Timetable = database.define(tableName,{
@@ -12,15 +9,6 @@ const Timetable = database.define(tableName,{
         type: Sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true
-    },
-    //Foreign key
-    professionalId:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { 
-            model: Professional,
-            key: 'id'
-        }
     },
     monday:{
         type: Sequelize.STRING,
@@ -45,8 +33,5 @@ const Timetable = database.define(tableName,{
     timestamps : false
     
 });
-
-//para la FK
-Timetable.belongsTo(Professional);
 
 module.exports = Timetable;
