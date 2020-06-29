@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
-
+import { Redirect } from "react-router-dom";
 import ProfessionalService from '../services/professional.service';
 import DepartmentService from '../services/department.service';
 import TutorService from '../services/tutor.service';
@@ -10,12 +10,15 @@ import ImageService from '../services/image.service';
 import Swal from 'sweetalert2';
 import $ from 'jquery';
 
+import Nav from './nav';
+
 
 class profileComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            redirect: null,
             departments: [],
             roles: [],
             tutors: [],
@@ -32,12 +35,19 @@ class profileComponent extends React.Component {
     }
 
     componentDidMount() {
+        this.isUserRegistered();
         //Professional info
         this.queryProfessionals();
         //Dropdowns
         this.queryDepartments();
         this.queryRoles();
         this.queryTutors();
+    }   
+    
+    isUserRegistered() {
+        if (sessionStorage.getItem('isUserRegistered') == 'false') {
+            this.setState({ redirect: '/crear-perfil' });
+        }
     }
 
     queryProfessionals() {
@@ -125,8 +135,14 @@ class profileComponent extends React.Component {
             });
     }
 
+    
+
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        } 
         return (
+            <div><Nav/>
             <div class="container p-4">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <div class="row">
@@ -225,7 +241,7 @@ class profileComponent extends React.Component {
                     </div>
                 </div>
             </div>
-
+            </div>
         );
     }
 

@@ -6,17 +6,44 @@ import { GoogleLogout } from 'react-google-login';
 import authController from '../controllers/authController';
 import { Redirect } from "react-router-dom";
 
+import ProfessionalService from '../services/professional.service';
+
 class navComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      redirect: null
+      redirect: null,
+      email: sessionStorage.getItem("userEmail"),
     };
   }
 
+  componentDidMount() {
+    //Professional info
+    this.queryProfessional();
+}
+
+  async queryProfessional() {
+    if(this.state.email==null)return;
+
+    await ProfessionalService.getWithEmail({ email: this.state.email })
+        .then(res => {
+            if (res.data.success) {
+              const {email} = res.data.data[0];
+              if(email==this.state.email){
+                sessionStorage["isUserRegistered"]=true;
+              }
+              
+            }else{
+              sessionStorage["isUserRegistered"]=false;
+            }
+        })
+        .catch(err => {
+            console.error('ERROR server' + err);
+        });
+}
+
   render() {
-    console.log("REDIRECT " + JSON.stringify(this.state.redirect));
     if (this.state.redirect != null) {
       let aux = this.state.redirect;
       this.setState({ redirect: null });
@@ -37,7 +64,9 @@ class navComponent extends React.Component {
   }
 
   controlUserSignedIn() {
-    if (authController.isAuthenticated() == "true") {
+    console.log("Usuario iniciado con google "+authController.isAuthenticated());
+    console.log("Tiene correo asignado "+sessionStorage.getItem("isUserRegistered"));
+    if (authController.isAuthenticated() == "true" && sessionStorage.getItem("isUserRegistered")=="true") {
       return (
         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
           <ul class="navbar-nav navbar-collapse">

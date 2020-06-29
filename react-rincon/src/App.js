@@ -19,7 +19,6 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-            <Nav/>
             <Switch>
               <ProtectedRoute exact path="/crear-perfil" component={CreateProfile}></ProtectedRoute>
               <ProtectedRoute exact path="/editar-perfil" component={EditProfile}></ProtectedRoute>
@@ -33,6 +32,8 @@ class App extends React.Component {
       </BrowserRouter>
     );
   }
+
+  
 
 }
 

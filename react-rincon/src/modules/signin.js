@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import ReactDOM from 'react-dom';
 import { GoogleLogin } from 'react-google-login';
 import { Redirect } from "react-router-dom";
 import Swal from 'sweetalert2';
 import authController from '../controllers/authController';
+import Nav from './nav';
 
 class signinComponent extends React.Component {
 
@@ -27,6 +27,7 @@ class signinComponent extends React.Component {
             return <Redirect to={this.state.redirect} />
         }
         return (
+            <div><Nav/>
             <div class="container p-4">
                 <div class="row">
                     <div class="col-md-4 mx-auto">
@@ -55,7 +56,7 @@ class signinComponent extends React.Component {
                     </div>
                 </div>
             </div>
-
+            </div>
         );
     }
 

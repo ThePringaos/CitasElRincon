@@ -7,12 +7,15 @@ import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import Nav from './nav';
+
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             reloadTable: null,
+            redirect: null,
             userId: sessionStorage.getItem("userId"),
             tableId: null,
             periodLenght: 30,
@@ -56,7 +59,14 @@ class App extends Component {
     }
 
     componentDidMount() {
+        this.isUserRegistered();
         this.queryTimetable();
+    }
+
+    isUserRegistered() {
+        if (sessionStorage.getItem('isUserRegistered') == 'false') {
+            this.setState({ redirect: '/crear-perfil' });
+        }
     }
 
     queryTimetable() {
@@ -96,49 +106,68 @@ class App extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        } 
         if (this.state.reloadTable) {
             this.queryTimetable();
         }
         return (
-            <div className="container">
-                <div className="row my-5 mx-3" >
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Lunes</th>
-                                <th scope="col">Martes</th>
-                                <th scope="col">Miércoles</th>
-                                <th scope="col">Jueves</th>
-                                <th scope="col">Viernes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="mondayRow"></td>
-                                <td id="tuesdayRow"></td>
-                                <td id="wednesdayRow"></td>
-                                <td id="thursdayRow"></td>
-                                <td id="fridayRow"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div><Nav />
+                <div className="container">
+                    <div className="row my-5 mx-3" >
+                        <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Lunes</th>
+                                    <th scope="col">Martes</th>
+                                    <th scope="col">Miércoles</th>
+                                    <th scope="col">Jueves</th>
+                                    <th scope="col">Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="mondayRow"></td>
+                                    <td id="tuesdayRow"></td>
+                                    <td id="wednesdayRow"></td>
+                                    <td id="thursdayRow"></td>
+                                    <td id="fridayRow"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div className="row my-3">
-                    <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h3>Lunes</h3>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Desde </label>
-                                            <div className="w-10">
+                    <div className="row my-3">
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Lunes</h3>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Desde </label>
+                                                <div className="w-10">
+                                                    <DatePicker
+                                                        selected={this.state.monday.myDateFrom}
+                                                        onChange={time => this.handleChange(time, 'mondayFrom')}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={this.state.periodLenght}
+                                                        timeCaption="Time"
+                                                        disabledKeyboardNavigation
+                                                        timeFormat="HH:mm"
+                                                        dateFormat="h:mm aa"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Hasta </label>
                                                 <DatePicker
-                                                    selected={this.state.monday.myDateFrom}
-                                                    onChange={time => this.handleChange(time, 'mondayFrom')}
+                                                    selected={this.state.monday.myDateTo}
+                                                    onChange={time => this.handleChange(time, 'mondayTo')}
                                                     showTimeSelect
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
@@ -148,49 +177,49 @@ class App extends Component {
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Hasta </label>
-                                            <DatePicker
-                                                selected={this.state.monday.myDateTo}
-                                                onChange={time => this.handleChange(time, 'mondayTo')}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={this.state.periodLenght}
-                                                timeCaption="Time"
-                                                disabledKeyboardNavigation
-                                                timeFormat="HH:mm"
-                                                dateFormat="h:mm aa"
-                                            />
-                                        </div>
-                                        <div class="col-sm">
-                                            <button type="button" class="btn btn-primary m-1"
-                                                onClick={() => this.addPeriod('monday')}>Añadir</button>
-                                            <button type="button" class="btn btn-danger m-1"
-                                                onClick={() => this.emptyPeriod('monday')}>Vaciar</button>
+                                            <div class="col-sm">
+                                                <button type="button" class="btn btn-primary m-1"
+                                                    onClick={() => this.addPeriod('monday')}>Añadir</button>
+                                                <button type="button" class="btn btn-danger m-1"
+                                                    onClick={() => this.emptyPeriod('monday')}>Vaciar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row my-3">
-                    <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h3>Martes</h3>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Desde </label>
-                                            <div className="w-10">
+                    <div className="row my-3">
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Martes</h3>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Desde </label>
+                                                <div className="w-10">
+                                                    <DatePicker
+                                                        selected={this.state.tuesday.myDateFrom}
+                                                        onChange={time => this.handleChange(time, 'tuesdayFrom')}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={this.state.periodLenght}
+                                                        timeCaption="Time"
+                                                        disabledKeyboardNavigation
+                                                        timeFormat="HH:mm"
+                                                        dateFormat="h:mm aa"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Hasta </label>
                                                 <DatePicker
-                                                    selected={this.state.tuesday.myDateFrom}
-                                                    onChange={time => this.handleChange(time, 'tuesdayFrom')}
+                                                    selected={this.state.tuesday.myDateTo}
+                                                    onChange={time => this.handleChange(time, 'tuesdayTo')}
                                                     showTimeSelect
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
@@ -200,49 +229,49 @@ class App extends Component {
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Hasta </label>
-                                            <DatePicker
-                                                selected={this.state.tuesday.myDateTo}
-                                                onChange={time => this.handleChange(time, 'tuesdayTo')}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={this.state.periodLenght}
-                                                timeCaption="Time"
-                                                disabledKeyboardNavigation
-                                                timeFormat="HH:mm"
-                                                dateFormat="h:mm aa"
-                                            />
-                                        </div>
-                                        <div class="col-sm">
-                                            <button type="button" class="btn btn-primary m-1"
-                                                onClick={() => this.addPeriod('tuesday')}>Añadir</button>
-                                            <button type="button" class="btn btn-danger m-1"
-                                                onClick={() => this.emptyPeriod('tuesday')}>Vaciar</button>
+                                            <div class="col-sm">
+                                                <button type="button" class="btn btn-primary m-1"
+                                                    onClick={() => this.addPeriod('tuesday')}>Añadir</button>
+                                                <button type="button" class="btn btn-danger m-1"
+                                                    onClick={() => this.emptyPeriod('tuesday')}>Vaciar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row my-3">
-                    <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h3>Miércoles</h3>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Desde </label>
-                                            <div className="w-10">
+                    <div className="row my-3">
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Miércoles</h3>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Desde </label>
+                                                <div className="w-10">
+                                                    <DatePicker
+                                                        selected={this.state.wednesday.myDateFrom}
+                                                        onChange={time => this.handleChange(time, 'wednesdayFrom')}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={this.state.periodLenght}
+                                                        timeCaption="Time"
+                                                        disabledKeyboardNavigation
+                                                        timeFormat="HH:mm"
+                                                        dateFormat="h:mm aa"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Hasta </label>
                                                 <DatePicker
-                                                    selected={this.state.wednesday.myDateFrom}
-                                                    onChange={time => this.handleChange(time, 'wednesdayFrom')}
+                                                    selected={this.state.wednesday.myDateTo}
+                                                    onChange={time => this.handleChange(time, 'wednesdayTo')}
                                                     showTimeSelect
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
@@ -252,49 +281,49 @@ class App extends Component {
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Hasta </label>
-                                            <DatePicker
-                                                selected={this.state.wednesday.myDateTo}
-                                                onChange={time => this.handleChange(time, 'wednesdayTo')}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={this.state.periodLenght}
-                                                timeCaption="Time"
-                                                disabledKeyboardNavigation
-                                                timeFormat="HH:mm"
-                                                dateFormat="h:mm aa"
-                                            />
-                                        </div>
-                                        <div class="col-sm">
-                                            <button type="button" class="btn btn-primary m-1"
-                                                onClick={() => this.addPeriod('wednesday')}>Añadir</button>
-                                            <button type="button" class="btn btn-danger m-1"
-                                                onClick={() => this.emptyPeriod('wednesday')}>Vaciar</button>
+                                            <div class="col-sm">
+                                                <button type="button" class="btn btn-primary m-1"
+                                                    onClick={() => this.addPeriod('wednesday')}>Añadir</button>
+                                                <button type="button" class="btn btn-danger m-1"
+                                                    onClick={() => this.emptyPeriod('wednesday')}>Vaciar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row my-3">
-                    <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h3>Jueves</h3>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Desde </label>
-                                            <div className="w-10">
+                    <div className="row my-3">
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Jueves</h3>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Desde </label>
+                                                <div className="w-10">
+                                                    <DatePicker
+                                                        selected={this.state.thursday.myDateFrom}
+                                                        onChange={time => this.handleChange(time, 'thursdayFrom')}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={this.state.periodLenght}
+                                                        timeCaption="Time"
+                                                        timeFormat="HH:mm"
+                                                        disabledKeyboardNavigation
+                                                        dateFormat="h:mm aa"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Hasta </label>
                                                 <DatePicker
-                                                    selected={this.state.thursday.myDateFrom}
-                                                    onChange={time => this.handleChange(time, 'thursdayFrom')}
+                                                    selected={this.state.thursday.myDateTo}
+                                                    onChange={time => this.handleChange(time, 'thursdayTo')}
                                                     showTimeSelect
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
@@ -304,49 +333,49 @@ class App extends Component {
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Hasta </label>
-                                            <DatePicker
-                                                selected={this.state.thursday.myDateTo}
-                                                onChange={time => this.handleChange(time, 'thursdayTo')}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={this.state.periodLenght}
-                                                timeCaption="Time"
-                                                timeFormat="HH:mm"
-                                                disabledKeyboardNavigation
-                                                dateFormat="h:mm aa"
-                                            />
-                                        </div>
-                                        <div class="col-sm">
-                                            <button type="button" class="btn btn-primary m-1"
-                                                onClick={() => this.addPeriod('thursday')}>Añadir</button>
-                                            <button type="button" class="btn btn-danger m-1"
-                                                onClick={() => this.emptyPeriod('thursday')}>Vaciar</button>
+                                            <div class="col-sm">
+                                                <button type="button" class="btn btn-primary m-1"
+                                                    onClick={() => this.addPeriod('thursday')}>Añadir</button>
+                                                <button type="button" class="btn btn-danger m-1"
+                                                    onClick={() => this.emptyPeriod('thursday')}>Vaciar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row my-3">
-                    <div className="col-lg-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <h3>Viernes</h3>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Desde </label>
-                                            <div className="w-10">
+                    <div className="row my-3">
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Viernes</h3>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Desde </label>
+                                                <div className="w-10">
+                                                    <DatePicker
+                                                        selected={this.state.friday.myDateFrom}
+                                                        onChange={time => this.handleChange(time, 'fridayFrom')}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={this.state.periodLenght}
+                                                        timeCaption="Time"
+                                                        timeFormat="HH:mm"
+                                                        disabledKeyboardNavigation
+                                                        dateFormat="h:mm aa"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label className="float-left">Hasta </label>
                                                 <DatePicker
-                                                    selected={this.state.friday.myDateFrom}
-                                                    onChange={time => this.handleChange(time, 'fridayFrom')}
+                                                    selected={this.state.friday.myDateTo}
+                                                    onChange={time => this.handleChange(time, 'fridayTo')}
                                                     showTimeSelect
                                                     showTimeSelectOnly
                                                     timeIntervals={this.state.periodLenght}
@@ -356,26 +385,12 @@ class App extends Component {
                                                     dateFormat="h:mm aa"
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="col-sm">
-                                            <label className="float-left">Hasta </label>
-                                            <DatePicker
-                                                selected={this.state.friday.myDateTo}
-                                                onChange={time => this.handleChange(time, 'fridayTo')}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={this.state.periodLenght}
-                                                timeCaption="Time"
-                                                timeFormat="HH:mm"
-                                                disabledKeyboardNavigation
-                                                dateFormat="h:mm aa"
-                                            />
-                                        </div>
-                                        <div class="col-sm">
-                                            <button type="button" class="btn btn-primary m-1"
-                                                onClick={() => this.addPeriod('friday')}>Añadir</button>
-                                            <button type="button" class="btn btn-danger m-1"
-                                                onClick={() => this.emptyPeriod('friday')}>Vaciar</button>
+                                            <div class="col-sm">
+                                                <button type="button" class="btn btn-primary m-1"
+                                                    onClick={() => this.addPeriod('friday')}>Añadir</button>
+                                                <button type="button" class="btn btn-danger m-1"
+                                                    onClick={() => this.emptyPeriod('friday')}>Vaciar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -388,8 +403,8 @@ class App extends Component {
     }
 
     handleChange = async (time, day) => {
-        if(time==null)return;
-        
+        if (time == null) return;
+
         const filteredTime = await String(time).match(/\d{2}:\d{2}/g)[0];
         switch (day) {
             case "mondayFrom":
@@ -467,7 +482,7 @@ class App extends Component {
                     console.error("error creando timetable")
                 );
         }
-        
+
         switch (day) {
             case 'monday':
                 if (this.state.monday.from && this.state.monday.to) {

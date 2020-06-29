@@ -10,6 +10,7 @@ import ProfessionalService from '../services/professional.service'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Nav from './nav';
 
 class homeComponent extends React.Component {
 
@@ -34,8 +35,15 @@ class homeComponent extends React.Component {
     }
 
     componentDidMount() {
+        this.isUserRegistered();
         this.loadUserId();
         this.showTodayDates();
+    }
+
+    isUserRegistered() {
+        if (sessionStorage.getItem('isUserRegistered') == 'false') {
+            this.setState({ redirect: '/crear-perfil' });
+        }
     }
 
     async loadUserId() {
@@ -123,6 +131,7 @@ class homeComponent extends React.Component {
             return <Redirect to={this.state.redirect} />
         }
         return (
+            <div><Nav/>
             <div className="container p-4">
                 <div className="row float-right">
                     <div className="col-sm">
@@ -181,6 +190,7 @@ class homeComponent extends React.Component {
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         );
     }
