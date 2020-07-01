@@ -13,7 +13,7 @@ import RoleService from '../services/role.service';
 import Swal from 'sweetalert2';
 import $ from 'jquery';
 
-import Nav from './nav';
+import Nav from '../components/nav';
 
 class profileComponent extends React.Component {
 

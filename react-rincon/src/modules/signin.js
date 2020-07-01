@@ -5,7 +5,8 @@ import { GoogleLogin } from 'react-google-login';
 import { Redirect } from "react-router-dom";
 import Swal from 'sweetalert2';
 import authController from '../controllers/authController';
-import Nav from './nav';
+import Nav from '../components/nav';
+import ProfessionalService from '../services/professional.service';
 
 class signinComponent extends React.Component {
 
@@ -40,14 +41,14 @@ class signinComponent extends React.Component {
                                 <GoogleLogin
                                     clientId="820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com"
                                     buttonText="Iniciar sesion"
-                                    onSuccess={ (res) => {
+                                    onSuccess={ async (res) => {
                                         this.responseGoogle(res);
+                                        await this.loadUserId(res);
                                         authController.login(()=>{
                                             this.setState({redirect: "/crear-perfil"})
                                         }
                                         );
                                     }}
-                                
                                     onFailure={ () => console.error('error crack')}
                                     cookiePolicy={'single_host_origin'}
                                 />}
@@ -58,6 +59,25 @@ class signinComponent extends React.Component {
             </div>
             </div>
         );
+    }
+
+    async loadUserId(response) {
+        await ProfessionalService.getWithEmail({email: response.profileObj.email})
+            .then(res => {
+                if (res.data.success) {
+                    const { id } = res.data.data[0];
+                    sessionStorage["userId"] = id;
+                } else {
+                    console.error('Error loading Id');
+                }
+            })
+            .catch(err => {
+                console.error('ERROR server' + err);
+            });
+
+        if(sessionStorage.getItem("userId")==null){
+            this.setState({redirect : "/crear-perfil"});
+        }
     }
 
     showLogInError(){

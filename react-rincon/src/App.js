@@ -4,8 +4,6 @@ import './App.css';
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-
-import Nav from './modules/nav';
 import CreateProfile from './modules/createProfile';
 import EditProfile from './modules/editProfile';
 import Signin from './modules/signin';

@@ -10,7 +10,7 @@ import ProfessionalService from '../services/professional.service'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Nav from './nav';
+import Nav from '../components/nav';
 
 class homeComponent extends React.Component {
 
@@ -36,32 +36,12 @@ class homeComponent extends React.Component {
 
     componentDidMount() {
         this.isUserRegistered();
-        this.loadUserId();
         this.showTodayDates();
     }
 
     isUserRegistered() {
         if (sessionStorage.getItem('isUserRegistered') == 'false') {
             this.setState({ redirect: '/crear-perfil' });
-        }
-    }
-
-    async loadUserId() {
-        await ProfessionalService.getWithEmail({ email: this.state.email })
-            .then(res => {
-                if (res.data.success) {
-                    const { id } = res.data.data[0];
-                    sessionStorage["userId"] = id;
-                } else {
-                    console.error('Error loading Id');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-
-        if(sessionStorage.getItem("userId")==null){
-            this.setState({redirect : "/crear-perfil"});
         }
     }
 

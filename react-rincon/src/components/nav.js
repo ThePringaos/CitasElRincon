@@ -1,7 +1,7 @@
 import React from 'react';
 
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { GoogleLogout } from 'react-google-login';
 import authController from '../controllers/authController';
 import { Redirect } from "react-router-dom";
@@ -64,8 +64,6 @@ class navComponent extends React.Component {
   }
 
   controlUserSignedIn() {
-    console.log("Usuario iniciado con google "+authController.isAuthenticated());
-    console.log("Tiene correo asignado "+sessionStorage.getItem("isUserRegistered"));
     if (authController.isAuthenticated() == "true" && sessionStorage.getItem("isUserRegistered")=="true") {
       return (
         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
