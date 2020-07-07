@@ -3,21 +3,19 @@ const router = express.Router();
 
 const departmentController = require('../controllers/departmentController');
 
-
-//GET ALL
+// GET ALL
 router.get('/department/list', departmentController.getAll);
 
-//GET WITH ID
-router.get('/department/:id',departmentController.getId);
+// GET WITH ID
+router.get('/department/:id', departmentController.getId);
 
-//CREATE
+// CREATE
 router.post('/department', departmentController.add);
 
-//DELETE
+// DELETE
 router.delete('/department/:id', departmentController.delete);
 
-//UPDATE
-router.put('/department',departmentController.edit);
+// UPDATE
+router.put('/department', departmentController.edit);
 
-module.exports=router;
-
+module.exports = router;

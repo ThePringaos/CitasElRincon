@@ -3,23 +3,22 @@ const router = express.Router();
 
 const professionalController = require('../controllers/professionalController');
 
-
-//GET ALL
+// GET ALL
 router.get('/professional/list', professionalController.getAll);
 
-//GET WITH ID
-router.get('/professional/:id',professionalController.getId);
+// GET WITH ID
+router.get('/professional/:id', professionalController.getId);
 
-//GET WITH EMAIL
-router.post('/professional-email',professionalController.getWithEmail);
+// GET WITH EMAIL
+router.post('/professional-email', professionalController.getWithEmail);
 
-//CREATE
+// CREATE
 router.post('/professional', professionalController.add);
 
-//DELETE
+// DELETE
 router.delete('/professional/:id', professionalController.delete);
 
-//UPDATE 
-router.put('/professional',professionalController.edit);
+// UPDATE
+router.put('/professional', professionalController.edit);
 
-module.exports=router;
+module.exports = router;
