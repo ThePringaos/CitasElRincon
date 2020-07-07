@@ -78,7 +78,7 @@ tutorController.delete = (req, res) => {
   Tutor.destroy({ where: { id } })
     .then(each => {
       const data = JSON.parse(JSON.stringify(each));
-      if (data == 1) {
+      if (data === 1) {
         res.json({ success: true, message: 'Succesfully deleted' });
       } else {
         res.json({ status: 'Error' });
