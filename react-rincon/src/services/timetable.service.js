@@ -1,24 +1,23 @@
-import http from "../http-common";
+import http from '../http-common';
 
 class TimetableDataService {
-
-  getAll() {
-    return http.get("/timetable/list");
+  getAll () {
+    return http.get('/timetable/list');
   }
 
-  get(id) {
+  get (id) {
     return http.get(`/timetable/${id}`);
   }
 
-  create(data) {
-    return http.post("/timetable/", data);
+  create (data) {
+    return http.post('/timetable/', data);
   }
 
-  update(data) {
-    return http.put(`/timetable/`, data);
+  update (data) {
+    return http.put('/timetable/', data);
   }
 
-  delete(id) {
+  delete (id) {
     return http.delete(`/timetable/${id}`);
   }
 }

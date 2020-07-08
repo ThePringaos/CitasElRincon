@@ -1,33 +1,33 @@
-import http from "../http-common";
+import http from '../http-common';
 
 class ProfessionalDataService {
-  getAll() {
-    return http.get("/professional/list");
+  getAll () {
+    return http.get('/professional/list');
   }
 
-  get(id) {
+  get (id) {
     return http.get(`/professional/${id}`);
   }
 
-  getWithEmail(correo){
+  getWithEmail (correo) {
     return http.post('/professional-email', correo);
   }
 
-  create(data) {
+  create (data) {
     console.log('DATA');
     console.log(data);
-    return http.post("/professional/", data, {
+    return http.post('/professional/', data, {
       onUploadProgress: progressEvent => {
-        console.log("Subida de foto: "+Math.round(progressEvent.loaded*100/progressEvent.total)+"%");
+        console.log('Subida de foto: ' + Math.round(progressEvent.loaded * 100 / progressEvent.total) + '%');
       }
     });
   }
 
-  update(data) {
-    return http.put(`/professional/`, data);
+  update (data) {
+    return http.put('/professional/', data);
   }
 
-  delete(id) {
+  delete (id) {
     return http.delete(`/professional/${id}`);
   }
 }

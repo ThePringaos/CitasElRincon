@@ -1,24 +1,23 @@
-import http from "../http-common";
+import http from '../http-common';
 
 class ImageDataService {
-
-  getAll() {
-    return http.get("/image/list");
+  getAll () {
+    return http.get('/image/list');
   }
 
-  get(id) {
+  get (id) {
     return http.get(`/image/${id}`);
   }
 
-  create(data) {
-    return http.post("/image/", data);
+  create (data) {
+    return http.post('/image/', data);
   }
 
-  update(data) {
-    return http.put(`/image/`, data);
+  update (data) {
+    return http.put('/image/', data);
   }
 
-  delete(id) {
+  delete (id) {
     return http.delete(`/image/${id}`);
   }
 }
