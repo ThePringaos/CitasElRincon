@@ -74,7 +74,6 @@ professionalController.getWithEmail = (req, res) => {
 
 professionalController.add = async (req, res) => {
     const { email,name,departmentId,roleId,comment,image,tutorId} = req.body;
-
     let imageId = null;
     if(image!=null){
         await Image.create(image).then(each => {

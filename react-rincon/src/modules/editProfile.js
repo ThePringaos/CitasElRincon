@@ -3,13 +3,9 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
 import { Redirect } from "react-router-dom";
 import ProfessionalService from '../services/professional.service';
-import DepartmentService from '../services/department.service';
-import TutorService from '../services/tutor.service';
-import RoleService from '../services/role.service';
-import ImageService from '../services/image.service';
+import ProfileController from '../controllers/profileController';
 import Swal from 'sweetalert2';
 import $ from 'jquery';
-
 import Nav from '../components/nav';
 
 
@@ -34,14 +30,18 @@ class profileComponent extends React.Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.isUserRegistered();
-        //Professional info
-        this.queryProfessionals();
         //Dropdowns
-        this.queryDepartments();
-        this.queryRoles();
-        this.queryTutors();
+        ProfileController.loadDepartments().then(each => this.setState({departments: each}));
+        ProfileController.loadRoles().then(each => this.setState({roles: each}));
+        ProfileController.loadTutors().then(each => this.setState({tutors: each}));
+        //Professional info
+        await ProfileController.queryProfessionals().then((res)=> {
+            this.setState(res);
+            this.setearImagenEnHTML();
+        });
+        
     }   
     
     isUserRegistered() {
@@ -49,93 +49,6 @@ class profileComponent extends React.Component {
             this.setState({ redirect: '/crear-perfil' });
         }
     }
-
-    queryProfessionals() {
-        ProfessionalService.getWithEmail({ email: this.state.email })
-            .then(res => {
-                if (res.data.success) {
-                    const { id, name, departmentId, roleId, tutorId, comment, imageId } = res.data.data[0];
-
-                    this.setState({
-                        id: id,
-                        name: name,
-                        departmentId: departmentId,
-                        roleId: roleId,
-                        tutorId: tutorId,
-                        comment: comment,
-                        imageId: imageId
-                    });
-
-                    if (imageId != null) {
-                        ImageService.get(imageId).then(res => {
-                            this.setState({ image: res.data.data[0] });
-                            this.cargarImagenDeBBDD(this.state.image);
-
-                        }).catch(err => {
-                            console.error('ERROR server ' + err);
-                        });
-                    } else {
-                        console.error('No hay imagen asociada a esta cuenta.');
-
-                    }
-                } else {
-                    console.error('Error quering professional EDIT');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryDepartments() {
-        DepartmentService.getAll()
-            .then(res => {
-
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ departments: data });
-                } else {
-                    console.error('Error quering departments EDIT');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryRoles() {
-        RoleService.getAll()
-            .then(res => {
-
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ roles: data });
-                } else {
-                    console.error('Error quering roles EDIT');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryTutors() {
-        TutorService.getAll()
-            .then(res => {
-
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ tutors: data });
-                } else {
-                    console.error('Error quering tutors EDIT');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    
 
     render() {
         if (this.state.redirect) {
@@ -164,7 +77,7 @@ class profileComponent extends React.Component {
                                                 value={this.state.departmentId}
                                                 onChange={(value) => this.setState({ departmentId: value.target.value })} >
                                                 <option selected disabled>Departamento</option>
-                                                {this.loadDepartments()}
+                                                {this.state.departments}
 
                                             </select>
                                         </div>
@@ -176,7 +89,7 @@ class profileComponent extends React.Component {
                                                 value={this.state.roleId}
                                                 onChange={(value) => this.setState({ roleId: value.target.value })} >
                                                 <option selected disabled >Rol</option>
-                                                {this.loadRoles()}
+                                                {this.state.roles}
                                             </select>
                                         </div>
                                     </div>
@@ -187,7 +100,7 @@ class profileComponent extends React.Component {
                                                 value={this.state.tutorId}
                                                 onChange={(value) => this.setState({ tutorId: value.target.value })} >
                                                 <option selected disabled >Tutoría</option>
-                                                {this.loadTutors()}
+                                                {this.state.tutors}
                                             </select>
                                         </div>
                                     </div>
@@ -245,41 +158,6 @@ class profileComponent extends React.Component {
         );
     }
 
-    loadDepartments() {
-        return this.state.departments.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
-    }
-
-    loadRoles() {
-        return this.state.roles.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
-    }
-
-    loadTutors() {
-        return this.state.tutors.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
-    }
 
     readURL(input) {
         if (input.files && input.files[0]) {
@@ -313,22 +191,10 @@ class profileComponent extends React.Component {
         }
     }
 
-    cargarImagenDeBBDD(imagenDeBBDD) {
-        if (imagenDeBBDD.type.includes("image")) {
-            //Pasar buffer a string
-            let bufferOriginal = Buffer.from(imagenDeBBDD.data);
-            //cambiar el src de imagen del render
-            $('#blah').attr('src', bufferOriginal.toString('utf8'));
-            //actualizar el state
-            this.setState({ image: bufferOriginal.toString('utf8')});
-        } else {
-            Swal.fire({
-                position: 'top',
-                icon: 'error',
-                title: 'Sólo archivos de tipo imagen!',
-                showConfirmButton: false,
-                timer: 2000
-            })
+    setearImagenEnHTML() {
+        if (this.state.image) {
+            //Setear imagen en html
+            $('#blah').attr('src', this.state.image.data);
         }
     }
 

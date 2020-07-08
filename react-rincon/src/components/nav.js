@@ -100,7 +100,6 @@ class navComponent extends React.Component {
         </div>
       );
     } else {
-      console.log("AUTH IS FALSE");
     }
   }
 }

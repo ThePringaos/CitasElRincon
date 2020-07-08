@@ -14,6 +14,8 @@ class ProfessionalDataService {
   }
 
   create(data) {
+    console.log('DATA');
+    console.log(data);
     return http.post("/professional/", data, {
       onUploadProgress: progressEvent => {
         console.log("Subida de foto: "+Math.round(progressEvent.loaded*100/progressEvent.total)+"%");
