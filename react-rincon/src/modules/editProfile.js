@@ -23,7 +23,7 @@ class profileComponent extends React.Component {
       email: sessionStorage.getItem('userEmail'),
       tutorId: null,
       comment: '',
-      image: null,
+      image: {},
       imageId: null
     };
   }
@@ -35,11 +35,17 @@ class profileComponent extends React.Component {
     ProfileController.loadRoles().then(each => this.setState({ roles: each }));
     ProfileController.loadTutors().then(each => this.setState({ tutors: each }));
     // Professional info
-    await ProfileController.queryProfessionals().then((res) => {
-      this.setState(res);
-      this.setearImagenEnHTML();
-    });
+    await ProfileController.queryProfessionals().then((dbState) => this.loadState(dbState));
   }
+
+  loadState(dbState){
+    if(dbState){
+      this.setState(dbState);
+      if(dbState.image) {
+        $('#blah').attr('src', dbState.image.data);
+      }
+    }
+  } 
 
   isUserRegistered () {
     if (sessionStorage.getItem('isUserRegistered') == 'false') {
@@ -167,82 +173,15 @@ class profileComponent extends React.Component {
   }
 
   readURL (input) {
-    if (input.files && input.files[0]) {
-      const myValue = input.files[0];
-
-      if (myValue.type.includes('image')) {
-        const reader = new FileReader();
-        const miImagen = {
-          name: myValue.name,
-          type: myValue.type
-        };
-
-        reader.readAsDataURL(myValue);
-        reader.onload = async (event) => {
-          miImagen.data = await event.target.result;
-          this.state.image = miImagen;
-          $('#blah').attr('src', this.state.image.data);
-        };
-        reader.onerror = (err) => {
-          console.error('Error en lectura de imagen --> ' + err);
-        };
-      } else {
-        Swal.fire({
-          position: 'top',
-          icon: 'error',
-          title: 'Sólo archivos de tipo imagen!',
-          showConfirmButton: false,
-          timer: 2000
-        });
+    ProfileController.readURL(input).then((res)=> {
+      if(res){
+        this.state.image = res;
+        $('#blah').attr('src', res.data);
       }
-    }
-  }
-
-  setearImagenEnHTML () {
-    if (this.state.image) {
-      // Setear imagen en html
-      $('#blah').attr('src', this.state.image.data);
-    }
-  }
-
-  validateFields () {
-    let emptyFields = '';
-    let count = 0;
-    const nombre = this.state.name;
-
-    if (nombre.replace(/\s/g, '').length == 0) {
-      emptyFields += ' Nombre ';
-      count++;
-    }
-    if (this.state.departmentId == null) {
-      emptyFields += ' Departamento ';
-      count++;
-    }
-    if (this.state.roleId == null) {
-      emptyFields += ' Rol ';
-      count++;
-    }
-
-    // If there are errors
-    if (count > 0) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: (count == 1 ? 'Falta el campo' : 'Faltan los campos: ') + emptyFields,
-        showConfirmButton: false,
-        timer: 2000
-      });
-      return false;
-    } else {
-      return true;
-    }
+    });
   }
 
   updateProfessional () {
-    if (this.validateFields() == false) {
-      return;
-    }
-
     // parametros de datos post
     const datapost = {
       id: this.state.id,
@@ -256,22 +195,7 @@ class profileComponent extends React.Component {
       imageId: this.state.imageId
     };
 
-    ProfessionalService.update(datapost)
-      .then(res => {
-        if (res.data.success) {
-          Swal.fire({
-            position: 'top',
-            icon: 'success',
-            title: 'Profesional actualizado correctamente!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-        } else {
-          console.error('Error');
-        }
-      }).catch(error => {
-        console.error('Error 34 ' + error);
-      });
+    ProfileController.updateProfessional(datapost);
   }
 }
 

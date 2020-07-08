@@ -1,2 +1,5 @@
 nodeserver/node_modules
+nodeserver/src/keys
+nodeserver/index.js
 react-rincon/node_modules
+

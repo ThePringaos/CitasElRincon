@@ -22,7 +22,7 @@ class profileComponent extends React.Component {
       email: sessionStorage.getItem('userEmail'),
       tutorId: null,
       comment: '',
-      image: null
+      image: {}
     };
   }
 
@@ -160,11 +160,13 @@ class profileComponent extends React.Component {
     }
   }
 
-  async readURL (input) {
-    const image = await ProfileController.readURL(input);
-    if (image) {
-      $('#blah').attr('src', image.data);
-    }
+  readURL (input) {
+    ProfileController.readURL(input).then((res)=> {
+      if(res){
+        this.state.image = res;
+        $('#blah').attr('src', res.data);
+      }
+    });
   }
 
   async addProfessional () {

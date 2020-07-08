@@ -10,18 +10,18 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 
 class profileController {
-  constructor () {
+  constructor() {
     this.state = {
       email: sessionStorage.getItem('userEmail'),
       response: {},
-      departments: {},
-      roles: {},
-      tutors: {},
+      departments: [],
+      roles: [],
+      tutors: [],
       correctlyCreated: 'false'
     };
   }
 
-  async loadUserId () {
+  async loadUserId() {
     await ProfessionalService.getWithEmail({ email: this.state.email })
       .then(res => {
         if (res.data.success) {
@@ -36,7 +36,7 @@ class profileController {
     return this.state.response;
   }
 
-  async queryProfessionals () {
+  async queryProfessionals() {
     let myState = {};
     await ProfessionalService.getWithEmail({ email: this.state.email })
       .then(async res => {
@@ -72,7 +72,7 @@ class profileController {
     return myState;
   }
 
-  cargarImagenDeBBDD (imagenDeBBDD) {
+  cargarImagenDeBBDD(imagenDeBBDD) {
     let bufferOriginal = null;
     if (imagenDeBBDD.type.includes('image')) {
       // Pasar buffer a string
@@ -91,7 +91,7 @@ class profileController {
     return imagenDeBBDD;
   }
 
-  async queryDepartments () {
+  async queryDepartments() {
     await DepartmentService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -106,7 +106,7 @@ class profileController {
       });
   }
 
-  async queryRoles () {
+  async queryRoles() {
     await RoleService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -121,7 +121,7 @@ class profileController {
       });
   }
 
-  async queryTutors () {
+  async queryTutors() {
     await TutorService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -137,7 +137,7 @@ class profileController {
     return this.state.tutors;
   }
 
-  async loadDepartments () {
+  async loadDepartments() {
     await this.queryDepartments();
     return this.state.departments.map(data => {
       if (data) {
@@ -150,7 +150,7 @@ class profileController {
     });
   }
 
-  async loadRoles () {
+  async loadRoles() {
     await this.queryRoles();
     return this.state.roles.map(data => {
       if (data) {
@@ -163,7 +163,7 @@ class profileController {
     });
   }
 
-  async loadTutors () {
+  async loadTutors() {
     await this.queryTutors();
     return this.state.tutors.map(data => {
       if (data) {
@@ -176,7 +176,7 @@ class profileController {
     });
   }
 
-  validateFields (nombre, departamentoId, roleId) {
+  validateFields(nombre, departamentoId, roleId) {
     let emptyFields = '';
     let count = 0;
 
@@ -208,7 +208,7 @@ class profileController {
     }
   }
 
-  async addProfessional (datapost) {
+  async addProfessional(datapost) {
     const { name, departmentId, roleId } = datapost;
     if (this.validateFields(name, departmentId, roleId) == false) {
       return;
@@ -235,37 +235,60 @@ class profileController {
     return this.state.correctlyCreated;
   }
 
-  async readURL (input) {
-    const miImagen = {};
+  updateProfessional (datapost) {
+    this.validateFields(datapost.name,datapost.departmentId,datapost.roleId);
 
-    if (input.files && input.files[0]) {
-      const myValue = input.files[0];
+    ProfessionalService.update(datapost)
+      .then(res => {
+        if (res.data.success) {
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Profesional actualizado correctamente!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else {
+          console.error('Error');
+        }
+      }).catch(error => {
+        console.error('Error 34 ' + error);
+      });
+  }
 
-      if (myValue.type.includes('image')) {
-        const reader = new FileReader();
-        reader.readAsDataURL(myValue);
+  async readURL(input) {
+    return new Promise(function (resolve, reject) {
+      const miImagen = {};
+      if (input.files && input.files[0]) {
+        const myValue = input.files[0];
 
-        reader.onload = (event) => {
-          console.log('CARGO DATOS');
-          miImagen.data = event.target.result;
-          miImagen.name = myValue.name;
-          miImagen.type = myValue.type;
-        };
-        reader.onerror = (err) => {
-          console.error('Error en lectura de imagen --> ' + err);
-        };
-      } else {
-        Swal.fire({
-          position: 'top',
-          icon: 'error',
-          title: 'Sólo archivos de tipo imagen!',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        if (myValue.type.includes('image')) {
+          const reader = new FileReader();
+          reader.readAsDataURL(myValue);
+
+          reader.onload = (event) => {
+            miImagen.data = event.target.result;
+            miImagen.name = myValue.name;
+            miImagen.type = myValue.type;
+            resolve(miImagen);
+          };
+          reader.onerror = (err) => {
+            console.error('Error en lectura de imagen --> ' + err);
+            reject(null);
+          };
+        } else {
+          Swal.fire({
+            position: 'top',
+            icon: 'error',
+            title: 'Sólo archivos de tipo imagen!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          console.error('Error en lectura de imagen');
+          reject(null);
+        }
       }
-      console.log('DEVUELVO DATOS');
-      return miImagen;
-    }
+    });
   }
 }
 export default new profileController();
