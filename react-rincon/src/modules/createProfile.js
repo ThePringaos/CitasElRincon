@@ -1,18 +1,10 @@
 import React from 'react';
-
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
-
 import { Redirect } from "react-router-dom";
-
-import ProfessionalService from '../services/professional.service';
-import DepartmentService from '../services/department.service';
-import TutorService from '../services/tutor.service';
-import RoleService from '../services/role.service';
-
+import ProfileController from '../controllers/profileController';
 import Swal from 'sweetalert2';
-import $ from 'jquery';
-
+import $, { data } from 'jquery';
 import Nav from '../components/nav';
 
 class profileComponent extends React.Component {
@@ -35,70 +27,20 @@ class profileComponent extends React.Component {
         };
     }
 
-    async componentDidMount() {
-        this.loadUserId();
-        this.queryDepartments();
-        this.queryRoles();
-        this.queryTutors();
+    componentDidMount() {
+        this.allowUserCreation();
+        ProfileController.loadDepartments().then(each => this.setState({departments: each}));
+        ProfileController.loadRoles().then(each => this.setState({roles: each}));
+        ProfileController.loadTutors().then(each => this.setState({tutors: each}));
     }
 
-    async loadUserId() {
-        await ProfessionalService.getWithEmail({ email: this.state.email })
-            .then(res => {
-                if (res.data.success) {
-                    this.setState({ redirect: "/" });
-                } else {
-                    this.setState({ allowCreation: true });
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryDepartments() {
-        DepartmentService.getAll()
-            .then(res => {
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ departments: data });
-                } else {
-                    console.error('Error web service');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryRoles() {
-        RoleService.getAll()
-            .then(res => {
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ roles: data });
-                } else {
-                    console.error('Error web service');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
-    }
-
-    queryTutors() {
-        TutorService.getAll()
-            .then(res => {
-                if (res.data.success) {
-                    const data = res.data.data;
-                    this.setState({ tutors: data });
-                } else {
-                    console.error('Error web service');
-                }
-            })
-            .catch(err => {
-                console.error('ERROR server' + err);
-            });
+    async allowUserCreation(){
+        const {redirect,allowCreation}= await ProfileController.loadUserId();
+        if(redirect){
+            this.setState({redirect});
+        } else if(allowCreation){
+            this.setState({allowCreation});
+        }
     }
 
     render() {
@@ -128,8 +70,7 @@ class profileComponent extends React.Component {
                                                     <select class="form-control"
                                                         onChange={(value) => this.setState({ departmentId: value.target.value })} >
                                                         <option selected disabled>Departamento</option>
-                                                        {this.loadDepartments()}
-
+                                                        {this.state.departments}
                                                     </select>
                                                 </div>
                                             </div>
@@ -139,7 +80,7 @@ class profileComponent extends React.Component {
                                                     <select class="form-control"
                                                         onChange={(value) => this.setState({ roleId: value.target.value })} >
                                                         <option selected disabled >Rol</option>
-                                                        {this.loadRoles()}
+                                                        {this.state.roles}
                                                     </select>
                                                 </div>
                                             </div>
@@ -149,7 +90,7 @@ class profileComponent extends React.Component {
                                                     <select class="form-control"
                                                         onChange={(value) => this.setState({ tutorId: value.target.value })} >
                                                         <option selected disabled >Tutoría</option>
-                                                        {this.loadTutors()}
+                                                        {this.state.tutors}
                                                     </select>
                                                 </div>
                                             </div>
@@ -188,7 +129,7 @@ class profileComponent extends React.Component {
                                                                 type="file"
                                                                 id="imgInput"
                                                                 className="custom-file-input btn btn-primary"
-                                                                onChange={(value) => { this.readURL(value.target) }}
+                                                                onChange={(value) => {this.readURL(value.target) }}
                                                             />
                                                             <label class="custom-file-label" for="customFile">Perfil</label>
                                                         </div>
@@ -209,110 +150,15 @@ class profileComponent extends React.Component {
         }
     }
 
-    loadDepartments() {
-        return this.state.departments.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
+    async readURL(input){
+        const image = await ProfileController.readURL(input);
+        if(image){
+            $('#blah').attr('src', image.data);
+        }
+        
     }
 
-    loadRoles() {
-        return this.state.roles.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
-    }
-
-    loadTutors() {
-        return this.state.tutors.map(data => {
-            if (data) {
-                return (
-                    <option value={data.id}>{data.name}</option>
-                );
-            } else {
-                return <div></div>;
-            }
-        });
-    }
-
-    readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            const myValue = input.files[0];
-
-            if (myValue.type.includes("image")) {
-                reader.onload = (event) => $('#blah').attr('src', event.target.result);
-                reader.readAsDataURL(myValue); // convert to base64 string
-
-                this.state.image = {
-                    name: myValue.name,
-                    type: myValue.type,
-                    data: myValue
-                }
-            } else {
-                Swal.fire({
-                    position: 'top',
-                    icon: 'error',
-                    title: 'Sólo archivos de tipo imagen!',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-            }
-
-
-        }
-    }
-
-    validateFields() {
-        let emptyFields = "";
-        let count = 0;
-        const nombre = this.state.name;
-
-        if (nombre.replace(/\s/g, "").length == 0) {
-            emptyFields += " Nombre ";
-            count++;
-        }
-        if (this.state.departmentId == null) {
-            emptyFields += " Departamento ";
-            count++;
-        }
-        if (this.state.roleId == null) {
-            emptyFields += " Rol ";
-            count++;
-        }
-
-        //If there are errors
-        if (count > 0) {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: (count == 1 ? "Falta el campo" : "Faltan los campos: ") + emptyFields,
-                showConfirmButton: false,
-                timer: 2000
-            })
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-    addProfessional() {
-        if (this.validateFields() == false) {
-            return;
-        }
-
+    async addProfessional() {
         const datapost = {
             name: this.state.name,
             departmentId: this.state.departmentId,
@@ -323,25 +169,11 @@ class profileComponent extends React.Component {
             image: this.state.image
         }
 
-        ProfessionalService.create(datapost)
-            .then(async res => {
-                if (res.data.success) {
-                    await Swal.fire({
-                        position: 'top',
-                        icon: 'success',
-                        title: '¡Enhorabuena, ya tiene perfil!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+        const response = await ProfileController.addProfessional(datapost);
+        if(response == "true"){
+            this.setState({redirect: "/"});
+        }
 
-                    this.setState({ redirect: "/" });
-                }
-                else {
-                    console.error("Error");
-                }
-            }).catch(error => {
-                console.error("Error 34 " + error);
-            });
     }
 }
 
