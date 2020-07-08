@@ -3,20 +3,19 @@ const router = express.Router();
 
 const dateStateController = require('../controllers/dateStateController');
 
-
-//GET ALL
+// GET ALL
 router.get('/date_state/list', dateStateController.getAll);
 
-//GET WITH ID
-router.get('/date_state/:id',dateStateController.getId);
+// GET WITH ID
+router.get('/date_state/:id', dateStateController.getId);
 
-//CREATE
+// CREATE
 router.post('/date_state', dateStateController.add);
 
-//DELETE
+// DELETE
 router.delete('/date_state/:id', dateStateController.delete);
 
-//UPDATE 
-router.put('/date_state',dateStateController.edit);
+// UPDATE
+router.put('/date_state', dateStateController.edit);
 
-module.exports=router;
+module.exports = router;
