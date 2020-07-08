@@ -1,0 +1,10 @@
+const KeysDatabase = ({
+  host: 'localhost',
+  user: 'dates',
+  password: 'your_password',
+  database: 'datesdb',
+  port: 3306,
+  dialect: 'mysql'
+});
+
+module.exports = KeysDatabase;

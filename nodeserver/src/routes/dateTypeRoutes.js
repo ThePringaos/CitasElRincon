@@ -3,20 +3,19 @@ const router = express.Router();
 
 const dateTypeController = require('../controllers/dateTypeController');
 
-
-//GET ALL
+// GET ALL
 router.get('/date_type/list', dateTypeController.getAll);
 
-//GET WITH ID
-router.get('/date_type/:id',dateTypeController.getId);
+// GET WITH ID
+router.get('/date_type/:id', dateTypeController.getId);
 
-//CREATE
+// CREATE
 router.post('/date_type', dateTypeController.add);
 
-//DELETE
+// DELETE
 router.delete('/date_type/:id', dateTypeController.delete);
 
-//UPDATE 
-router.put('/date_type',dateTypeController.edit);
+// UPDATE
+router.put('/date_type', dateTypeController.edit);
 
-module.exports=router;
+module.exports = router;

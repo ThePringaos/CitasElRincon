@@ -1,22 +1,23 @@
+const keysDatabase = require('../keys/keys');
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('datesDB', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql',
-    port:3307,
-    pool: {
-        max: 5,
-        min: 0,
-        //acquire: 30000
-        //idle: 10000
-    }
+const sequelize = new Sequelize(keysDatabase.database, keysDatabase.user, keysDatabase.password, {
+  host: keysDatabase.host,
+  dialect: keysDatabase.dialect,
+  port: keysDatabase.port,
+  pool: {
+    max: 5,
+    min: 0
+  },
+  logging: true
 });
+
 sequelize.authenticate()
   .then(() => {
-    console.log('Connected')
+    console.log(`Connect the bd with sequelize: ${keysDatabase.database}`);
   })
   .catch(err => {
-    console.log('Failed attempt to connect')
-  })
+    console.log(`Exits the error ${err}`);
+  });
 
-module.exports=sequelize;
+module.exports = sequelize;

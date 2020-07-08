@@ -3,20 +3,19 @@ const router = express.Router();
 
 const timetableController = require('../controllers/timetableController');
 
-
-//GET ALL
+// GET ALL
 router.get('/timetable/list', timetableController.getAll);
 
-//GET WITH ID
-router.get('/timetable/:id',timetableController.getId);
+// GET WITH ID
+router.get('/timetable/:id', timetableController.getId);
 
-//CREATE
+// CREATE
 router.post('/timetable', timetableController.add);
 
-//DELETE
+// DELETE
 router.delete('/timetable/:id', timetableController.delete);
 
-//UPDATE 
-router.put('/timetable',timetableController.edit);
+// UPDATE
+router.put('/timetable', timetableController.edit);
 
-module.exports=router;
+module.exports = router;
