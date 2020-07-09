@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 
 class profileController {
-  constructor() {
+  constructor () {
     this.state = {
       email: sessionStorage.getItem('userEmail'),
       response: {},
@@ -21,13 +21,13 @@ class profileController {
     };
   }
 
-  async loadUserId() {
-    await ProfessionalService.getWithEmail({ email: this.state.email })
+  async loadUserId () {
+    await ProfessionalService.getWithEmail({ email: sessionStorage.getItem('userEmail') })
       .then(res => {
         if (res.data.success) {
-          this.state.response = { redirect: '/' };
+          this.state.response = { redirect: '/', allowCreation: false };
         } else {
-          this.state.response = { allowCreation: true };
+          this.state.response = { redirect: null, allowCreation: true };
         }
       })
       .catch(err => {
@@ -36,7 +36,7 @@ class profileController {
     return this.state.response;
   }
 
-  async queryProfessionals() {
+  async queryProfessionals () {
     let myState = {};
     await ProfessionalService.getWithEmail({ email: this.state.email })
       .then(async res => {
@@ -72,7 +72,7 @@ class profileController {
     return myState;
   }
 
-  cargarImagenDeBBDD(imagenDeBBDD) {
+  cargarImagenDeBBDD (imagenDeBBDD) {
     let bufferOriginal = null;
     if (imagenDeBBDD.type.includes('image')) {
       // Pasar buffer a string
@@ -91,7 +91,7 @@ class profileController {
     return imagenDeBBDD;
   }
 
-  async queryDepartments() {
+  async queryDepartments () {
     await DepartmentService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -106,7 +106,7 @@ class profileController {
       });
   }
 
-  async queryRoles() {
+  async queryRoles () {
     await RoleService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -121,7 +121,7 @@ class profileController {
       });
   }
 
-  async queryTutors() {
+  async queryTutors () {
     await TutorService.getAll()
       .then(res => {
         if (res.data.success) {
@@ -137,7 +137,7 @@ class profileController {
     return this.state.tutors;
   }
 
-  async loadDepartments() {
+  async loadDepartments () {
     await this.queryDepartments();
     return this.state.departments.map(data => {
       if (data) {
@@ -150,7 +150,7 @@ class profileController {
     });
   }
 
-  async loadRoles() {
+  async loadRoles () {
     await this.queryRoles();
     return this.state.roles.map(data => {
       if (data) {
@@ -163,7 +163,7 @@ class profileController {
     });
   }
 
-  async loadTutors() {
+  async loadTutors () {
     await this.queryTutors();
     return this.state.tutors.map(data => {
       if (data) {
@@ -176,7 +176,7 @@ class profileController {
     });
   }
 
-  validateFields(nombre, departamentoId, roleId) {
+  validateFields (nombre, departamentoId, roleId) {
     let emptyFields = '';
     let count = 0;
 
@@ -208,7 +208,7 @@ class profileController {
     }
   }
 
-  async addProfessional(datapost) {
+  async addProfessional (datapost) {
     const { name, departmentId, roleId } = datapost;
     if (this.validateFields(name, departmentId, roleId) == false) {
       return;
@@ -236,7 +236,7 @@ class profileController {
   }
 
   updateProfessional (datapost) {
-    this.validateFields(datapost.name,datapost.departmentId,datapost.roleId);
+    this.validateFields(datapost.name, datapost.departmentId, datapost.roleId);
 
     ProfessionalService.update(datapost)
       .then(res => {
@@ -256,7 +256,7 @@ class profileController {
       });
   }
 
-  async readURL(input) {
+  async readURL (input) {
     return new Promise(function (resolve, reject) {
       const miImagen = {};
       if (input.files && input.files[0]) {

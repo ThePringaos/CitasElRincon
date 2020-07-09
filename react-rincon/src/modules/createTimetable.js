@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import $ from 'jquery';
 import { Redirect } from 'react-router-dom';
 

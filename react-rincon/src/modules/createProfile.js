@@ -127,7 +127,7 @@ class profileComponent extends React.Component {
                         <div class='md-4'>
                           <img
                             src={require('../images/profile-picture.jpg')}
-                            ref={profilePicture => this.myProfilePicture = profilePicture}
+                            ref={profilePicture => { this.myProfilePicture = profilePicture; }}
                             id='blah'
                             class='rounded-circle z-depth-1-half avatar-pic img-fluid img-thumbnail' alt='avatar'
                           />
@@ -135,7 +135,7 @@ class profileComponent extends React.Component {
                           <div style={{ marginTop: '10px' }} class='d-flex'>
                             <div class='btn btn-mdb-color btn-rounded float-left custom-file'>
                               <input
-                                style={{ width: '100%' }} ref={(myElement) => this.myFileElement = myElement}
+                                style={{ width: '100%' }} ref={(myElement) => { this.myFileElement = myElement; }}
                                 type='file'
                                 id='imgInput'
                                 className='custom-file-input btn btn-primary'
@@ -161,8 +161,8 @@ class profileComponent extends React.Component {
   }
 
   readURL (input) {
-    ProfileController.readURL(input).then((res)=> {
-      if(res){
+    ProfileController.readURL(input).then((res) => {
+      if (res) {
         this.state.image = res;
         $('#blah').attr('src', res.data);
       }

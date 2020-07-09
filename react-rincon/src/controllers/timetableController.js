@@ -198,24 +198,6 @@ class timetableController {
             friday: this.state.fridayDDBB
         }
 
-        /*
-        if (this.state.tableId == null) {
-            TimetableService.create({
-                professionalId: this.state.userId,
-                monday: null,
-                tuesday: null,
-                wednesday: null,
-                thursday: null,
-                friday: null
-            })
-                .then(res => {
-                    this.setState({ tableId: res.data.id });
-                })
-                .catch(
-                    console.error("error creando timetable")
-                );
-        }*/
-
         switch (day) {
             case 'monday':
                 aux = await this.showConfirmNotification('Lunes');

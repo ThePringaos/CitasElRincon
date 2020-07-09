@@ -1,4 +1,4 @@
-class Auth {
+class AuthController {
   constructor () {
     this.authenticate = sessionStorage.getItem('authenticatedUser');
   }
@@ -22,4 +22,4 @@ class Auth {
   }
 }
 
-export default new Auth();
+export default new AuthController();

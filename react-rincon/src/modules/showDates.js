@@ -1,12 +1,9 @@
 import React from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import { Redirect } from 'react-router-dom';
-
-import DateService from '../services/date.service';
-import ProfessionalService from '../services/professional.service';
+import DateController from '../controllers/dateController';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -24,13 +21,6 @@ class homeComponent extends React.Component {
       endDate: new Date(),
       daysToQuery: []
     };
-
-    // We add addDays to DATE
-    Date.prototype.addDays = function (days) {
-      var date = new Date(this.valueOf());
-      date.setDate(date.getDate() + days);
-      return date;
-    };
   }
 
   componentDidMount () {
@@ -45,64 +35,20 @@ class homeComponent extends React.Component {
   }
 
   async showTodayDates () {
-    const myDates = [];
-
-    let aux = this.state.daysToQuery;
-    if (aux.length == 0) {
-      aux = [this.filterDate(new Date())];
-    }
-
-    async function asyncForEach (array, callback) {
-      for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-      }
-    }
-
-    await asyncForEach(aux, async (each) => {
-      await DateService.getDates({ id: this.state.id, day: each })
-        .then(res => {
-          if (res.data.success) {
-            const data = res.data.data[0];
-            myDates.push({ dates: data });
-          } else {
-            console.error('Error loading dates service');
-          }
-        })
-        .catch(err => {
-          console.error('ERROR server' + err);
-        });
-    });
-
+    const myDates = await DateController.showTodayDates(this.state.daysToQuery, this.state.id);
     this.setState({ dates: myDates });
   }
 
   async setStartDate (date) {
     await this.setState({ startDate: date });
-    this.setState({ daysToQuery: this.getDaysToQuery() });
+    this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
   }
 
   async setEndDate (date) {
     await this.setState({ endDate: date });
-    this.setState({ daysToQuery: this.getDaysToQuery() });
+    this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
-  }
-
-  filterDate (day) {
-    return day.getFullYear() + '/' + (day.getMonth() + 1) + '/' + day.getDate();
-  }
-
-  getDaysToQuery () {
-    const days = [];
-    let eachDay = new Date(this.state.startDate.getTime());
-    let i = 1;
-    const finalDay = new Date(this.state.endDate.getTime());
-    while (eachDay.getTime() <= finalDay) {
-      days.push(this.filterDate(eachDay));
-      eachDay = new Date(this.state.startDate.getTime()).addDays(i);
-      i++;
-    }
-    return days;
   }
 
   render () {
@@ -165,28 +111,13 @@ class homeComponent extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.loadFillData()}
+                {DateController.loadFillData(this.state.dates)}
               </tbody>
             </table>
           </div>
         </div>
       </div>
     );
-  }
-
-  loadFillData () {
-    return this.state.dates.map(each => {
-      if (each.dates) {
-        return (
-          <tr>
-            <td>{each.dates.date}</td>
-            <td>{each.dates.time}</td>
-            <td>{each.dates.email}</td>
-            <td>{each.dates.dateType.name}</td>
-          </tr>
-        );
-      }
-    });
   }
 }
 
