@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "fix": "semistandard --fix"
   },
   "repository": {
     "type": "git",

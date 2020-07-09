@@ -29,6 +29,6 @@ app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 app.use(require('./src/routes/tutorRoutes'));
 
-app.listen(app.get('PORT'), 'localhost', () => {
+app.listen(app.get('PORT'), '192.168.1.122', () => {
   console.log(`SERVER IN PORT ${app.get('PORT')}`);
 });
