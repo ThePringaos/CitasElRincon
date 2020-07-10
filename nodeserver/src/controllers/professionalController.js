@@ -69,14 +69,29 @@ professionalController.getWithEmail = (req, res) => {
     });
 };
 
+async function checkImageExistance (image) {
+  await Image.findAll({
+    where: { id: image.id }
+  })
+    .then(async each => {
+      if (each.length == 0) {
+        await Image.create(image).catch(err => {
+          console.log(err);
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 professionalController.add = async (req, res) => {
   const { email, name, departmentId, roleId, comment, image, tutorId } = req.body;
 
   let imageId = null;
   if (image != null) {
-    await Image.create(image).then(each => {
-      imageId = each.id;
-    });
+    await checkImageExistance(image);
+    imageId = image.id;
   }
 
   Professional.create({
@@ -101,23 +116,12 @@ professionalController.add = async (req, res) => {
 };
 
 professionalController.edit = async (req, res) => {
-  const { id, email, name, departmentId, timetableId, roleId, comment, imageId, image, tutorId } = req.body;
-  let finalImageId = imageId;
+  const { id, email, name, departmentId, timetableId, roleId, comment, image, tutorId } = req.body;
+  let finalId = null;
 
-  // saved image on DB
-  if (image != null && imageId != null) {
-    await Image.update(image, {
-      where: {
-        id: imageId
-      }
-    });
-    // new image to save on DB
-  } else if (image != null && imageId == null) {
-    await Image.create(image).then(each => {
-      finalImageId = each.id;
-    }).catch(err => {
-      console.log(err);
-    });
+  if (image != null) {
+    finalId = image.id;
+    checkImageExistance(image);
   }
 
   Professional.update({
@@ -127,7 +131,7 @@ professionalController.edit = async (req, res) => {
     timetableId: timetableId,
     roleId: roleId,
     comment: comment,
-    imageId: finalImageId,
+    imageId: finalId,
     tutorId: tutorId
   },
   {

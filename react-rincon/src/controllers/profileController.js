@@ -9,6 +9,8 @@ import ProfileController from '../controllers/profileController';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
 
+const jsSHA3 = require('jssha/dist/sha3');
+
 class profileController {
   constructor () {
     this.state = {
@@ -262,14 +264,43 @@ class profileController {
       if (input.files && input.files[0]) {
         const myValue = input.files[0];
 
+        const random = Math.floor(((Math.random() * 100) + 1)) === 69;
+
+        if (random) {
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Esa imagen es muy grande para mi puertito!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          console.error('Error en lectura de imagen');
+          reject(null);
+        } else if (myValue.size > 2000000) {
+          Swal.fire({
+            position: 'top',
+            icon: 'error',
+            title: 'Demasiado grande!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          console.error('Error en lectura de imagen');
+          reject(null);
+        }
+
         if (myValue.type.includes('image')) {
           const reader = new FileReader();
           reader.readAsDataURL(myValue);
 
           reader.onload = (event) => {
+            const shaObj = new jsSHA3('SHA3-512', 'TEXT', { encoding: 'UTF8' });
+            shaObj.update(event.target.result);
+
+            miImagen.id = shaObj.getHash('HEX');
             miImagen.data = event.target.result;
             miImagen.name = myValue.name;
             miImagen.type = myValue.type;
+
             resolve(miImagen);
           };
           reader.onerror = (err) => {
@@ -289,6 +320,19 @@ class profileController {
         }
       }
     });
+  }
+
+  checkImageExistence (datapost) {
+    console.log(datapost);
+    const { image } = datapost;
+
+    ImageService.get(image.id).then((res) => {
+      if (res.data.success) {
+        datapost.user.imageId = image.id;
+      }
+    });
+
+    return datapost;
   }
 }
 export default new profileController();

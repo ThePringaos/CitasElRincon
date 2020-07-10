@@ -26,6 +26,15 @@ class profileComponent extends React.Component {
       image: {},
       imageId: null
     };
+
+    // CAN'T TOUCH THIS
+    this.myElement = React.createRef();
+    this.handleInputElement = this.handleInputElement.bind(this);
+  }
+
+  // NOR THIS
+  handleInputElement () {
+    this.myElement.click();
   }
 
   async componentDidMount () {
@@ -147,20 +156,23 @@ class profileComponent extends React.Component {
                           class='rounded-circle z-depth-1-half avatar-pic img-fluid img-thumbnail' alt='avatar'
                         />
 
-                        <div style={{ marginTop: '10px' }} class='d-flex'>
-                          <div class='btn btn-mdb-color btn-rounded float-left custom-file'>
-                            <input
-                              style={{ width: '100%' }} ref={(myElement) => { this.myFileElement = myElement; }}
-                              type='file'
-                              id='imgInput'
-                              className='custom-file-input btn btn-primary'
-                              onChange={(value) => { this.readURL(value.target); }}
-                            />
-                            <label class='custom-file-label' for='customFile'>Perfil</label>
-                          </div>
-                        </div>
+                        <figure>
+                          <input
+                            style={{ display: 'none' }}
+                            ref={myElement => { this.myElement = myElement; }}
+                            type='file'
+                            className='custom-file-input'
+                            onChange={(value) => { this.readURL(value.target); }}
+                          />
+                          <button
+                            type='button' style={{ display: 'block', width: '100%' }}
+                            onClick={this.handleInputElement}
+                            class='btn-mdb-color btn-rounded my-3 btn btn-primary py-1'
+                          >Subir Foto
+                          </button>
+                          <figcaption class='font-italic'><small>Tamaño máximo 2MB</small></figcaption>
+                        </figure>
                       </div>
-
                     </div>
                   </form>
                 </div>

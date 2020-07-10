@@ -2,3 +2,6 @@ Add button images cool super power de la vida
 https://www.youtube.com/watch?v=XeiOnkEI7XI 
 
 ---------------------------------------------
+
+Añadir limitaciones de tamaño
+en el html y notificación

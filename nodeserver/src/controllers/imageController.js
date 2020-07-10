@@ -54,25 +54,6 @@ imageController.add = (req, res) => {
     });
 };
 
-imageController.edit = (req, res) => {
-  // const {id}=req.params;
-  const { id, name, type, data } = req.body;
-
-  Image.update({ name, type, data },
-    { where: { id } })
-    .then(each => {
-      const data = JSON.parse(JSON.stringify(each));
-      if (data.length > 0) {
-        res.json({ success: true, message: 'Successfully updated' });
-      } else {
-        res.json({ status: 'Error' });
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
 imageController.delete = (req, res) => {
   const { id } = req.params;
   Image.destroy({ where: { id } })

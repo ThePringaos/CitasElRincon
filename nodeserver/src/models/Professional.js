@@ -63,7 +63,7 @@ const Professional = database.define(tableName, {
   comment: Sequelize.STRING,
   // Foreign key
   imageId: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(128),
     allowNull: true,
     references: {
       model: Image,

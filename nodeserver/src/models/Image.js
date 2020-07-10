@@ -5,9 +5,9 @@ const tableName = 'images';
 const Image = database.define(tableName, {
   // attributes
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(128),
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: false
   },
   type: {
     type: Sequelize.STRING,

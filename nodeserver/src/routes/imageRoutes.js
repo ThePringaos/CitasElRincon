@@ -15,7 +15,4 @@ router.post('/image', imageController.add);
 // DELETE
 router.delete('/image/:id', imageController.delete);
 
-// UPDATE
-router.put('/image', imageController.edit);
-
 module.exports = router;
