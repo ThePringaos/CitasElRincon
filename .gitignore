@@ -1,4 +1,2 @@
-nodeserver/node_modules
-nodeserver/src/keys/keys.js
-react-rincon/node_modules
-react-rincon/src/http-common.js
+backend/node_modules
+frontend/node_modules

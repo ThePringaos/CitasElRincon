@@ -1,9 +1,9 @@
 const KeysDatabase = ({
   host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'datesDB',
-  port: 3307,
+  user: 'dates',
+  password: 'your_password',
+  database: 'dates_db',
+  port: 3306,
   dialect: 'mysql'
 });
 
