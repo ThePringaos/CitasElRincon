@@ -40,8 +40,8 @@ imageController.getId = (req, res) => {
 };
 
 imageController.add = (req, res) => {
-  const { name, type, data } = req.body;
-  Image.create({ name, type, data })
+  const { data } = req.body;
+  Image.create({ data })
     .then(each => {
       if (each.id) {
         res.json({ success: true, message: `Successfully added, id: ${each.id}` });

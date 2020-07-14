@@ -9,14 +9,6 @@ const Image = database.define(tableName, {
     primaryKey: true,
     autoIncrement: false
   },
-  type: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
   data: {
     type: Sequelize.BLOB('long'),
     allowNull: false

@@ -49,6 +49,7 @@ class profileComponent extends React.Component {
 
   loadState (dbState) {
     if (dbState) {
+      console.log(dbState);
       this.setState(dbState);
       if (dbState.image) {
         $('#blah').attr('src', dbState.image.data);

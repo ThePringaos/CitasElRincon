@@ -37,12 +37,13 @@ class signinComponent extends React.Component {
                         SigninController.responseGoogle(res).then(async (successMessage) => {
                           await SigninController.loadUserId(res);
                           AuthController.login(() => {
+                            console.log('Sesion iniciada correctamente');
                             this.setState({ redirect: '/crear-perfil' });
                           }
                           );
                         }).catch((err) => console.error('ERROR WITH SIGN IN'));
                       }}
-                      onFailure={() => console.error('error crack')}
+                      onFailure={() => console.error('error with login')}
                       cookiePolicy='single_host_origin'
                     />
                   }
