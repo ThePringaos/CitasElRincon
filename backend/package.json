@@ -21,9 +21,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "AGPLv3",
   "bugs": {
     "url": "https://github.com/JonEG/backendElRincon/issues"
   },
-  "homepage": "https://github.com/JonEG/backendElRincon#readme"
+  "homepage": "https://github.com/JonEG/backendElRincon"
 }

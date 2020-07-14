@@ -45,5 +45,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonEG/backendElRincon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPLv3",
+  "bugs": {
+    "url": "https://github.com/JonEG/backendElRincon/issues"
+  },
+  "homepage": "https://github.com/JonEG/backendElRincon"
 }
