@@ -1,2 +1,6 @@
 backend/node_modules
+backend/src/keys/keys.js
 frontend/node_modules
+.DS_Store
+frontend/.DS_Store
+backend/.DS_Store
