@@ -1,4 +1,6 @@
-nodeserver/node_modules
-nodeserver/src/keys/keys.js
-react-rincon/node_modules
-react-rincon/src/http-common.js
+backend/node_modules
+backend/src/keys/keys.js
+frontend/node_modules
+.DS_Store
+frontend/.DS_Store
+backend/.DS_Store

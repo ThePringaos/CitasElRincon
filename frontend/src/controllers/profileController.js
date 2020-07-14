@@ -80,247 +80,255 @@ class profileController {
     bufferOriginal = Buffer.from(imagenDeBBDD.data);
     // Pasar buffer a formato utf
     imagenDeBBDD.data = bufferOriginal.toString('utf8');
-    return imagenDeBBDD;
-  }
 
-  async queryDepartments() {
-    await DepartmentService.getAll()
-      .then(res => {
-        if (res.data.success) {
-          const data = res.data.data;
-          this.state.departments = data;
+    const imageType = imagenDeBBDD.data.substring(0, 11);
+    if (imageType === 'data:image/') {
+      return imagenDeBBDD;
+    }else{
+      return null;
+    }
+  }
+      
+    
+
+    async queryDepartments() {
+      await DepartmentService.getAll()
+        .then(res => {
+          if (res.data.success) {
+            const data = res.data.data;
+            this.state.departments = data;
+          } else {
+            console.error('Error web service');
+          }
+        })
+        .catch(err => {
+          console.error('ERROR server' + err);
+        });
+    }
+
+    async queryRoles() {
+      await RoleService.getAll()
+        .then(res => {
+          if (res.data.success) {
+            const data = res.data.data;
+            this.state.roles = data;
+          } else {
+            console.error('Error web service');
+          }
+        })
+        .catch(err => {
+          console.error('ERROR server' + err);
+        });
+    }
+
+    async queryTutors() {
+      await TutorService.getAll()
+        .then(res => {
+          if (res.data.success) {
+            const data = res.data.data;
+            this.state.tutors = data;
+          } else {
+            console.error('Error web service');
+          }
+        })
+        .catch(err => {
+          console.error('ERROR server' + err);
+        });
+      return this.state.tutors;
+    }
+
+    async loadDepartments() {
+      await this.queryDepartments();
+      return this.state.departments.map(data => {
+        if (data) {
+          return (
+            <option value={data.id}>{data.name}</option>
+          );
         } else {
-          console.error('Error web service');
+          return <div />;
         }
-      })
-      .catch(err => {
-        console.error('ERROR server' + err);
       });
-  }
+    }
 
-  async queryRoles() {
-    await RoleService.getAll()
-      .then(res => {
-        if (res.data.success) {
-          const data = res.data.data;
-          this.state.roles = data;
+    async loadRoles() {
+      await this.queryRoles();
+      return this.state.roles.map(data => {
+        if (data) {
+          return (
+            <option value={data.id}>{data.name}</option>
+          );
         } else {
-          console.error('Error web service');
+          return <div />;
         }
-      })
-      .catch(err => {
-        console.error('ERROR server' + err);
       });
-  }
+    }
 
-  async queryTutors() {
-    await TutorService.getAll()
-      .then(res => {
-        if (res.data.success) {
-          const data = res.data.data;
-          this.state.tutors = data;
+    async loadTutors() {
+      await this.queryTutors();
+      return this.state.tutors.map(data => {
+        if (data) {
+          return (
+            <option value={data.id}>{data.name}</option>
+          );
         } else {
-          console.error('Error web service');
+          return <div />;
         }
-      })
-      .catch(err => {
-        console.error('ERROR server' + err);
       });
-    return this.state.tutors;
-  }
+    }
 
-  async loadDepartments() {
-    await this.queryDepartments();
-    return this.state.departments.map(data => {
-      if (data) {
-        return (
-          <option value={data.id}>{data.name}</option>
-        );
-      } else {
-        return <div />;
+    validateFields(nombre, departamentoId, roleId) {
+      let emptyFields = '';
+      let count = 0;
+
+      if (nombre.replace(/\s/g, '').length == 0) {
+        emptyFields += ' Nombre ';
+        count++;
       }
-    });
-  }
-
-  async loadRoles() {
-    await this.queryRoles();
-    return this.state.roles.map(data => {
-      if (data) {
-        return (
-          <option value={data.id}>{data.name}</option>
-        );
-      } else {
-        return <div />;
+      if (departamentoId == null) {
+        emptyFields += ' Departamento ';
+        count++;
       }
-    });
-  }
-
-  async loadTutors() {
-    await this.queryTutors();
-    return this.state.tutors.map(data => {
-      if (data) {
-        return (
-          <option value={data.id}>{data.name}</option>
-        );
-      } else {
-        return <div />;
+      if (roleId == null) {
+        emptyFields += ' Rol ';
+        count++;
       }
-    });
-  }
 
-  validateFields(nombre, departamentoId, roleId) {
-    let emptyFields = '';
-    let count = 0;
-
-    if (nombre.replace(/\s/g, '').length == 0) {
-      emptyFields += ' Nombre ';
-      count++;
-    }
-    if (departamentoId == null) {
-      emptyFields += ' Departamento ';
-      count++;
-    }
-    if (roleId == null) {
-      emptyFields += ' Rol ';
-      count++;
+      // If there are errors
+      if (count > 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: (count == 1 ? 'Falta el campo' : 'Faltan los campos: ') + emptyFields,
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return false;
+      } else {
+        return true;
+      }
     }
 
-    // If there are errors
-    if (count > 0) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: (count == 1 ? 'Falta el campo' : 'Faltan los campos: ') + emptyFields,
-        showConfirmButton: false,
-        timer: 2000
-      });
-      return false;
-    } else {
-      return true;
+    async addProfessional(datapost) {
+      const { name, departmentId, roleId } = datapost;
+      if (this.validateFields(name, departmentId, roleId) == false) {
+        return;
+      }
+
+      await ProfessionalService.create(datapost)
+        .then(async res => {
+          if (res.data.success) {
+            await Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: '¡Enhorabuena, ya tiene perfil!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            this.state.correctlyCreated = 'true';
+          } else {
+            console.error('Error creating professional');
+          }
+        }).catch(error => {
+          console.error('Error 34 ' + error);
+        });
+
+      return this.state.correctlyCreated;
     }
-  }
 
-  async addProfessional(datapost) {
-    const { name, departmentId, roleId } = datapost;
-    if (this.validateFields(name, departmentId, roleId) == false) {
-      return;
+    updateProfessional(datapost) {
+      this.validateFields(datapost.name, datapost.departmentId, datapost.roleId);
+
+      ProfessionalService.update(datapost)
+        .then(res => {
+          if (res.data.success) {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'Profesional actualizado correctamente!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          } else {
+            console.error('Error');
+          }
+        }).catch(error => {
+          console.error('Error 34 ' + error);
+        });
     }
 
-    await ProfessionalService.create(datapost)
-      .then(async res => {
-        if (res.data.success) {
-          await Swal.fire({
-            position: 'top',
-            icon: 'success',
-            title: '¡Enhorabuena, ya tiene perfil!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          this.state.correctlyCreated = 'true';
-        } else {
-          console.error('Error creating professional');
-        }
-      }).catch(error => {
-        console.error('Error 34 ' + error);
-      });
+    async readURL(input) {
+      return new Promise(function (resolve, reject) {
+        const miImagen = {};
+        if (input.files && input.files[0]) {
+          const myValue = input.files[0];
 
-    return this.state.correctlyCreated;
-  }
+          const random = Math.floor(((Math.random() * 100) + 1)) === 69;
 
-  updateProfessional(datapost) {
-    this.validateFields(datapost.name, datapost.departmentId, datapost.roleId);
-
-    ProfessionalService.update(datapost)
-      .then(res => {
-        if (res.data.success) {
-          Swal.fire({
-            position: 'top',
-            icon: 'success',
-            title: 'Profesional actualizado correctamente!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-        } else {
-          console.error('Error');
-        }
-      }).catch(error => {
-        console.error('Error 34 ' + error);
-      });
-  }
-
-  async readURL(input) {
-    return new Promise(function (resolve, reject) {
-      const miImagen = {};
-      if (input.files && input.files[0]) {
-        const myValue = input.files[0];
-
-        const random = Math.floor(((Math.random() * 100) + 1)) === 69;
-
-        if (random) {
-          Swal.fire({
-            position: 'top',
-            icon: 'success',
-            title: 'Esa imagen es muy grande para mi puertito!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          console.error('Error en lectura de imagen');
-          reject(null);
-        } else if (myValue.size > 2000000) {
-          Swal.fire({
-            position: 'top',
-            icon: 'error',
-            title: 'Demasiado grande!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          console.error('Error en lectura de imagen');
-          reject(null);
-        }
-
-        if (myValue.type.includes('image')) {
-          const reader = new FileReader();
-          reader.readAsDataURL(myValue);
-
-          reader.onload = (event) => {
-            const shaObj = new jsSHA3('SHA3-512', 'TEXT', { encoding: 'UTF8' });
-            shaObj.update(event.target.result);
-
-            miImagen.id = shaObj.getHash('HEX');
-            miImagen.data = event.target.result;
-
-            resolve(miImagen);
-          };
-          reader.onerror = (err) => {
-            console.error('Error en lectura de imagen --> ' + err);
+          if (random) {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'Esa imagen es muy grande para mi puertito!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            console.error('Error en lectura de imagen');
             reject(null);
-          };
-        } else {
-          Swal.fire({
-            position: 'top',
-            icon: 'error',
-            title: 'Sólo archivos de tipo imagen!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          console.error('Error en lectura de imagen');
-          reject(null);
+          } else if (myValue.size > 2000000) {
+            Swal.fire({
+              position: 'top',
+              icon: 'error',
+              title: 'Demasiado grande!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            console.error('Error en lectura de imagen');
+            reject(null);
+          }
+
+          if (myValue.type.includes('image')) {
+            const reader = new FileReader();
+            reader.readAsDataURL(myValue);
+
+            reader.onload = (event) => {
+              const shaObj = new jsSHA3('SHA3-512', 'TEXT', { encoding: 'UTF8' });
+              shaObj.update(event.target.result);
+
+              miImagen.id = shaObj.getHash('HEX');
+              miImagen.data = event.target.result;
+
+              resolve(miImagen);
+            };
+            reader.onerror = (err) => {
+              console.error('Error en lectura de imagen --> ' + err);
+              reject(null);
+            };
+          } else {
+            Swal.fire({
+              position: 'top',
+              icon: 'error',
+              title: 'Sólo archivos de tipo imagen!',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            console.error('Error en lectura de imagen');
+            reject(null);
+          }
         }
-      }
-    });
+      });
+    }
+
+    checkImageExistence(datapost) {
+      console.log(datapost);
+      const { image } = datapost;
+
+      ImageService.get(image.id).then((res) => {
+        if (res.data.success) {
+          datapost.user.imageId = image.id;
+        }
+      });
+
+      return datapost;
+    }
   }
-
-  checkImageExistence(datapost) {
-    console.log(datapost);
-    const { image } = datapost;
-
-    ImageService.get(image.id).then((res) => {
-      if (res.data.success) {
-        datapost.user.imageId = image.id;
-      }
-    });
-
-    return datapost;
-  }
-}
 export default new profileController();

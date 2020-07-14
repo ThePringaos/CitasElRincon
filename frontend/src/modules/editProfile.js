@@ -49,7 +49,6 @@ class profileComponent extends React.Component {
 
   loadState (dbState) {
     if (dbState) {
-      console.log(dbState);
       this.setState(dbState);
       if (dbState.image) {
         $('#blah').attr('src', dbState.image.data);
@@ -152,6 +151,7 @@ class profileComponent extends React.Component {
                       <div class='md-4'>
                         <img
                           src={require('../images/profile-picture.jpg')}
+                          style={{width: '10rem', height: '10rem'}}
                           ref={profilePicture => { this.myProfilePicture = profilePicture; }}
                           id='blah'
                           class='rounded-circle z-depth-1-half avatar-pic img-fluid img-thumbnail' alt='avatar'
