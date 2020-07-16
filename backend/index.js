@@ -1,22 +1,42 @@
 /*
  *  Copyright (C) 2020  Unknown
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
  *  by the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Affero General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 const express = require('express');
 const app = express();
+
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+// Extended: https://swagger.io/specification/#infoObject
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "0.0.1",
+      title: "DATES API",
+      description: "Dates API Information",
+      contact: {
+        name: "unknown"
+      },
+      servers: ["http://localhost:8000"]
+    }
+  },
+  apis: ['./src/routes/*.js']
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 // process.env.PORT -> enviroment variable hosted in our pc
 app.set('PORT', process.env.PORT || 8000);
@@ -35,7 +55,6 @@ app.use((req, res, next) => {
 });
 
 // routes
-
 app.use(require('./src/routes/imageRoutes'));
 app.use(require('./src/routes/departmentRoutes'));
 app.use(require('./src/routes/roleRoutes'));
@@ -46,6 +65,8 @@ app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 app.use(require('./src/routes/tutorRoutes'));
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.listen(app.get('PORT'), '127.0.0.1', () => {
   console.log(`SERVER IN PORT ${app.get('PORT')}`);
-});
+}); 

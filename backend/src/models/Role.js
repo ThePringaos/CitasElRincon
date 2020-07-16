@@ -19,6 +19,7 @@ const Sequelize = require('sequelize');
 const database = require('../database/database');
 
 const tableName = 'roles';
+
 const Role = database.define(tableName, {
   // attributes
   id: {
@@ -32,11 +33,11 @@ const Role = database.define(tableName, {
   }
 
 },
-// Special settings
-{
-  freezeTableName: true,
-  timestamps: false
+  // Special settings
+  {
+    freezeTableName: true,
+    timestamps: false
 
-});
+  });
 
 module.exports = Role;
