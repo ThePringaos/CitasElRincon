@@ -17,13 +17,15 @@
 
 const Image = require('../models/Image');
 
+const controller = 'image';
+
 /**
  * SYNC ALL MODELS WITH DB
  */
 // sequelize.sync();
 Image.sync({ force: false })
   .then(() => {
-    console.log('SYNC MODEL IMAGE');
+    console.log(`SYNC MODEL ${controller.toUpperCase()}`);
   });
 
 const imageController = {};
@@ -45,10 +47,9 @@ imageController.getId = (req, res) => {
     .then(each => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
-
         return res.json({ success: true, data: data });
       } else {
-        res.json({ status: 'The image doesn\'t exist' });
+        res.status(400).json({ status: `The ${controller} doesn't exist` });
       }
     })
     .catch(err => {
@@ -63,7 +64,7 @@ imageController.add = (req, res) => {
       if (each.id) {
         res.json({ success: true, message: `Successfully added, id: ${each.id}` });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
     })
     .catch(err => {
@@ -79,7 +80,7 @@ imageController.delete = (req, res) => {
       if (data === 1) {
         res.json({ success: true, message: 'Succesfully deleted' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be deleted` });
       }
     })
     .catch(err => {

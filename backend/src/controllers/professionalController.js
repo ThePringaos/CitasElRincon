@@ -22,19 +22,21 @@ const Role = require('../models/Role');
 const Image = require('../models/Image');
 const Timetable = require('../models/Timetable');
 
+const controller = 'professional';
+const controllerDep1 = 'image';
+
 /**
  * SYNC ALL MODELS WITH DB
  */
 // sequelize.sync();
-
 Image.sync({ force: false })
   .then(() => {
-    console.log('SYNC MODEL IMAGE');
+    console.log(`SYNC MODEL ${controllerDep1.toUpperCase()}`);
   });
 
 Professional.sync({ force: false })
   .then(() => {
-    console.log('SYNC MODEL PROFESSIONAL');
+    console.log(`SYNC MODEL ${controller.toUpperCase()}`);
   });
 
 const professionalController = {};
@@ -62,7 +64,7 @@ professionalController.getId = (req, res) => {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
       } else {
-        res.json({ status: 'The professional doesn\'t exist' });
+        res.status(400).json({ status: `The ${controller} doesn't exist` });
       }
     })
     .catch(err => {
@@ -78,7 +80,7 @@ professionalController.getWithEmail = (req, res) => {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
       } else {
-        res.json({ status: 'The email doesn\'t exist' });
+        res.status(400).json({ status: 'The email doesn\'t exist' });
       }
     })
     .catch(err => {
@@ -91,7 +93,7 @@ async function checkImageExistance (image) {
     where: { id: image.id }
   })
     .then(async each => {
-      if (each.length == 0) {
+      if (each.length === 0) {
         await Image.create(image).catch(err => {
           console.log(err);
         });
@@ -124,7 +126,7 @@ professionalController.add = async (req, res) => {
       if (each.id) {
         res.json({ success: true, message: `Successfully added, id: ${each.id}` });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
     })
     .catch(err => {
@@ -159,7 +161,7 @@ professionalController.edit = async (req, res) => {
       if (data.length > 0) {
         res.json({ success: true, message: 'Successfully updated' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be updated` });
       }
     })
     .catch(err => {
@@ -175,7 +177,7 @@ professionalController.delete = (req, res) => {
       if (data === 1) {
         res.json({ success: true, message: 'Succesfully deleted' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be deleted` });
       }
     })
     .catch(err => {
