@@ -17,13 +17,15 @@
 
 const DateType = require('../models/DateType');
 
+const controller = 'datetype';
+
 /**
  * SYNC ALL MODELS WITH DB
  */
 // sequelize.sync();
 DateType.sync({ force: false })
   .then(() => {
-    console.log('SYNC MODEL DATE_TYPE');
+    console.log(`SYNC MODEL ${controller.toUpperCase()}`);
   });
 
 const dateTypeController = {};
@@ -32,7 +34,6 @@ dateTypeController.getAll = async (req, res) => {
   DateType.findAll()
     .then(each => {
       const data = JSON.parse(JSON.stringify(each));
-
       return res.json({ success: true, data: data });
     }).catch(err => {
       console.log(err);
@@ -45,10 +46,9 @@ dateTypeController.getId = (req, res) => {
     .then(each => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
-
         return res.json({ success: true, data: data });
       } else {
-        res.json({ status: 'The date type doesn\'t exist' });
+        res.status(400).json({ status: `The ${controller} doesn't exist` });
       }
     })
     .catch(err => {
@@ -63,7 +63,7 @@ dateTypeController.add = (req, res) => {
       if (each.id) {
         res.json({ success: true, message: `Successfully added, id: ${each.id}` });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
     })
     .catch(err => {
@@ -74,7 +74,6 @@ dateTypeController.add = (req, res) => {
 dateTypeController.edit = (req, res) => {
   // const {id}=req.params;
   const { id, name } = req.body;
-
   DateType.update({ name },
     { where: { id } })
     .then(each => {
@@ -82,7 +81,7 @@ dateTypeController.edit = (req, res) => {
       if (data.length > 0) {
         res.json({ success: true, message: 'Successfully updated' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be updated` });
       }
     })
     .catch(err => {
@@ -98,7 +97,7 @@ dateTypeController.delete = (req, res) => {
       if (data === 1) {
         res.json({ success: true, message: 'Succesfully deleted' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be deleted` });
       }
     })
     .catch(err => {

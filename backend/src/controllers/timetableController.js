@@ -17,13 +17,15 @@
 
 const Timetable = require('../models/Timetable');
 
+const controller = 'timetable';
+
 /**
  * SYNC ALL MODELS WITH DB
  */
 // sequelize.sync();
 Timetable.sync({ force: false })
   .then(() => {
-    console.log('SYNC MODEL TIMETABLE');
+    console.log(`SYNC MODEL ${controller.toUpperCase()}`);
   });
 
 const timetableController = {};
@@ -45,7 +47,7 @@ timetableController.getId = (req, res) => {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
       } else {
-        res.json({ status: 'The timetable doesn\'t exist' });
+        res.status(400).json({ status: `The ${controller} doesn't exist` });
       }
     })
     .catch(err => {
@@ -58,9 +60,9 @@ timetableController.add = (req, res) => {
   Timetable.create({ monday, tuesday, wednesday, thursday, friday })
     .then(each => {
       if (each.id) {
-        res.json({ success: true, message: `Successfully added, id: ${each.id}`, id: each.id });
+        res.json({ success: true, message: `Successfully added, id: ${each.id}` });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
     })
     .catch(err => {
@@ -70,7 +72,6 @@ timetableController.add = (req, res) => {
 
 timetableController.edit = (req, res) => {
   const { id, monday, tuesday, wednesday, thursday, friday } = req.body;
-
   Timetable.update({ monday, tuesday, wednesday, thursday, friday },
     {
       where: { id }
@@ -81,7 +82,7 @@ timetableController.edit = (req, res) => {
       if (data.length > 0) {
         res.json({ success: true, message: 'Successfully updated' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be updated` });
       }
     })
     .catch(err => {
@@ -97,7 +98,7 @@ timetableController.delete = (req, res) => {
       if (data === 1) {
         res.json({ success: true, message: 'Succesfully deleted' });
       } else {
-        res.json({ status: 'Error' });
+        res.status(400).json({ status: `The ${controller} couldn't be deleted` });
       }
     })
     .catch(err => {
