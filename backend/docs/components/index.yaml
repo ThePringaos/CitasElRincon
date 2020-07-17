@@ -1,0 +1,26 @@
+ # Reusable schemas (data models)
+  schemas:
+    $ref: ./schemas/index.yaml
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    
+  # Security scheme definitions (see Authentication)
+  securitySchemes:
+    
+  # Reusable request bodies
+  requestBodies:
+    
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  responses:
+    
+  # Reusable response headers
+  headers:
+    
+  # Reusable examples
+  examples:
+    
+  # Reusable links
+  links:
+    
+  # Reusable callbacks
+  callbacks:

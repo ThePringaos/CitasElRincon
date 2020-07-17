@@ -24,6 +24,44 @@ const DateType = require('./DateType');
 const DateState = require('./DateState');
 
 const tableName = 'dates';
+
+/**
+ * @swagger
+ *
+ * definitions:
+ *   Date:
+ *     type: object
+ *     required:
+ *       - username
+ *       - password
+ *     properties:
+ *       id:
+ *         type: integer
+ *         example: 1
+ *       email:
+ *         type: string
+ *         format: email
+ *         example: alumno@ieselrincon.es
+ *       date:
+ *         type: string
+ *         example: 2020/4/20
+ *       time:
+ *         type: string
+ *         example: 12:50
+ *       professionalId:
+ *         type: integer
+ *         example: 1
+ *         summary: This references to a register in professional DB Table  # Optional description
+ *       dateTypeId:
+ *         type: integer
+ *         example: 1
+ *         summary: This references to a register in dateType DB Table  # Optional description
+ *       dateStateId:
+ *         type: integer
+ *         example: 1
+ *         summary: This references to a register in dateStates DB Table  # Optional description
+ */
+
 const Date = database.define(tableName, {
   // attributes
   id: {

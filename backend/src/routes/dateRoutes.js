@@ -19,18 +19,9 @@ const express = require('express');
 const router = express.Router();
 
 const dateController = require('../controllers/dateController');
-
+ 
 
 // GET ALL
-/**
- * @swagger
- * /date/list:
- *  get:
- *    description: Use to request all dates
- *    responses:
- *      '200':
- *        description: A successful response
- */
 router.get('/date/list', dateController.getAll);
 
 // GET WITH ID

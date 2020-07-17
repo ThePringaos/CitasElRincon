@@ -8,21 +8,22 @@
     "mysql2": "^2.1.0",
     "semistandard": "^14.2.2",
     "sequelize": "^5.21.11",
-    "swagger-jsdoc": "^4.0.0",
+    "swagger-merger": "^1.4.3",
     "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "dev": "nodemon",
-    "fix": "semistandard --fix"
+    "dev": "npm run doc && nodemon",
+    "fix": "semistandard --fix",
+    "doc": "swagger-merger -i ./docs/index.yaml -o ./docs/build.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JonEG/backendElRincon.git"
   },
-  "keywords": [],
+  "keywords": [], 
   "author": "",
   "license": "AGPL-3.0",
   "bugs": {

@@ -18,25 +18,7 @@
 const express = require('express');
 const app = express();
 
-const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
-// Extended: https://swagger.io/specification/#infoObject
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      version: "0.0.1",
-      title: "DATES API",
-      description: "Dates API Information",
-      contact: {
-        name: "unknown"
-      },
-      servers: ["http://localhost:8000"]
-    }
-  },
-  apis: ['./src/routes/*.js']
-};
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 // process.env.PORT -> enviroment variable hosted in our pc
 app.set('PORT', process.env.PORT || 8000);
@@ -65,7 +47,13 @@ app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 app.use(require('./src/routes/tutorRoutes'));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const options = {
+  swaggerOptions: {
+    supportedSubmitMethods: []
+   }
+};
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require('./docs/build.json'),options));
 
 app.listen(app.get('PORT'), '127.0.0.1', () => {
   console.log(`SERVER IN PORT ${app.get('PORT')}`);
