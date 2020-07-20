@@ -1,0 +1,57 @@
+##############
+# /date/list #
+##############
+/date/list:
+  get:
+    tags:
+        - DateRoutes
+    summary: Returns a list of dates.
+    description: Returns a list of dates including their relative value in Professional, DateType and DateState.
+    responses:
+      200: # status code
+        description: The JSON.data also includes professionalId, dateTypeId and 
+          dateStateId relative values.(Not in the example)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                data:
+                  type: array
+                  items: 
+                    $ref: ../components/schemas/Date.yaml
+
+
+      400:
+        description: Bad request.
+
+#############
+# /date/:id #
+#############
+
+/date/{id}:
+  get:
+    tags:
+        - DateRoutes
+    summary: Returns a list of dates for certain ID.
+    description: Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.
+    parameters:
+      - name: id
+        in: path
+        description: Date id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Date.yaml
+
+      400:
+        description: Bad request.

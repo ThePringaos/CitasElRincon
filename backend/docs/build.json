@@ -1,0 +1,218 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "DATES APE",
+    "description": "This is the project description",
+    "contact": {
+      "name": "unknown"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "paths": {
+    "/date/list": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState.",
+        "responses": {
+          "200": {
+            "description": "The JSON.data also includes professionalId, dateTypeId and dateStateId relative values.(Not in the example)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "username",
+                          "password"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "alumno@ieselrincon.es"
+                          },
+                          "date": {
+                            "type": "string",
+                            "example": "2020/4/20"
+                          },
+                          "time": {
+                            "type": "string",
+                            "example": 770
+                          },
+                          "professionalId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in professional DB Table"
+                          },
+                          "dateTypeId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateType DB Table"
+                          },
+                          "dateStateId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateStates DB Table"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date/{id}": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates for certain ID.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Date id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Date": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "alumno@ieselrincon.es"
+          },
+          "date": {
+            "type": "string",
+            "example": "2020/4/20"
+          },
+          "time": {
+            "type": "string",
+            "example": 770
+          },
+          "professionalId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in professional DB Table"
+          },
+          "dateTypeId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in dateType DB Table"
+          },
+          "dateStateId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in dateStates DB Table"
+          }
+        }
+      }
+    },
+    "parameters": null,
+    "securitySchemes": null,
+    "requestBodies": null,
+    "responses": null,
+    "headers": null,
+    "examples": null,
+    "links": null,
+    "callbacks": null
+  }
+}
