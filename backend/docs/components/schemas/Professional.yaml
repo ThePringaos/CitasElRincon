@@ -1,0 +1,45 @@
+type: object
+required:
+  - id
+  - email
+  - name
+  - departmentId
+  - roleId
+properties:
+  id:
+    type: integer
+    example: 1
+  email:
+    type: string
+    format: email
+    nullable: false
+    example: profesor@ieselrincon.es
+  name:
+    type: string
+    nullable: false
+    example: Juan Delgado Saavedra
+  departmentId:
+    type: integer
+    nullable: false
+    example: 1
+    summary: This references to a register in deparments DB Table.
+  timetableId:
+    type: integer
+    nullable: true
+    example: 1
+    summary: This references to a register in timetables DB Table.
+  roleId:
+    type: integer
+    nullable: false
+    example: 1
+    summary: This references to a register in roles DB Table.
+  tutorId:
+    type: integer
+    nullable: true
+    example: 1
+    summary: This references to a register in tutors DB Table.
+  ImageId:
+    type: string
+    minLength: 128
+    maxLength: 128
+    example: <SHA3-512 hash in hex>

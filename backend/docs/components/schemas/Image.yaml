@@ -1,0 +1,16 @@
+type: object
+required:
+  - id
+  - data
+properties:
+  id:
+    type: string
+    minLength: 128
+    maxLength: 128
+    nullable: false
+    example: <SHA3-512 hash in hex>
+  data:
+    type: string
+    format: binary
+    nullable: false
+    example: <Binary representation>
