@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "0.0.1",
-    "title": "DATES APE",
+    "title": "DATES API",
     "description": "This is the project description",
     "contact": {
       "name": "unknown"
@@ -14,16 +14,15 @@
     }
   ],
   "paths": {
-    "/date/list": {
+    "/tutor/list": {
       "get": {
         "tags": [
-          "DateRoutes"
+          "TutorRoutes"
         ],
-        "summary": "Returns a list of dates.",
-        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState.",
+        "summary": "Returns a list of with all courses added.",
+        "description": "Returns a list of with all courses added.",
         "responses": {
           "200": {
-            "description": "The JSON.data also includes professionalId, dateTypeId and dateStateId relative values.(Not in the example)",
             "content": {
               "application/json": {
                 "schema": {
@@ -37,42 +36,15 @@
                       "type": "array",
                       "items": {
                         "type": "object",
-                        "required": [
-                          "username",
-                          "password"
-                        ],
                         "properties": {
                           "id": {
                             "type": "integer",
                             "example": 1
                           },
-                          "email": {
+                          "name": {
                             "type": "string",
-                            "format": "email",
-                            "example": "alumno@ieselrincon.es"
-                          },
-                          "date": {
-                            "type": "string",
-                            "example": "2020/4/20"
-                          },
-                          "time": {
-                            "type": "string",
-                            "example": 770
-                          },
-                          "professionalId": {
-                            "type": "integer",
-                            "example": 1,
-                            "summary": "This references to a register in professional DB Table"
-                          },
-                          "dateTypeId": {
-                            "type": "integer",
-                            "example": 1,
-                            "summary": "This references to a register in dateType DB Table"
-                          },
-                          "dateStateId": {
-                            "type": "integer",
-                            "example": 1,
-                            "summary": "This references to a register in dateStates DB Table"
+                            "example": "2DAM",
+                            "description": "Course name"
                           }
                         }
                       }
@@ -88,18 +60,17 @@
         }
       }
     },
-    "/date/{id}": {
+    "/tutor/{id}": {
       "get": {
         "tags": [
-          "DateRoutes"
+          "TutorRoutes"
         ],
-        "summary": "Returns a list of dates for certain ID.",
-        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.",
+        "summary": "Returns a course with this id.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Date id",
+            "description": "Tutor id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -113,42 +84,156 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "username",
-                    "password"
-                  ],
                   "properties": {
                     "id": {
                       "type": "integer",
                       "example": 1
                     },
-                    "email": {
+                    "name": {
                       "type": "string",
-                      "format": "email",
-                      "example": "alumno@ieselrincon.es"
+                      "example": "2DAM",
+                      "description": "Course name"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor": {
+      "post": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Add a course to the database.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "Course name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
                     },
-                    "date": {
+                    "message": {
                       "type": "string",
-                      "example": "2020/4/20"
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor/update": {
+      "put": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Update a course usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "Course name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
                     },
-                    "time": {
+                    "message": {
                       "type": "string",
-                      "example": 770
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor/delete": {
+      "delete": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Delete the course with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
                     },
-                    "professionalId": {
-                      "type": "integer",
-                      "example": 1,
-                      "summary": "This references to a register in professional DB Table"
-                    },
-                    "dateTypeId": {
-                      "type": "integer",
-                      "example": 1,
-                      "summary": "This references to a register in dateType DB Table"
-                    },
-                    "dateStateId": {
-                      "type": "integer",
-                      "example": 1,
-                      "summary": "This references to a register in dateStates DB Table"
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
                     }
                   }
                 }
@@ -202,6 +287,62 @@
             "type": "integer",
             "example": 1,
             "summary": "This references to a register in dateStates DB Table"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Director"
+          }
+        }
+      },
+      "Timetable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "monday": {
+            "type": "string",
+            "example": "10:30-11:00"
+          },
+          "tuesday": {
+            "type": "string",
+            "example": "09:00-10:00"
+          },
+          "wednesday": {
+            "type": "string",
+            "example": null
+          },
+          "thursday": {
+            "type": "string",
+            "example": null
+          },
+          "friday": {
+            "type": "string",
+            "example": "12:15-13:30"
+          }
+        }
+      },
+      "Tutor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "2DAM",
+            "description": "Course name"
           }
         }
       }

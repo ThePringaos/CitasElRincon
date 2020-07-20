@@ -1,0 +1,152 @@
+###############
+# /tutor/list #
+###############
+/tutor/list:
+  get:
+    tags:
+      - TutorRoutes
+    summary: Returns a list of with all courses added.
+    description: Returns a list of with all courses added.
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                data:
+                  type: array
+                  items:
+                    $ref: ../components/schemas/Tutor.yaml
+      400:
+        description: Bad request.
+
+##############
+# /tutor/:id #
+##############
+/tutor/{id}:
+  get:
+    tags:
+      - TutorRoutes
+    summary: Returns a course with this id.
+    parameters:
+      - name: id
+        in: path
+        description: Tutor id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Tutor.yaml
+      400:
+        description: Bad request.
+
+##############
+# /tutor #
+##############
+/tutor:
+  post:
+    tags:
+      - TutorRoutes
+    summary: Add a course to the database.
+    parameters:
+      - name: name
+        in: params
+        required: True
+        description: Course name
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully added, id 1.
+      400:
+        description: Bad request.
+
+##############
+# /tutor #
+##############
+/tutor/update:
+  put:
+    tags:
+      - TutorRoutes
+    summary: Update a course usign its id.
+    parameters:
+      - name: id
+        in: params
+        description: Tutor id
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: params
+        required: True
+        description: Course name
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully updated.
+      400:
+        description: Bad request.
+
+##################
+# /tutor/:id #
+##################
+/tutor/delete:
+  delete:
+    tags:
+      - TutorRoutes
+    summary: Delete the course with this ID.
+    parameters:
+      - name: id
+        in: path
+        description: Tutor id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.

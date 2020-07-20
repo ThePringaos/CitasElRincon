@@ -1,0 +1,152 @@
+##############
+# /role/list #
+##############
+/role/list:
+  get:
+    tags:
+        - RoleRoutes
+    summary: Returns a list of roles.
+    description: Returns a list of roles.
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                data:
+                  type: array
+                  items: 
+                    $ref: ../components/schemas/Role.yaml
+      400:
+        description: Bad request.
+
+#############
+# /role/:id #
+#############
+/role/{id}:
+  get:
+    tags:
+        - RoleRoutes
+    summary: Returns a role with this id.
+    parameters:
+      - name: id
+        in: path
+        description: Role id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Date.yaml
+      400:
+        description: Bad request.
+
+#########
+# /role #
+#########
+/role:
+  post:
+    tags:
+        - RoleRoutes
+    summary: Add a role to the database.
+    parameters:
+      - name: name
+        in: params
+        description: Role name
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully added, id 1.
+      400:
+        description: Bad request.
+
+#########
+# /role #
+#########
+/role/update:
+  put:
+    tags:
+        - RoleRoutes
+    summary: Update a role usign its id.
+    parameters:
+      - name: id
+        in: params
+        description: Role id
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: params
+        description: Role name
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully updated.
+      400:
+        description: Bad request.
+
+#############
+# /role/:id #
+#############
+/role/delete:
+  delete:
+    tags:
+        - RoleRoutes
+    summary: Delete the role with this id.
+    parameters:
+      - name: id
+        in: path
+        description: Role id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.

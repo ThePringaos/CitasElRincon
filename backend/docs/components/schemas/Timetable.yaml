@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  monday:
+    type: string
+    example: 10:30-11:00
+  tuesday:
+    type: string
+    example: 09:00-10:00
+  wednesday:
+    type: string
+    example: null
+  thursday:
+    type: string
+    example: null
+  friday:
+    type: string
+    example: 12:15-13:30

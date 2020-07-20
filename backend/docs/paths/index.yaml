@@ -1,2 +1,4 @@
-$ref: ./dateRoutes.yaml
-
+#$ref: ./dateRoutes.yaml
+#$ref: ./roleRoutes.yaml
+#$ref: ./timetableRoutes.yaml
+$ref: ./tutorRoutes.yaml

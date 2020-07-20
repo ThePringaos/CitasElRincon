@@ -1,0 +1,190 @@
+###################
+# /timetable/list #
+###################
+/timetable/list:
+  get:
+    tags:
+      - TimetableRoutes
+    summary: Returns a list with all weeks added and their specific times.
+    description: Returns a list with all weeks added and their specific times.
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                data:
+                  type: array
+                  items:
+                    $ref: ../components/schemas/Timetable.yaml
+      400:
+        description: Bad request.
+
+##################
+# /timetable/:id #
+##################
+/timetable/{id}:
+  get:
+    tags:
+      - TimetableRoutes
+    summary: Returns a week with this id.
+    parameters:
+      - name: id
+        in: path
+        description: Timetable id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Timetable.yaml
+      400:
+        description: Bad request.
+
+##############
+# /timetable #
+##############
+/timetable:
+  post:
+    tags:
+      - TimetableRoutes
+    summary: Add a week to the database.
+    parameters:
+      - name: monday
+        in: params
+        description: Hours for Monday
+        schema:
+          type: string
+      - name: tuesday
+        in: params
+        description: Hours for Tuesday
+        schema:
+          type: string
+      - name: wednesday
+        in: params
+        description: Hours for Wednesday
+        schema:
+          type: string
+      - name: thursday
+        in: params
+        description: Hours for Thursday
+        schema:
+          type: string
+      - name: friday
+        in: params
+        description: Hours for Friday
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully added, id 1.
+      400:
+        description: Bad request.
+
+##############
+# /timetable #
+##############
+/timetable/update:
+  put:
+    tags:
+      - TimetableRoutes
+    summary: Update a week usign its id.
+    parameters:
+      - name: id
+        in: params
+        description: Timetable id
+        required: true
+        schema:
+          type: string
+      - name: monday
+        in: params
+        description: Hours for Monday
+        schema:
+          type: string
+      - name: tuesday
+        in: params
+        description: Hours for Tuesday
+        schema:
+          type: string
+      - name: wednesday
+        in: params
+        description: Hours for Wednesday
+        schema:
+          type: string
+      - name: thursday
+        in: params
+        description: Hours for Thursday
+        schema:
+          type: string
+      - name: friday
+        in: params
+        description: Hours for Friday
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully updated.
+      400:
+        description: Bad request.
+
+##################
+# /timetable/:id #
+##################
+/timetable/delete:
+  delete:
+    tags:
+      - TimetableRoutes
+    summary: Delete the week with this ID.
+    parameters:
+      - name: id
+        in: path
+        description: Timetable id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.

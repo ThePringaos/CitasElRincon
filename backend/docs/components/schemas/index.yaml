@@ -1,2 +1,8 @@
 Date:
   $ref: ./Date.yaml
+Role:
+  $ref: ./Role.yaml
+Timetable:
+  $ref: ./Timetable.yaml
+Tutor:
+  $ref: ./Tutor.yaml
