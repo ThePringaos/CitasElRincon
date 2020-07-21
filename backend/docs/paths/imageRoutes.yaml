@@ -1,0 +1,151 @@
+###############
+# /image/list #
+###############
+/image/list:
+  get:
+    tags:
+        - ImageRoutes
+    summary: Returns a list of images.
+    description: Just returns a list of images.
+    responses:
+      200:
+        description: JSON array with the images.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  type: array
+                  items: 
+                    $ref: ../components/schemas/Image.yaml
+
+##############
+# /image/:id #
+##############
+
+/image/{id}:
+  get:
+    tags:
+        - ImageRoutes
+    summary: Returns the image with certain id.
+    description: Just returns the image with certain id.
+    parameters:
+      - name: id
+        in: path
+        description: Image id
+        required: true
+        schema:
+          type: string
+          minLength: 128
+          maxLength: 128
+    responses:
+      200:
+        description: JSON with the image.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  $ref: ../components/schemas/Image.yaml
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  delete:
+    tags:
+        - ImageRoutes
+    summary: Delete an image with certain id.
+    description: Just delete an image with certain id.
+    parameters:
+      - name: id
+        in: path
+        description: Image id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+##########
+# /image #
+##########
+
+/image:
+  post:
+    tags:
+        - ImageRoutes
+    summary: Add a new image.
+    description: Just add a new image.
+    parameters:
+      - name: data
+        in: query
+        description: Image data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Image.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.

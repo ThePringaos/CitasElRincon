@@ -1,0 +1,213 @@
+######################
+# /professional/list #
+######################
+/professional/list:
+  get:
+    tags:
+        - ProfessionalRoutes
+    summary: Returns a list of professionals.
+    description: Returns a list of professionals including their relative value in Role, Department and Image.
+    responses:
+      200:
+        description: JSON array with the departments including roleId, departmentId and imageId relative values.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  type: array
+                  items: 
+                    $ref: ../components/schemas/Professional.yaml
+
+#####################
+# /professional/:id #
+#####################
+
+/professional/{id}:
+  get:
+    tags:
+        - ProfessionalRoutes
+    summary: Returns the professional with certain id.
+    description: Returns the professional with certain id including its relative value in TimeTable.
+    parameters:
+      - name: id
+        in: path
+        description: Professional id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: JSON with the professional including timetableId relative value.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  $ref: ../components/schemas/Professional.yaml
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  delete:
+    tags:
+        - ProfessionalRoutes
+    summary: Delete a professional with certain id.
+    description: Just delete a professional with certain id.
+    parameters:
+      - name: id
+        in: path
+        description: Professional id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+#######################
+# /professional-email #
+#######################
+
+/professional-email:
+  get:
+    tags:
+        - ProfessionalRoutes
+    summary: Returns a professional with certain email.
+    description: Just returns a professional with certain email.
+    responses:
+      200:
+        description: JSON with the professional.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  $ref: ../components/schemas/Professional.yaml
+
+#################
+# /professional #
+#################
+
+/professional:
+  post:
+    tags:
+        - ProfessionalRoutes
+    summary: Add a new professional.
+    description: Just add a new professional.
+    parameters:
+      - name: data
+        in: query
+        description: Professional data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Professional.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  put:
+    tags:
+        - ProfessionalRoutes
+    summary: Update a professional.
+    description: Just update a professional.
+    parameters:
+      - name: data
+        in: query
+        description: Professional data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Professional.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
