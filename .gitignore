@@ -4,3 +4,4 @@ frontend/node_modules
 .DS_Store
 frontend/.DS_Store
 backend/.DS_Store
+backend/docs/build.json
