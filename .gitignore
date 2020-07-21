@@ -3,7 +3,7 @@ backend/node_modules
 frontend/node_modules
 
 # Ignore database keys
-./backend/src/keys
+backend/src/keys
 
 # Ignore Mac system files
 .DS_Store
