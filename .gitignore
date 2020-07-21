@@ -1,7 +1,14 @@
+# Ignore node_modules folder
 backend/node_modules
-backend/src/keys/keys.js
 frontend/node_modules
+
+# Ignore database keys
+backend/src/keys
+
+# Ignore Mac system files
 .DS_Store
 frontend/.DS_Store
 backend/.DS_Store
+
+# Ignore documentation file
 backend/docs/build.json
