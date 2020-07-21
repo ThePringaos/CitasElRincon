@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "0.0.1",
-    "title": "DATES APE",
+    "title": "DATES API",
     "description": "This is the project description",
     "contact": {
       "name": "unknown"
@@ -160,6 +160,1169 @@
           }
         }
       }
+    },
+    "/department/list": {
+      "get": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Returns a list of departments.",
+        "description": "Just returns a list of departments.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the departments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false,
+                            "example": "Maths"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/department/{id}": {
+      "get": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Returns the department with certain id.",
+        "description": "Just returns the department with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the department.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Maths"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Delete a department with certain id.",
+        "description": "Just delete a department with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/department": {
+      "post": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Add a new department.",
+        "description": "Just add a new department.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Department data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Maths"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Update a department.",
+        "description": "Just update a department.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Department data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Maths"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/list": {
+      "get": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Returns a list of images.",
+        "description": "Just returns a list of images.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the images.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "data"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 128,
+                            "maxLength": 128,
+                            "nullable": false,
+                            "example": "<SHA3-512 hash in hex>"
+                          },
+                          "data": {
+                            "type": "string",
+                            "format": "binary",
+                            "nullable": false,
+                            "example": "<Binary representation>"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/{id}": {
+      "get": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Returns the image with certain id.",
+        "description": "Just returns the image with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Image id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 128,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the image.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "data"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "nullable": false,
+                          "example": "<SHA3-512 hash in hex>"
+                        },
+                        "data": {
+                          "type": "string",
+                          "format": "binary",
+                          "nullable": false,
+                          "example": "<Binary representation>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Delete an image with certain id.",
+        "description": "Just delete an image with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Image id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image": {
+      "post": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Add a new image.",
+        "description": "Just add a new image.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Image data.",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "data"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "nullable": false,
+                      "example": "<SHA3-512 hash in hex>"
+                    },
+                    "data": {
+                      "type": "string",
+                      "format": "binary",
+                      "nullable": false,
+                      "example": "<Binary representation>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional/list": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns a list of professionals.",
+        "description": "Returns a list of professionals including their relative value in Role, Department and Image.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the departments including roleId, departmentId and imageId relative values.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "email",
+                          "name",
+                          "departmentId",
+                          "roleId"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "nullable": false,
+                            "example": "profesor@ieselrincon.es"
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false,
+                            "example": "Juan Delgado Saavedra"
+                          },
+                          "departmentId": {
+                            "type": "integer",
+                            "nullable": false,
+                            "example": 1,
+                            "summary": "This references to a register in deparments DB Table."
+                          },
+                          "timetableId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": 1,
+                            "summary": "This references to a register in timetables DB Table."
+                          },
+                          "roleId": {
+                            "type": "integer",
+                            "nullable": false,
+                            "example": 1,
+                            "summary": "This references to a register in roles DB Table."
+                          },
+                          "tutorId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": 1,
+                            "summary": "This references to a register in tutors DB Table."
+                          },
+                          "ImageId": {
+                            "type": "string",
+                            "minLength": 128,
+                            "maxLength": 128,
+                            "example": "<SHA3-512 hash in hex>"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional/{id}": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns the professional with certain id.",
+        "description": "Returns the professional with certain id including its relative value in TimeTable.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Professional id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the professional including timetableId relative value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "email",
+                        "name",
+                        "departmentId",
+                        "roleId"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "nullable": false,
+                          "example": "profesor@ieselrincon.es"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Juan Delgado Saavedra"
+                        },
+                        "departmentId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in deparments DB Table."
+                        },
+                        "timetableId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in timetables DB Table."
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in roles DB Table."
+                        },
+                        "tutorId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in tutors DB Table."
+                        },
+                        "ImageId": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "example": "<SHA3-512 hash in hex>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Delete a professional with certain id.",
+        "description": "Just delete a professional with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Professional id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional-email": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns a professional with certain email.",
+        "description": "Just returns a professional with certain email.",
+        "responses": {
+          "200": {
+            "description": "JSON with the professional.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "email",
+                        "name",
+                        "departmentId",
+                        "roleId"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "nullable": false,
+                          "example": "profesor@ieselrincon.es"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Juan Delgado Saavedra"
+                        },
+                        "departmentId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in deparments DB Table."
+                        },
+                        "timetableId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in timetables DB Table."
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in roles DB Table."
+                        },
+                        "tutorId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in tutors DB Table."
+                        },
+                        "ImageId": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "example": "<SHA3-512 hash in hex>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional": {
+      "post": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Add a new professional.",
+        "description": "Just add a new professional.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Professional data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "email",
+                    "name",
+                    "departmentId",
+                    "roleId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "nullable": false,
+                      "example": "profesor@ieselrincon.es"
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Juan Delgado Saavedra"
+                    },
+                    "departmentId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in deparments DB Table."
+                    },
+                    "timetableId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in timetables DB Table."
+                    },
+                    "roleId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in roles DB Table."
+                    },
+                    "tutorId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in tutors DB Table."
+                    },
+                    "ImageId": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "example": "<SHA3-512 hash in hex>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Update a professional.",
+        "description": "Just update a professional.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Professional data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "email",
+                    "name",
+                    "departmentId",
+                    "roleId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "nullable": false,
+                      "example": "profesor@ieselrincon.es"
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Juan Delgado Saavedra"
+                    },
+                    "departmentId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in deparments DB Table."
+                    },
+                    "timetableId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in timetables DB Table."
+                    },
+                    "roleId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in roles DB Table."
+                    },
+                    "tutorId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in tutors DB Table."
+                    },
+                    "ImageId": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "example": "<SHA3-512 hash in hex>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -202,6 +1365,103 @@
             "type": "integer",
             "example": 1,
             "summary": "This references to a register in dateStates DB Table"
+          }
+        }
+      },
+      "Department": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "example": "Maths"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "required": [
+          "id",
+          "data"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 128,
+            "maxLength": 128,
+            "nullable": false,
+            "example": "<SHA3-512 hash in hex>"
+          },
+          "data": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false,
+            "example": "<Binary representation>"
+          }
+        }
+      },
+      "Professional": {
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "name",
+          "departmentId",
+          "roleId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": false,
+            "example": "profesor@ieselrincon.es"
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "example": "Juan Delgado Saavedra"
+          },
+          "departmentId": {
+            "type": "integer",
+            "nullable": false,
+            "example": 1,
+            "summary": "This references to a register in deparments DB Table."
+          },
+          "timetableId": {
+            "type": "integer",
+            "nullable": true,
+            "example": 1,
+            "summary": "This references to a register in timetables DB Table."
+          },
+          "roleId": {
+            "type": "integer",
+            "nullable": false,
+            "example": 1,
+            "summary": "This references to a register in roles DB Table."
+          },
+          "tutorId": {
+            "type": "integer",
+            "nullable": true,
+            "example": 1,
+            "summary": "This references to a register in tutors DB Table."
+          },
+          "ImageId": {
+            "type": "string",
+            "minLength": 128,
+            "maxLength": 128,
+            "example": "<SHA3-512 hash in hex>"
           }
         }
       }

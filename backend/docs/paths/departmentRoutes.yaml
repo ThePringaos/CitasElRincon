@@ -1,0 +1,189 @@
+####################
+# /department/list #
+####################
+/department/list:
+  get:
+    tags:
+        - DepartmentRoutes
+    summary: Returns a list of departments.
+    description: Just returns a list of departments.
+    responses:
+      200:
+        description: JSON array with the departments.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  type: array
+                  items: 
+                    $ref: ../components/schemas/Department.yaml
+
+###################
+# /department/:id #
+###################
+
+/department/{id}:
+  get:
+    tags:
+        - DepartmentRoutes
+    summary: Returns the department with certain id.
+    description: Just returns the department with certain id.
+    parameters:
+      - name: id
+        in: path
+        description: Department id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: JSON with the department.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct
+                data:
+                  $ref: ../components/schemas/Department.yaml
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  delete:
+    tags:
+        - DepartmentRoutes
+    summary: Delete a department with certain id.
+    description: Just delete a department with certain id.
+    parameters:
+      - name: id
+        in: path
+        description: Department id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+###############
+# /department #
+###############
+
+/department:
+  post:
+    tags:
+        - DepartmentRoutes
+    summary: Add a new department.
+    description: Just add a new department.
+    parameters:
+      - name: data
+        in: query
+        description: Department data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Department.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  put:
+    tags:
+        - DepartmentRoutes
+    summary: Update a department.
+    description: Just update a department.
+    parameters:
+      - name: data
+        in: query
+        description: Department data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Department.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
