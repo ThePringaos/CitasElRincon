@@ -1,0 +1,7 @@
+$ref#date: ./dateRoutes.yaml
+$ref#department: ./departmentRoutes.yaml
+$ref#image: ./imageRoutes.yaml
+$ref#professional: ./professionalRoutes.yaml
+$ref#role: ./roleRoutes.yaml
+$ref#timetable: ./timetableRoutes.yaml
+$ref#tutor: ./tutorRoutes.yaml

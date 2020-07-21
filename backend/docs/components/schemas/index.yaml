@@ -1,0 +1,14 @@
+Date:
+  $ref: ./Date.yaml
+Department:
+  $ref: ./Department.yaml
+Image:
+  $ref: ./Image.yaml
+Professional:
+  $ref: ./Professional.yaml
+Role:
+  $ref: ./Role.yaml
+Timetable:
+  $ref: ./Timetable.yaml
+Tutor:
+  $ref: ./Tutor.yaml

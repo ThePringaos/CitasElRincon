@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: DATES API
+  description: This is the project description
+  contact:
+    name: unknown
+servers:
+  - url: http://localhost:8000
+paths:
+  $ref: ./paths/index.yaml
+components:
+  $ref: ./components/index.yaml
