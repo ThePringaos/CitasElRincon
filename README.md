@@ -6,7 +6,7 @@ Citas El Rincón repository
 
 Download links:
 
-From Github: https://github.com/JonEG/IESELRINCONproject.git
+From Github: https://github.com/ThePringaos/CitasElRincon.git
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ You need a working environment with:
 The best option to start with this project is cloning it in your PC:
 
 ```
-git clone https://github.com/JonEG/IESELRINCONproject.git
+git clone https://github.com/ThePringaos/CitasElRincon.git
 ```
 
 You need a node.js working environment. The LTS is recommended: https://nodejs.org/es/
@@ -73,7 +73,7 @@ npm run start
 Enjoy!!!
 
 ## Authors
-* unknown
+* ThePringaos
 
 ## Acknowledgments
 * José Juan Rodríguez Martín because of his dedication to teach us.
