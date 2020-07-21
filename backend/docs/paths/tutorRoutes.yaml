@@ -48,6 +48,34 @@
               $ref: ../components/schemas/Tutor.yaml
       400:
         description: Bad request.
+  
+  delete:
+    tags:
+      - TutorRoutes
+    summary: Delete the course with this ID.
+    parameters:
+      - name: id
+        in: path
+        description: Tutor id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.
 
 ##############
 # /tutor #
@@ -81,10 +109,6 @@
       400:
         description: Bad request.
 
-##############
-# /tutor #
-##############
-/tutor/update:
   put:
     tags:
       - TutorRoutes
@@ -116,37 +140,5 @@
                 message:
                   type: string
                   description: Successfully updated.
-      400:
-        description: Bad request.
-
-##################
-# /tutor/:id #
-##################
-/tutor/delete:
-  delete:
-    tags:
-      - TutorRoutes
-    summary: Delete the course with this ID.
-    parameters:
-      - name: id
-        in: path
-        description: Tutor id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Successful operation
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                success:
-                  type: boolean
-                  description: True
-                message:
-                  type: string
-                  description: Successfully deleted.
       400:
         description: Bad request.

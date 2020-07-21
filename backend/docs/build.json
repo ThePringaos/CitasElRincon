@@ -14,6 +14,727 @@
     }
   ],
   "paths": {
+    "/date/list": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState.",
+        "responses": {
+          "200": {
+            "description": "The JSON.data also includes professionalId, dateTypeId and dateStateId relative values.(Not in the example)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "username",
+                          "password"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "alumno@ieselrincon.es"
+                          },
+                          "date": {
+                            "type": "string",
+                            "example": "2020/4/20"
+                          },
+                          "time": {
+                            "type": "string",
+                            "example": 770
+                          },
+                          "professionalId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in professional DB Table"
+                          },
+                          "dateTypeId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateType DB Table"
+                          },
+                          "dateStateId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateStates DB Table"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date/{id}": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates for certain ID.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Date id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/role/list": {
+      "get": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Returns a list of roles.",
+        "description": "Returns a list of roles.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Director"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/role/{id}": {
+      "get": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Returns a role with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Delete the role with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Add a role to the database.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "description": "Role name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Update a role usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "description": "Role name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable/list": {
+      "get": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Returns a list with all weeks added and their specific times.",
+        "description": "Returns a list with all weeks added and their specific times.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "monday": {
+                            "type": "string",
+                            "example": "10:30-11:00"
+                          },
+                          "tuesday": {
+                            "type": "string",
+                            "example": "09:00-10:00"
+                          },
+                          "wednesday": {
+                            "type": "string",
+                            "example": null
+                          },
+                          "thursday": {
+                            "type": "string",
+                            "example": null
+                          },
+                          "friday": {
+                            "type": "string",
+                            "example": "12:15-13:30"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable/{id}": {
+      "get": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Returns a week with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "monday": {
+                      "type": "string",
+                      "example": "10:30-11:00"
+                    },
+                    "tuesday": {
+                      "type": "string",
+                      "example": "09:00-10:00"
+                    },
+                    "wednesday": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "thursday": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "friday": {
+                      "type": "string",
+                      "example": "12:15-13:30"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Delete the week with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable": {
+      "post": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Add a week to the database.",
+        "parameters": [
+          {
+            "name": "monday",
+            "in": "params",
+            "description": "Hours for Monday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tuesday",
+            "in": "params",
+            "description": "Hours for Tuesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wednesday",
+            "in": "params",
+            "description": "Hours for Wednesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "thursday",
+            "in": "params",
+            "description": "Hours for Thursday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friday",
+            "in": "params",
+            "description": "Hours for Friday",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Update a week usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "monday",
+            "in": "params",
+            "description": "Hours for Monday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tuesday",
+            "in": "params",
+            "description": "Hours for Tuesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wednesday",
+            "in": "params",
+            "description": "Hours for Wednesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "thursday",
+            "in": "params",
+            "description": "Hours for Thursday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friday",
+            "in": "params",
+            "description": "Hours for Friday",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
     "/tutor/list": {
       "get": {
         "tags": [
@@ -103,6 +824,48 @@
             "description": "Bad request."
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Delete the course with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
       }
     },
     "/tutor": {
@@ -147,9 +910,7 @@
             "description": "Bad request."
           }
         }
-      }
-    },
-    "/tutor/update": {
+      },
       "put": {
         "tags": [
           "TutorRoutes"
@@ -190,50 +951,6 @@
                     "message": {
                       "type": "string",
                       "description": "Successfully updated."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      }
-    },
-    "/tutor/delete": {
-      "delete": {
-        "tags": [
-          "TutorRoutes"
-        ],
-        "summary": "Delete the course with this ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Tutor id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "Successfully deleted."
                     }
                   }
                 }

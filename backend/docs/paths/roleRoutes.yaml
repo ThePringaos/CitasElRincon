@@ -48,6 +48,34 @@
               $ref: ../components/schemas/Date.yaml
       400:
         description: Bad request.
+  
+  delete:
+    tags:
+        - RoleRoutes
+    summary: Delete the role with this id.
+    parameters:
+      - name: id
+        in: path
+        description: Role id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.
 
 #########
 # /role #
@@ -80,11 +108,7 @@
                   description: Successfully added, id 1.
       400:
         description: Bad request.
-
-#########
-# /role #
-#########
-/role/update:
+  
   put:
     tags:
         - RoleRoutes
@@ -116,37 +140,5 @@
                 message:
                   type: string
                   description: Successfully updated.
-      400:
-        description: Bad request.
-
-#############
-# /role/:id #
-#############
-/role/delete:
-  delete:
-    tags:
-        - RoleRoutes
-    summary: Delete the role with this id.
-    parameters:
-      - name: id
-        in: path
-        description: Role id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Successful operation
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                success:
-                  type: boolean
-                  description: True
-                message:
-                  type: string
-                  description: Successfully deleted.
       400:
         description: Bad request.
