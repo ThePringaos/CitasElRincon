@@ -1,15 +1,14 @@
 ####################
-# /department/list #
+# /date_state/list #
 ####################
-/department/list:
+/date_state/list:
   get:
     tags:
-        - DepartmentRoutes
-    summary: Returns a list of departments.
-    description: Just returns a list of departments.
+      - DateStateRoutes
+    summary: Returns a list of with all date states.
+    description: Returns a list of with all date states.
     responses:
       200:
-        description: JSON array with the departments.
         content:
           application/json:
             schema:
@@ -17,12 +16,11 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct
+                  description: True
                 data:
                   type: array
-                  items: 
-                    $ref: ../components/schemas/Department.yaml
-
+                  items:
+                    $ref: ../components/schemas/DateState.yaml
       400:
         description: Bad request.
         content:
@@ -35,36 +33,27 @@
                   description: Error.
 
 ###################
-# /department/:id #
+# /date_state/:id #
 ###################
-
-/department/{id}:
+/date_state/{id}:
   get:
     tags:
-        - DepartmentRoutes
-    summary: Returns the department with certain id.
-    description: Just returns the department with certain id.
+      - DateStateRoutes
+    summary: Returns the date state with this id.
     parameters:
       - name: id
         in: path
-        description: Department id
+        description: DateState id
         required: true
         schema:
           type: integer
     responses:
       200:
-        description: JSON with the department.
+        description: Successful operation
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                success:
-                  type: boolean
-                  description: Correct
-                data:
-                  $ref: ../components/schemas/Department.yaml
-
+              $ref: ../components/schemas/DateState.yaml
       400:
         description: Bad request.
         content:
@@ -75,22 +64,21 @@
                 status:
                   type: string
                   description: Error.
-
+  
   delete:
     tags:
-        - DepartmentRoutes
-    summary: Delete a department with certain id.
-    description: Just delete a department with certain id.
+      - DateStateRoutes
+    summary: Delete the date state with this ID.
     parameters:
       - name: id
         in: path
-        description: Department id
+        description: DateState id
         required: true
         schema:
           type: integer
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -98,11 +86,10 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct.
+                  description: True
                 message:
                   type: string
-                  description: Status.
-
+                  description: Successfully deleted.
       400:
         description: Bad request.
         content:
@@ -115,27 +102,23 @@
                   description: Error.
 
 ###############
-# /department #
+# /date_state #
 ###############
-
-/department:
+/date_state:
   post:
     tags:
-        - DepartmentRoutes
-    summary: Add a new department.
-    description: Just add a new department.
+      - DateStateRoutes
+    summary: Add a date state to DateState table.
     parameters:
-      - name: data
-        in: query
-        description: Department data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../components/schemas/Department.yaml
+      - name: name
+        in: params
+        required: True
+        description: DateState name
+        schema:
+          type: string
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -149,8 +132,7 @@
                   description: Status.
                 id:
                   type: integer
-                  description: Department id.
-
+                  description: Date state id.
       400:
         description: Bad request.
         content:
@@ -164,21 +146,24 @@
 
   put:
     tags:
-        - DepartmentRoutes
-    summary: Update a department.
-    description: Just update a department.
+      - DateStateRoutes
+    summary: Update a date state usign its id.
     parameters:
-      - name: data
-        in: query
-        description: Department data
+      - name: id
+        in: params
+        description: DateState id
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../components/schemas/Department.yaml
+        schema:
+          type: string
+      - name: name
+        in: params
+        required: True
+        description: DateState name
+        schema:
+          type: string
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -186,11 +171,10 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct.
+                  description: True
                 message:
                   type: string
-                  description: Status.
-
+                  description: Successfully updated.
       400:
         description: Bad request.
         content:

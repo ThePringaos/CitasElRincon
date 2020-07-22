@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 ThePringaos
+ *  Copyright (C) 2020  Unknown
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -15,21 +15,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const express = require('express');
-const router = express.Router();
+const KeysDatabase = ({
+  host: 'localhost',
+  user: 'root',
+  password: 'ylenia',
+  database: 'elrincon-project',
+  port: 3306,
+  dialect: 'mysql'
+});
 
-const imageController = require('../controllers/imageController');
-
-// GET ALL
-router.get('/image/list', imageController.getAll);
-
-// GET WITH ID
-router.get('/image/:id', imageController.getId);
-
-// CREATE
-router.post('/image', imageController.add);
-
-// DELETE
-router.delete('/image/:id', imageController.delete);
-
-module.exports = router;
+module.exports = KeysDatabase;
