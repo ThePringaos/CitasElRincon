@@ -1,2 +1,13 @@
 npm modules to install
 - forever-service
+
+Redefine styles 
+- /definir-horario
+  - ancho de las tablas (igualar)
+  - alinear horizontal y vertical (días)
+
+- primera ruta tras frontend npm start
+
+- posibilidad de cancelar dias concretos 
+
+- hacer que el nombre(nav) sea el del perfil 
