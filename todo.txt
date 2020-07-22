@@ -1,0 +1,2 @@
+npm modules to install
+- forever-service
