@@ -23,6 +23,17 @@
                   items: 
                     $ref: ../components/schemas/Professional.yaml
 
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
 #####################
 # /professional/:id #
 #####################
@@ -103,19 +114,19 @@
                   type: string
                   description: Error.
 
-##############################
-# /professional/email/:email #
-##############################
+#######################
+# /professional-email #
+#######################
 
-/professional/email/{email}:
-  get:
+/professional-email:
+  post:
     tags:
         - ProfessionalRoutes
     summary: Returns a professional with certain email.
     description: Just returns a professional with certain email.
     parameters:
       - name: email
-        in: path
+        in: query
         description: Professional email
         required: true
         schema:
@@ -134,6 +145,17 @@
                   description: Correct
                 data:
                   $ref: ../components/schemas/Professional.yaml
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 #################
 # /professional #
@@ -168,6 +190,9 @@
                 message:
                   type: string
                   description: Status.
+                id:
+                  type: integer
+                  description: Professional id.
 
       400:
         description: Bad request.

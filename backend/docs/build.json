@@ -1790,8 +1790,8 @@
         }
       }
     },
-    "/professional/email/{email}": {
-      "get": {
+    "/professional-email": {
+      "post": {
         "tags": [
           "ProfessionalRoutes"
         ],
@@ -1800,7 +1800,7 @@
         "parameters": [
           {
             "name": "email",
-            "in": "path",
+            "in": "query",
             "description": "Professional email",
             "required": true,
             "schema": {

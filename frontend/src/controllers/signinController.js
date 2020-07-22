@@ -1,16 +1,16 @@
 /*
- *  Copyright (C) 2020  Unknown
- *  
+ *  Copyright (C) 2020 ThePringaos
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
  *  by the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Affero General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -28,18 +28,21 @@ class SigninController {
       sessionStorage.userEmail = response.profileObj.email;
       sessionStorage.userUrl = response.profileObj.imageUrl;
       resolve(true);
+      console.log('Google info loaded succesfully');
     });
   }
 
   async loadUserId (response) {
-    const {email} = response.profileObj;
-    await ProfessionalService.getWithEmail({email: email})
+    const { email } = response.profileObj;
+    await ProfessionalService.getWithEmail({ email: email })
       .then(res => {
         if (res.data.success) {
           const { id } = res.data.data[0];
           sessionStorage.userId = id;
+          console.log('Professional exists');
         } else {
           console.error('Error loading Id');
+          console.log("Professional doesn't exists");
         }
       })
       .catch(err => {

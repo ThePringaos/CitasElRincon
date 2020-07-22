@@ -1,16 +1,16 @@
 /*
  *  Copyright (C) 2020  Unknown
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
  *  by the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Affero General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -26,15 +26,11 @@ class ProfessionalDataService {
     return http.get(`/professional/${id}`);
   }
 
-  getWithEmail (emailo) {
-    const {email} = emailo;
-    console.log(JSON.stringify(email));
-    return http.get(`/professional/email/${email}`);
+  getWithEmail (email) {
+    return http.post('/professional-email', email);
   }
 
   create (data) {
-    console.log('DATA');
-    console.log(data);
     return http.post('/professional/', data, {
       onUploadProgress: progressEvent => {
         console.log('Subida de foto: ' + Math.round(progressEvent.loaded * 100 / progressEvent.total) + '%');
