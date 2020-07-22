@@ -59,7 +59,6 @@ class DateController {
           console.error('ERROR server' + err);
         });
     });
-    console.log(myDates);
     return myDates;
   }
 
@@ -77,7 +76,6 @@ class DateController {
       eachDay = new Date(startDate.getTime()).addDays(i);
       i++;
     }
-    console.log(days);
     return days;
   }
 

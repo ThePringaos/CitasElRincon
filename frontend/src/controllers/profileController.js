@@ -41,7 +41,7 @@ class profileController {
   }
 
   async loadUserId() {
-    await ProfessionalService.getWithEmail({ email: sessionStorage.getItem('userEmail') })
+    await ProfessionalService.getWithEmail({email: sessionStorage.getItem('userEmail')})
       .then(res => {
         if (res.data.success) {
           this.state.response = { redirect: '/', allowCreation: false };
@@ -57,7 +57,8 @@ class profileController {
 
   async queryProfessionals() {
     let myState = {};
-    await ProfessionalService.getWithEmail({ email: this.state.email })
+    
+    await ProfessionalService.getWithEmail({email: this.state.email})
       .then(async res => {
         if (res.data.success) {
           const { id, name, departmentId, roleId, tutorId, comment, imageId } = res.data.data[0];

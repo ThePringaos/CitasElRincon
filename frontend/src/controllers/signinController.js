@@ -32,7 +32,8 @@ class SigninController {
   }
 
   async loadUserId (response) {
-    await ProfessionalService.getWithEmail({ email: response.profileObj.email })
+    const {email} = response.profileObj;
+    await ProfessionalService.getWithEmail({email: email})
       .then(res => {
         if (res.data.success) {
           const { id } = res.data.data[0];

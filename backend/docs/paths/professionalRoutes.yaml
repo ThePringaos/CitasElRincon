@@ -103,16 +103,24 @@
                   type: string
                   description: Error.
 
-#######################
-# /professional-email #
-#######################
+##############################
+# /professional/email/:email #
+##############################
 
-/professional-email:
+/professional/email/{email}:
   get:
     tags:
         - ProfessionalRoutes
     summary: Returns a professional with certain email.
     description: Just returns a professional with certain email.
+    parameters:
+      - name: email
+        in: path
+        description: Professional email
+        required: true
+        schema:
+          type: string
+          format: email
     responses:
       200:
         description: JSON with the professional.
