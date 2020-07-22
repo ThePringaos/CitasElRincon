@@ -36,7 +36,7 @@
   get:
     tags:
         - DateRoutes
-    summary: Returns a list of dates for certain ID.
+    summary: Returns a list of dates for a certain ID.
     description: Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.
     parameters:
       - name: id
@@ -55,3 +55,151 @@
 
       400:
         description: Bad request.
+  
+  delete:
+    tags:
+      - DateRoutes
+    summary: Delete the date with this ID.
+    parameters:
+      - name: id
+        in: path
+        description: Date id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.
+
+##################
+# /date/get-date #
+##################
+
+/date/get-date: 
+  get:
+    tags:
+        - DateRoutes
+    summary: Returns a date if exists.
+    description: Returns a professional's date on a certeain time.
+    parameters:
+      - in: body
+        name: date info
+        description: The professional id and date's date.
+        schema:
+          type: object
+          required:
+            - professionalId
+            - date
+          properties:
+            professionalId:
+              type: integer
+            date:
+              type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Date.yaml
+
+      400:
+        description: Bad request.
+
+#########
+# /date #
+#########
+
+/date: 
+  post:
+      tags:
+          - DateRoutes
+      summary: Add a new date.
+      description: Just add a new date.
+      parameters:
+        - name: data
+          in: query
+          description: Date data
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: ../components/schemas/Date.yaml
+      responses:
+        200:
+          description: Result of the operation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Correct.
+                  message:
+                    type: string
+                    description: Status.
+  
+        400:
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Error.
+
+  put:
+    tags:
+        - DateRoutes
+    summary: Update a date.
+    description: Just update a date.
+    parameters:
+      - name: data
+        in: query
+        description: Date data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/Date.yaml
+    responses:
+      200:
+        description: Result of the operation.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.

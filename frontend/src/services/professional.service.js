@@ -26,8 +26,10 @@ class ProfessionalDataService {
     return http.get(`/professional/${id}`);
   }
 
-  getWithEmail (correo) {
-    return http.post('/professional-email', correo);
+  getWithEmail (emailo) {
+    const {email} = emailo;
+    console.log(JSON.stringify(email));
+    return http.get(`/professional/email/${email}`);
   }
 
   create (data) {

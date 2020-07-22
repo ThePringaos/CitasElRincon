@@ -73,8 +73,8 @@ professionalController.getId = (req, res) => {
 };
 
 professionalController.getWithEmail = (req, res) => {
-  const { email } = req.body;
-  Professional.findAll({ where: { email } })
+  const { email } = req.params;
+  Professional.findAll({ where: { email: email } })
     .then(each => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));

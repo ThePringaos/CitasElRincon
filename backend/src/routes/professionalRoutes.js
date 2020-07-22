@@ -27,7 +27,7 @@ router.get('/professional/list', professionalController.getAll);
 router.get('/professional/:id', professionalController.getId);
 
 // GET WITH EMAIL
-router.post('/professional-email', professionalController.getWithEmail);
+router.get('/professional/email/:email', professionalController.getWithEmail);
 
 // CREATE
 router.post('/professional', professionalController.add);

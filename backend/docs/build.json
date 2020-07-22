@@ -1,0 +1,3156 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "DATES API",
+    "description": "This is the project description",
+    "contact": {
+      "name": "unknown"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "paths": {
+    "/date/list": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState.",
+        "responses": {
+          "200": {
+            "description": "The JSON.data also includes professionalId, dateTypeId and dateStateId relative values.(Not in the example)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "username",
+                          "password"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "alumno@ieselrincon.es"
+                          },
+                          "date": {
+                            "type": "string",
+                            "example": "2020/4/20"
+                          },
+                          "time": {
+                            "type": "string",
+                            "example": 770
+                          },
+                          "professionalId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in professional DB Table"
+                          },
+                          "dateTypeId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateType DB Table"
+                          },
+                          "dateStateId": {
+                            "type": "integer",
+                            "example": 1,
+                            "summary": "This references to a register in dateStates DB Table"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date/{id}": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a list of dates for a certain ID.",
+        "description": "Returns a list of dates including their relative value in Professional, DateType and DateState for certain ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Date id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Delete the date with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Date id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date/get-date": {
+      "get": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Returns a date if exists.",
+        "description": "Returns a professional's date on a certeain time.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "date info",
+            "description": "The professional id and date's date.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "professionalId",
+                "date"
+              ],
+              "properties": {
+                "professionalId": {
+                  "type": "integer"
+                },
+                "date": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date": {
+      "post": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Add a new date.",
+        "description": "Just add a new date.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Date data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DateRoutes"
+        ],
+        "summary": "Update a date.",
+        "description": "Just update a date.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Date data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/date_state/list": {
+      "get": {
+        "tags": [
+          "DateStateRoutes"
+        ],
+        "summary": "Returns a list of with all date states.",
+        "description": "Returns a list of with all date states.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "confirmed",
+                            "description": "Date state"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date_state/{id}": {
+      "get": {
+        "tags": [
+          "DateStateRoutes"
+        ],
+        "summary": "Returns the date state with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "DateState id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "confirmed",
+                      "description": "Date state"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DateStateRoutes"
+        ],
+        "summary": "Delete the date state with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "DateState id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date_state": {
+      "post": {
+        "tags": [
+          "DateStateRoutes"
+        ],
+        "summary": "Add a date state to DateState table.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "DateState name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DateStateRoutes"
+        ],
+        "summary": "Update a date state usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "DateState id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "DateState name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date_type/list": {
+      "get": {
+        "tags": [
+          "DateTypeRoutes"
+        ],
+        "summary": "Returns a list of with all date types.",
+        "description": "Returns a list of with all date types.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "videocall",
+                            "description": "Date type"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date_type/{id}": {
+      "get": {
+        "tags": [
+          "DateTypeRoutes"
+        ],
+        "summary": "Returns the date type with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "DateType id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "videocall",
+                      "description": "Date type"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DateTypeRoutes"
+        ],
+        "summary": "Delete the date type with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "DateType id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/date_type": {
+      "post": {
+        "tags": [
+          "DateTypeRoutes"
+        ],
+        "summary": "Add a date type to DateType table.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "DateType name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DateTypeRoutes"
+        ],
+        "summary": "Update a date type usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "DateType id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "DateType name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/department/list": {
+      "get": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Returns a list of departments.",
+        "description": "Just returns a list of departments.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the departments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false,
+                            "example": "Maths"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/department/{id}": {
+      "get": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Returns the department with certain id.",
+        "description": "Just returns the department with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the department.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Maths"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Delete a department with certain id.",
+        "description": "Just delete a department with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/department": {
+      "post": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Add a new department.",
+        "description": "Just add a new department.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Department data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Maths"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DepartmentRoutes"
+        ],
+        "summary": "Update a department.",
+        "description": "Just update a department.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Department data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Maths"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/list": {
+      "get": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Returns a list of images.",
+        "description": "Just returns a list of images.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the images.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "data"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 128,
+                            "maxLength": 128,
+                            "nullable": false,
+                            "example": "<SHA3-512 hash in hex>"
+                          },
+                          "data": {
+                            "type": "string",
+                            "format": "binary",
+                            "nullable": false,
+                            "example": "<Binary representation>"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image/{id}": {
+      "get": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Returns the image with certain id.",
+        "description": "Just returns the image with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Image id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 128,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the image.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "data"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "nullable": false,
+                          "example": "<SHA3-512 hash in hex>"
+                        },
+                        "data": {
+                          "type": "string",
+                          "format": "binary",
+                          "nullable": false,
+                          "example": "<Binary representation>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Delete an image with certain id.",
+        "description": "Just delete an image with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Image id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/image": {
+      "post": {
+        "tags": [
+          "ImageRoutes"
+        ],
+        "summary": "Add a new image.",
+        "description": "Just add a new image.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Image data.",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "data"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "nullable": false,
+                      "example": "<SHA3-512 hash in hex>"
+                    },
+                    "data": {
+                      "type": "string",
+                      "format": "binary",
+                      "nullable": false,
+                      "example": "<Binary representation>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional/list": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns a list of professionals.",
+        "description": "Returns a list of professionals including their relative value in Role, Department and Image.",
+        "responses": {
+          "200": {
+            "description": "JSON array with the departments including roleId, departmentId and imageId relative values.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "email",
+                          "name",
+                          "departmentId",
+                          "roleId"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "nullable": false,
+                            "example": "profesor@ieselrincon.es"
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false,
+                            "example": "Juan Delgado Saavedra"
+                          },
+                          "departmentId": {
+                            "type": "integer",
+                            "nullable": false,
+                            "example": 1,
+                            "summary": "This references to a register in deparments DB Table."
+                          },
+                          "timetableId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": 1,
+                            "summary": "This references to a register in timetables DB Table."
+                          },
+                          "roleId": {
+                            "type": "integer",
+                            "nullable": false,
+                            "example": 1,
+                            "summary": "This references to a register in roles DB Table."
+                          },
+                          "tutorId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": 1,
+                            "summary": "This references to a register in tutors DB Table."
+                          },
+                          "ImageId": {
+                            "type": "string",
+                            "minLength": 128,
+                            "maxLength": 128,
+                            "example": "<SHA3-512 hash in hex>"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional/{id}": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns the professional with certain id.",
+        "description": "Returns the professional with certain id including its relative value in TimeTable.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Professional id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the professional including timetableId relative value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "email",
+                        "name",
+                        "departmentId",
+                        "roleId"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "nullable": false,
+                          "example": "profesor@ieselrincon.es"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Juan Delgado Saavedra"
+                        },
+                        "departmentId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in deparments DB Table."
+                        },
+                        "timetableId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in timetables DB Table."
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in roles DB Table."
+                        },
+                        "tutorId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in tutors DB Table."
+                        },
+                        "ImageId": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "example": "<SHA3-512 hash in hex>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Delete a professional with certain id.",
+        "description": "Just delete a professional with certain id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Professional id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional/email/{email}": {
+      "get": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Returns a professional with certain email.",
+        "description": "Just returns a professional with certain email.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Professional email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON with the professional.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "email",
+                        "name",
+                        "departmentId",
+                        "roleId"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "nullable": false,
+                          "example": "profesor@ieselrincon.es"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "example": "Juan Delgado Saavedra"
+                        },
+                        "departmentId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in deparments DB Table."
+                        },
+                        "timetableId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in timetables DB Table."
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "nullable": false,
+                          "example": 1,
+                          "summary": "This references to a register in roles DB Table."
+                        },
+                        "tutorId": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": 1,
+                          "summary": "This references to a register in tutors DB Table."
+                        },
+                        "ImageId": {
+                          "type": "string",
+                          "minLength": 128,
+                          "maxLength": 128,
+                          "example": "<SHA3-512 hash in hex>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/professional": {
+      "post": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Add a new professional.",
+        "description": "Just add a new professional.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Professional data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "email",
+                    "name",
+                    "departmentId",
+                    "roleId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "nullable": false,
+                      "example": "profesor@ieselrincon.es"
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Juan Delgado Saavedra"
+                    },
+                    "departmentId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in deparments DB Table."
+                    },
+                    "timetableId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in timetables DB Table."
+                    },
+                    "roleId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in roles DB Table."
+                    },
+                    "tutorId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in tutors DB Table."
+                    },
+                    "ImageId": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "example": "<SHA3-512 hash in hex>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProfessionalRoutes"
+        ],
+        "summary": "Update a professional.",
+        "description": "Just update a professional.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Professional data",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "email",
+                    "name",
+                    "departmentId",
+                    "roleId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "nullable": false,
+                      "example": "profesor@ieselrincon.es"
+                    },
+                    "name": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "Juan Delgado Saavedra"
+                    },
+                    "departmentId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in deparments DB Table."
+                    },
+                    "timetableId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in timetables DB Table."
+                    },
+                    "roleId": {
+                      "type": "integer",
+                      "nullable": false,
+                      "example": 1,
+                      "summary": "This references to a register in roles DB Table."
+                    },
+                    "tutorId": {
+                      "type": "integer",
+                      "nullable": true,
+                      "example": 1,
+                      "summary": "This references to a register in tutors DB Table."
+                    },
+                    "ImageId": {
+                      "type": "string",
+                      "minLength": 128,
+                      "maxLength": 128,
+                      "example": "<SHA3-512 hash in hex>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Correct."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/list": {
+      "get": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Returns a list of roles.",
+        "description": "Returns a list of roles.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Director"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/role/{id}": {
+      "get": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Returns a role with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "username",
+                    "password"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "alumno@ieselrincon.es"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "2020/4/20"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": 770
+                    },
+                    "professionalId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in professional DB Table"
+                    },
+                    "dateTypeId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateType DB Table"
+                    },
+                    "dateStateId": {
+                      "type": "integer",
+                      "example": 1,
+                      "summary": "This references to a register in dateStates DB Table"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Delete the role with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Add a role to the database.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "description": "Role name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RoleRoutes"
+        ],
+        "summary": "Update a role usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Role id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "description": "Role name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable/list": {
+      "get": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Returns a list with all weeks added and their specific times.",
+        "description": "Returns a list with all weeks added and their specific times.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "monday": {
+                            "type": "string",
+                            "example": "10:30-11:00"
+                          },
+                          "tuesday": {
+                            "type": "string",
+                            "example": "09:00-10:00"
+                          },
+                          "wednesday": {
+                            "type": "string",
+                            "example": null
+                          },
+                          "thursday": {
+                            "type": "string",
+                            "example": null
+                          },
+                          "friday": {
+                            "type": "string",
+                            "example": "12:15-13:30"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable/{id}": {
+      "get": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Returns a week with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "monday": {
+                      "type": "string",
+                      "example": "10:30-11:00"
+                    },
+                    "tuesday": {
+                      "type": "string",
+                      "example": "09:00-10:00"
+                    },
+                    "wednesday": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "thursday": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "friday": {
+                      "type": "string",
+                      "example": "12:15-13:30"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Delete the week with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/timetable": {
+      "post": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Add a week to the database.",
+        "parameters": [
+          {
+            "name": "monday",
+            "in": "params",
+            "description": "Hours for Monday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tuesday",
+            "in": "params",
+            "description": "Hours for Tuesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wednesday",
+            "in": "params",
+            "description": "Hours for Wednesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "thursday",
+            "in": "params",
+            "description": "Hours for Thursday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friday",
+            "in": "params",
+            "description": "Hours for Friday",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TimetableRoutes"
+        ],
+        "summary": "Update a week usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Timetable id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "monday",
+            "in": "params",
+            "description": "Hours for Monday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tuesday",
+            "in": "params",
+            "description": "Hours for Tuesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wednesday",
+            "in": "params",
+            "description": "Hours for Wednesday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "thursday",
+            "in": "params",
+            "description": "Hours for Thursday",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friday",
+            "in": "params",
+            "description": "Hours for Friday",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor/list": {
+      "get": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Returns a list of with all courses added.",
+        "description": "Returns a list of with all courses added.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "2DAM",
+                            "description": "Course name"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor/{id}": {
+      "get": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Returns a course with this id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "2DAM",
+                      "description": "Course name"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Delete the course with this ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/tutor": {
+      "post": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Add a course to the database.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "Course name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully added, id 1."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TutorRoutes"
+        ],
+        "summary": "Update a course usign its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "params",
+            "description": "Tutor id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "params",
+            "required": true,
+            "description": "Course name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Successfully updated."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Date": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "alumno@ieselrincon.es"
+          },
+          "date": {
+            "type": "string",
+            "example": "2020/4/20"
+          },
+          "time": {
+            "type": "string",
+            "example": 770
+          },
+          "professionalId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in professional DB Table"
+          },
+          "dateTypeId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in dateType DB Table"
+          },
+          "dateStateId": {
+            "type": "integer",
+            "example": 1,
+            "summary": "This references to a register in dateStates DB Table"
+          }
+        }
+      },
+      "DateState": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "confirmed",
+            "description": "Date state"
+          }
+        }
+      },
+      "DateType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "videocall",
+            "description": "Date type"
+          }
+        }
+      },
+      "Department": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "example": "Maths"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "required": [
+          "id",
+          "data"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 128,
+            "maxLength": 128,
+            "nullable": false,
+            "example": "<SHA3-512 hash in hex>"
+          },
+          "data": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false,
+            "example": "<Binary representation>"
+          }
+        }
+      },
+      "Professional": {
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "name",
+          "departmentId",
+          "roleId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": false,
+            "example": "profesor@ieselrincon.es"
+          },
+          "name": {
+            "type": "string",
+            "nullable": false,
+            "example": "Juan Delgado Saavedra"
+          },
+          "departmentId": {
+            "type": "integer",
+            "nullable": false,
+            "example": 1,
+            "summary": "This references to a register in deparments DB Table."
+          },
+          "timetableId": {
+            "type": "integer",
+            "nullable": true,
+            "example": 1,
+            "summary": "This references to a register in timetables DB Table."
+          },
+          "roleId": {
+            "type": "integer",
+            "nullable": false,
+            "example": 1,
+            "summary": "This references to a register in roles DB Table."
+          },
+          "tutorId": {
+            "type": "integer",
+            "nullable": true,
+            "example": 1,
+            "summary": "This references to a register in tutors DB Table."
+          },
+          "ImageId": {
+            "type": "string",
+            "minLength": 128,
+            "maxLength": 128,
+            "example": "<SHA3-512 hash in hex>"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Director"
+          }
+        }
+      },
+      "Timetable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "monday": {
+            "type": "string",
+            "example": "10:30-11:00"
+          },
+          "tuesday": {
+            "type": "string",
+            "example": "09:00-10:00"
+          },
+          "wednesday": {
+            "type": "string",
+            "example": null
+          },
+          "thursday": {
+            "type": "string",
+            "example": null
+          },
+          "friday": {
+            "type": "string",
+            "example": "12:15-13:30"
+          }
+        }
+      },
+      "Tutor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "2DAM",
+            "description": "Course name"
+          }
+        }
+      }
+    },
+    "parameters": null,
+    "securitySchemes": null,
+    "requestBodies": null,
+    "responses": null,
+    "headers": null,
+    "examples": null,
+    "links": null,
+    "callbacks": null
+  }
+}

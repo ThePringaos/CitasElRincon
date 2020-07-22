@@ -62,7 +62,7 @@ dateController.getId = (req, res) => {
     });
 };
 
-dateController.getDate = (req, res) => {
+dateController.getDate = (req, res) => { 
   const { id, day } = req.body;
 
   // TODO get dateStateId confirmado from dateStates table, not like this.
