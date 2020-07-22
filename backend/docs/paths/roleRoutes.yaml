@@ -23,6 +23,14 @@
                     $ref: ../components/schemas/Role.yaml
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 #############
 # /role/:id #
@@ -48,6 +56,14 @@
               $ref: ../components/schemas/Date.yaml
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
   
   delete:
     tags:
@@ -76,6 +92,14 @@
                   description: Successfully deleted.
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 #########
 # /role #
@@ -102,12 +126,23 @@
               properties:
                 success:
                   type: boolean
-                  description: True
+                  description: Correct.
                 message:
                   type: string
-                  description: Successfully added, id 1.
+                  description: Status.
+                id:
+                  type: integer
+                  description: Role id.
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
   
   put:
     tags:
@@ -142,3 +177,11 @@
                   description: Successfully updated.
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.

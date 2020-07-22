@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -61,7 +61,7 @@ dateStateController.add = (req, res) => {
   DateState.create({ name })
     .then(each => {
       if (each.id) {
-        res.json({ success: true, message: `Successfully added, id: ${each.id}` });
+        res.json({ success: true, message: 'Successfully added', id: each.id });
       } else {
         res.status(400).json({ status: `The ${controller} couldn't be added` });
       }

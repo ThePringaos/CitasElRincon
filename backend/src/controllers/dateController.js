@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -62,7 +62,7 @@ dateController.getId = (req, res) => {
     });
 };
 
-dateController.getDate = (req, res) => { 
+dateController.getDate = (req, res) => {
   const { id, day } = req.body;
 
   // TODO get dateStateId confirmado from dateStates table, not like this.
@@ -88,7 +88,7 @@ dateController.add = (req, res) => {
   Date.create({ email, date, time, professionalId, dateTypeId, dateStateId })
     .then(each => {
       if (each.id) {
-        res.json({ success: true, message: `Successfully added, id: ${each.id}` });
+        res.json({ success: true, message: 'Successfully added', id: each.id });
       } else {
         res.json({ status: `The ${controller} couldn't be added` });
       }

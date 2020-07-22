@@ -27,6 +27,14 @@
 
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 #############
 # /date/:id #
@@ -55,6 +63,14 @@
 
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
   
   delete:
     tags:
@@ -83,6 +99,14 @@
                   description: Successfully deleted.
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 ##################
 # /date/get-date #
@@ -118,6 +142,14 @@
 
       400:
         description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
 
 #########
 # /date #
@@ -152,6 +184,9 @@
                   message:
                     type: string
                     description: Status.
+                  id:
+                    type: integer
+                    description: Date id.
   
         400:
           description: Bad request.

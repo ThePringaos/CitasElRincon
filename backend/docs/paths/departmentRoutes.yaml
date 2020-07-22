@@ -23,6 +23,17 @@
                   items: 
                     $ref: ../components/schemas/Department.yaml
 
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
 ###################
 # /department/:id #
 ###################
@@ -136,6 +147,9 @@
                 message:
                   type: string
                   description: Status.
+                id:
+                  type: integer
+                  description: Department id.
 
       400:
         description: Bad request.

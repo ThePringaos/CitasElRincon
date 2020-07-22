@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -27,7 +27,7 @@ router.get('/professional/list', professionalController.getAll);
 router.get('/professional/:id', professionalController.getId);
 
 // GET WITH EMAIL
-router.get('/professional/email/:email', professionalController.getWithEmail);
+router.post('/professional-email', professionalController.getWithEmail);
 
 // CREATE
 router.post('/professional', professionalController.add);
