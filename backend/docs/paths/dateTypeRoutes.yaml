@@ -1,15 +1,14 @@
-####################
-# /department/list #
-####################
-/department/list:
+###################
+# /date_type/list #
+###################
+/date_type/list:
   get:
     tags:
-        - DepartmentRoutes
-    summary: Returns a list of departments.
-    description: Just returns a list of departments.
+      - DateTypeRoutes
+    summary: Returns a list of with all date types.
+    description: Returns a list of with all date types.
     responses:
       200:
-        description: JSON array with the departments.
         content:
           application/json:
             schema:
@@ -17,12 +16,11 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct
+                  description: True
                 data:
                   type: array
-                  items: 
-                    $ref: ../components/schemas/Department.yaml
-
+                  items:
+                    $ref: ../components/schemas/DateType.yaml
       400:
         description: Bad request.
         content:
@@ -34,37 +32,28 @@
                   type: string
                   description: Error.
 
-###################
-# /department/:id #
-###################
-
-/department/{id}:
+##################
+# /date_type/:id #
+##################
+/date_type/{id}:
   get:
     tags:
-        - DepartmentRoutes
-    summary: Returns the department with certain id.
-    description: Just returns the department with certain id.
+      - DateTypeRoutes
+    summary: Returns the date type with this id.
     parameters:
       - name: id
         in: path
-        description: Department id
+        description: DateType id
         required: true
         schema:
           type: integer
     responses:
       200:
-        description: JSON with the department.
+        description: Successful operation
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                success:
-                  type: boolean
-                  description: Correct
-                data:
-                  $ref: ../components/schemas/Department.yaml
-
+              $ref: ../components/schemas/DateType.yaml
       400:
         description: Bad request.
         content:
@@ -75,22 +64,21 @@
                 status:
                   type: string
                   description: Error.
-
+  
   delete:
     tags:
-        - DepartmentRoutes
-    summary: Delete a department with certain id.
-    description: Just delete a department with certain id.
+      - DateTypeRoutes
+    summary: Delete the date type with this ID.
     parameters:
       - name: id
         in: path
-        description: Department id
+        description: DateType id
         required: true
         schema:
           type: integer
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -98,11 +86,10 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct.
+                  description: True
                 message:
                   type: string
-                  description: Status.
-
+                  description: Successfully deleted.
       400:
         description: Bad request.
         content:
@@ -114,28 +101,24 @@
                   type: string
                   description: Error.
 
-###############
-# /department #
-###############
-
-/department:
+##############
+# /date_type #
+##############
+/date_type:
   post:
     tags:
-        - DepartmentRoutes
-    summary: Add a new department.
-    description: Just add a new department.
+      - DateTypeRoutes
+    summary: Add a date type to DateType table.
     parameters:
-      - name: data
-        in: query
-        description: Department data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../components/schemas/Department.yaml
+      - name: name
+        in: params
+        required: True
+        description: DateType name
+        schema:
+          type: string
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -149,8 +132,7 @@
                   description: Status.
                 id:
                   type: integer
-                  description: Department id.
-
+                  description: Date type id.
       400:
         description: Bad request.
         content:
@@ -164,21 +146,24 @@
 
   put:
     tags:
-        - DepartmentRoutes
-    summary: Update a department.
-    description: Just update a department.
+      - DateTypeRoutes
+    summary: Update a date type usign its id.
     parameters:
-      - name: data
-        in: query
-        description: Department data
+      - name: id
+        in: params
+        description: DateType id
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../components/schemas/Department.yaml
+        schema:
+          type: string
+      - name: name
+        in: params
+        required: True
+        description: DateType name
+        schema:
+          type: string
     responses:
       200:
-        description: Result of the operation.
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -186,11 +171,10 @@
               properties:
                 success:
                   type: boolean
-                  description: Correct.
+                  description: True
                 message:
                   type: string
-                  description: Status.
-
+                  description: Successfully updated.
       400:
         description: Bad request.
         content:

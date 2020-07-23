@@ -1,5 +1,9 @@
 Date:
   $ref: ./Date.yaml
+DateState:
+  $ref: ./DateState.yaml
+DateType:
+  $ref: ./DateType.yaml
 Department:
   $ref: ./Department.yaml
 Image:

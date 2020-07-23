@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -74,7 +74,7 @@ professionalController.getId = (req, res) => {
 
 professionalController.getWithEmail = (req, res) => {
   const { email } = req.body;
-  Professional.findAll({ where: { email } })
+  Professional.findAll({ where: { email: email } })
     .then(each => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));

@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2020  Unknown
- *  
+ *  Copyright (C) 2020 ThePringaos
+ * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
  *  by the Free Software Foundation, either version 3 of the License, or
@@ -65,6 +65,7 @@ class timetableController {
     }
 
     async queryTimetable() {
+        console.log("CARGO ID");
         await ProfessionalService.get(this.state.userId).then(res => {
             if (res.data.success) {
                 this.state.myUser = res.data.data[0];
@@ -165,7 +166,7 @@ class timetableController {
 
         switch (day) {
             case 'monday':
-                console.log(this.state.monday.from + this.state.monday.to);
+                console.log(this.state.monday.from +" "+ this.state.monday.to);
                 if (this.state.monday.from && this.state.monday.to) {
                     week.monday = this.state.monday.from + "-" + this.state.monday.to;
                     this.updateTimetable(week);
