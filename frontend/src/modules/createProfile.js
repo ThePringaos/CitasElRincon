@@ -61,6 +61,7 @@ class profileComponent extends React.Component {
 
   async allowUserCreation () {
     const { redirect, allowCreation } = await ProfileController.loadUserId();
+    console.log('module ' + redirect, allowCreation);
     if (redirect) {
       this.setState({ redirect });
     } else if (allowCreation) {

@@ -63,8 +63,10 @@ professionalController.getId = (req, res) => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
       } else {
-        res.status(400).json({ status: `The ${controller} doesn't exist` });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
@@ -79,8 +81,10 @@ professionalController.getWithEmail = (req, res) => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
       } else {
-        res.status(400).json({ status: 'The email doesn\'t exist' });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
@@ -88,7 +92,7 @@ professionalController.getWithEmail = (req, res) => {
     });
 };
 
-async function checkImageExistance (image) {
+async function checkImageExistance(image) {
   await Image.findAll({
     where: { id: image.id }
   })
@@ -153,9 +157,9 @@ professionalController.edit = async (req, res) => {
     imageId: finalId,
     tutorId: tutorId
   },
-  {
-    where: { id }
-  })
+    {
+      where: { id }
+    })
     .then(each => {
       const data = JSON.parse(JSON.stringify(each));
       if (data.length > 0) {

@@ -53,8 +53,10 @@ dateController.getId = (req, res) => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false });
       } else {
-        res.status(400).json({ status: `The ${controller} doesn't exist` });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
@@ -74,8 +76,10 @@ dateController.getDate = (req, res) => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
       } else {
-        res.status(400).json({ status: `The ${controller} doesn't exist` });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
