@@ -10,8 +10,6 @@ Redefine styles
 
 - hacer que el nombre(nav) sea el del perfil 
 
-- crear perfil (bucle)
-
 - en imágenes (DDBB) añadir alt
 
 - components a jsx 
@@ -19,3 +17,5 @@ Redefine styles
 - https://emotion.sh/docs/styled (estilos dentro de js)
 
 - corregir DDBB dateState
+
+- comprobar email profesionales (si es del instituto o no, creando una tabla nueva)
