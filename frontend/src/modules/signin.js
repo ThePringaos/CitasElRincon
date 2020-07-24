@@ -25,14 +25,14 @@ import SigninController from '../controllers/signinController';
 import Nav from '../components/nav';
 
 class signinComponent extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       redirect: null
     };
   }
 
-  render () {
+  render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
@@ -41,20 +41,28 @@ class signinComponent extends React.Component {
         <div class='container p-4'>
           <div class='row'>
             <div class='col-md-4 mx-auto'>
+              <img class="mb-4" src={require('../images/rincon-icon.png')} alt="" width="72" height="72" />
               <div class='card text-center'>
                 <div class='card-header'>
-                  <h1>Iniciar Sesión</h1>
+                  <h1 class="h3 py-3 my-0 font-weight-normal">Iniciar sesión</h1>
                 </div>
-                <div class='card-body'>
+                <div class='card-body d-flex justify-content-center'>
                   {
                     <GoogleLogin
+                      render={renderProps => (
+                        <button className='btn btn-outline-primary d-flex aling-self-center' onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                          <img className='mr-2' src={require('../images/iconGoogle.png')} alt="iconGoogle" />
+                          <span className='my-auto'>
+                            Acceder con Google
+                          </span>
+                        </button>
+                      )}
                       clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
-                      buttonText='Iniciar sesion'
+                      buttonText='Google'
                       onSuccess={(res) => {
                         SigninController.responseGoogle(res).then(async (successMessage) => {
                           await SigninController.loadUserId(res);
                           AuthController.login(() => {
-                            console.log('Sesion iniciada correctamente');
                             this.setState({ redirect: '/crear-perfil' });
                           }
                           );
