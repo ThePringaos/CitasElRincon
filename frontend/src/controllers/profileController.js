@@ -43,7 +43,8 @@ class profileController {
   async loadUserId () {
     await ProfessionalService.getWithEmail({ email: sessionStorage.getItem('userEmail') })
       .then(res => {
-        if (res.data.success) {
+        console.log('then');
+        if (res.success) {
           this.state.response = { redirect: '/', allowCreation: false };
         } else {
           this.state.response = { redirect: null, allowCreation: true };
