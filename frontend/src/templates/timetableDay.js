@@ -19,28 +19,28 @@ import React from 'react';
 import MyPicker from '../components/myTimePicker';
 
 class timetableDayComponent extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount () {
+  componentDidMount() {
   }
 
-  render () {
+  render() {
     return (
       <div className='row my-3'>
         <div className='col-lg-12'>
           <div className='card'>
             <div className='card-body'>
-              <div class='container'>
-                <div class='row'>
-                  <div class='col-sm'>
-                    <h3>{this.props.dayName}</h3>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-sm-12 col-md-3 d-flex justify-content-center'>
+                    <h3 className='my-auto' >{this.props.dayName}</h3>
                   </div>
-                  <div class='col-sm'>
-                    <label className='float-left'>Desde </label>
-                    <div className='w-10'>
+                  <div className='col-sm-12 col-md-3 d-md-flex justify-content-center mb-sm-4'>
+                    <label className='my-md-auto my-sm-2 d-sm-block'>Desde </label>
+                    <div className='w-10 my-md-auto my-sm-2'>
                       <MyPicker
                         myDate={this.props.day.myDateFrom}
                         handleChange={this.props.handleChangeFrom}
@@ -48,15 +48,17 @@ class timetableDayComponent extends React.Component {
                       />
                     </div>
                   </div>
-                  <div class='col-sm'>
-                    <label className='float-left'>Hasta </label>
-                    <MyPicker
-                      myDate={this.props.day.myDateTo}
-                      handleChange={this.props.handleChangeTo}
-                      myInterval={this.props.myInterval}
-                    />
+                  <div className='col-sm-12 col-md-3 d-md-flex justify-content-center mb-sm-2'>
+                    <label className='my-lg-auto my-sm-2 d-sm-block'>Hasta </label>
+                    <div className='w-10 my-lg-auto my-sm-2'>
+                      <MyPicker
+                        myDate={this.props.day.myDateTo}
+                        handleChange={this.props.handleChangeTo}
+                        myInterval={this.props.myInterval}
+                      />
+                    </div>
                   </div>
-                  <div class='col-sm'>
+                  <div className='col-sm-12 col-md-3 d-flex justify-content-center'>
                     <button
                       type='button' class='btn btn-primary m-1'
                       onClick={this.props.onClickAddPeriod}

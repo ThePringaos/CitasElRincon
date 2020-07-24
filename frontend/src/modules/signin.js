@@ -58,6 +58,7 @@ class signinComponent extends React.Component {
                         </button>
                       )}
                       clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
+                      //clientId='516377320931-dt0rjb2jipavh3q00ou316leltrf4de4.apps.googleusercontent.com'
                       buttonText='Google'
                       onSuccess={(res) => {
                         SigninController.responseGoogle(res).then(async (successMessage) => {

@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   isUserRegistered () {
-    if (sessionStorage.getItem('isUserRegistered') == 'false') {
+    if (sessionStorage.getItem('isUserRegistered') === 'false') {
       this.setState({ redirect: '/crear-perfil' });
     }
   }
@@ -69,9 +69,10 @@ class App extends Component {
       this.setState({ reloadTable: false });
     }
     return (
-      <div><Nav />
+      <div>
+        <Nav />
         <div className='container'>
-          <div className='row my-5 mx-3'>
+          <div className='row my-5 mx-auto table-responsive-sm'>
             <table className='table table-bordered table-striped'>
               <thead>
                 <tr>
@@ -158,10 +159,10 @@ class App extends Component {
             dayName='Jueves'
             day={this.state.thursday}
             handleChangeFrom={async time => {
-              this.setState({ thursday: await TimeTableController.handleChange(time, 'wednesdayFrom') });
+              this.setState({ thursday: await TimeTableController.handleChange(time, 'thursdayFrom') });
             }}
             handleChangeTo={async time => {
-              this.setState({ thursday: await TimeTableController.handleChange(time, 'wednesdayTo') });
+              this.setState({ thursday: await TimeTableController.handleChange(time, 'thursdayTo') });
             }}
             myInterval={this.state.periodLenght}
             onClickAddPeriod={async () => {
