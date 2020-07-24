@@ -27,7 +27,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Nav from '../components/nav';
 
 class homeComponent extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       redirect: null,
@@ -40,43 +40,44 @@ class homeComponent extends React.Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.isUserRegistered();
     this.showTodayDates();
   }
 
-  isUserRegistered () {
+  isUserRegistered() {
     if (sessionStorage.getItem('isUserRegistered') == 'false') {
       this.setState({ redirect: '/crear-perfil' });
     }
   }
 
-  async showTodayDates () {
+  async showTodayDates() {
     const myDates = await DateController.showTodayDates(this.state.daysToQuery, this.state.id);
     this.setState({ dates: myDates });
   }
 
-  async setStartDate (date) {
+  async setStartDate(date) {
     await this.setState({ startDate: date });
     this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
   }
 
-  async setEndDate (date) {
+  async setEndDate(date) {
     await this.setState({ endDate: date });
     this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
   }
 
-  render () {
+  render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
     return (
-      <div><Nav />
+      <div>
+        <Nav />
         <div className='container p-4'>
-          <div className='row float-right'>
-            <div className='col-sm'>
+          <div className='row'>
+            <div className='col-sm-12 col-md-4 offset-md-8 float-right mb-sm-2'>
               <table className='table table-hover table-borderless table-sm'>
                 <tbody>
                   <tr className='table-info'>
@@ -112,12 +113,8 @@ class homeComponent extends React.Component {
             </div>
           </div>
 
-          <div className='row my-5 mx-3'>
-            <div className='d-flex justify-content-center'>
-              <h2>Próximas citas</h2>
-            </div>
-          </div>
-          <div className='row my-5 mx-3'>
+          <div className='row mx-1 table-responsive-sm'>
+            <h2 className='mb-3'>Próximas citas</h2>
             <table className='table table-bordered table-striped'>
               <thead>
                 <tr>
