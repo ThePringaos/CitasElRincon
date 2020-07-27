@@ -26,14 +26,11 @@ class myTimePickerComponent extends React.Component {
     };
   }
 
-  componentDidMount () {
-  }
-
   render () {
     return (
       <DatePicker
         selected={this.props.myDate}
-        onChange={this.props.handleChange}
+        onChange={this.props.onHandleChange}
         showTimeSelect
         showTimeSelectOnly
         timeIntervals={this.props.myInterval}

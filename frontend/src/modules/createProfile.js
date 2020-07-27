@@ -20,8 +20,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
 import { Redirect } from 'react-router-dom';
 import ProfileController from '../controllers/profileController';
-import Swal from 'sweetalert2';
-import $, { data } from 'jquery';
+import $ from 'jquery';
 import Nav from '../components/nav';
 
 class profileComponent extends React.Component {
@@ -91,8 +90,8 @@ class profileComponent extends React.Component {
                       />
                     </div>
 
-                    <div class='row'>
-                      <div class='col-lg-3'>
+                    <div class='form-row'>
+                      <div class='col-md-12 col-lg-4'>
                         <div class='form-group'>
                           <select
                             class='form-control'
@@ -104,7 +103,7 @@ class profileComponent extends React.Component {
                         </div>
                       </div>
 
-                      <div class='col-lg-2'>
+                      <div class='col-md-12 col-lg-4'>
                         <div class='form-group'>
                           <select
                             class='form-control'
@@ -116,7 +115,7 @@ class profileComponent extends React.Component {
                         </div>
                       </div>
 
-                      <div class='col-lg-3'>
+                      <div class='col-md-12 col-lg-4'>
                         <div class='form-group'>
                           <select
                             class='form-control'
@@ -212,7 +211,7 @@ class profileComponent extends React.Component {
     };
 
     const response = await ProfileController.addProfessional(datapost);
-    if (response == 'true') {
+    if (response === 'true') {
       this.setState({ redirect: '/' });
     }
   }
