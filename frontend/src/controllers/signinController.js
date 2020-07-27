@@ -18,10 +18,6 @@
 import ProfessionalService from '../services/professional.service';
 import Swal from 'sweetalert2';
 class SigninController {
-  constructor () {
-
-  }
-
   responseGoogle (response) {
     return new Promise((resolve, reject) => {
       sessionStorage.userName = response.profileObj.name;
@@ -37,8 +33,9 @@ class SigninController {
     await ProfessionalService.getWithEmail({ email: email })
       .then(res => {
         if (res.data.success) {
-          const { id } = res.data.data[0];
+          const { id, name } = res.data.data[0];
           sessionStorage.userId = id;
+          sessionStorage.userName = name;
           console.log('Professional exists');
         } else {
           console.error('Error loading Id');

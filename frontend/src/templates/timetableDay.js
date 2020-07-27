@@ -19,15 +19,12 @@ import React from 'react';
 import MyPicker from '../components/myTimePicker';
 
 class timetableDayComponent extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount() {
-  }
-
-  render() {
+  render () {
     return (
       <div className='row my-3'>
         <div className='col-lg-12'>
@@ -35,37 +32,37 @@ class timetableDayComponent extends React.Component {
             <div className='card-body'>
               <div className='container'>
                 <div className='row'>
-                  <div className='col-sm-12 col-md-3 d-flex justify-content-center'>
-                    <h3 className='my-auto' >{this.props.dayName}</h3>
+                  <div className='col-md-12 col-lg-2 d-flex justify-content-center p-0'>
+                    <h4 className='my-auto'>{this.props.dayName}</h4>
                   </div>
-                  <div className='col-sm-12 col-md-3 d-md-flex justify-content-center mb-sm-4'>
-                    <label className='my-md-auto my-sm-2 d-sm-block'>Desde </label>
-                    <div className='w-10 my-md-auto my-sm-2'>
+                  <div className='col-md-12 col-lg-4 d-md-flex justify-content-center p-0 my-auto'>
+                    <label className='my-md-auto my-md-2 d-md-block mr-1'>Desde</label>
+                    <div className='w-10 my-md-auto my-md-2'>
                       <MyPicker
                         myDate={this.props.day.myDateFrom}
-                        handleChange={this.props.handleChangeFrom}
+                        onHandleChange={this.props.handleChangeFrom}
                         myInterval={this.props.myInterval}
                       />
                     </div>
                   </div>
-                  <div className='col-sm-12 col-md-3 d-md-flex justify-content-center mb-sm-2'>
-                    <label className='my-lg-auto my-sm-2 d-sm-block'>Hasta </label>
-                    <div className='w-10 my-lg-auto my-sm-2'>
+                  <div className='col-md-12 col-lg-4 d-md-flex justify-content-center p-0 my-auto'>
+                    <label className='my-lg-auto my-md-2 d-md-block mr-1'>Hasta</label>
+                    <div className='w-10 my-lg-auto my-md-2'>
                       <MyPicker
                         myDate={this.props.day.myDateTo}
-                        handleChange={this.props.handleChangeTo}
+                        onHandleChange={this.props.handleChangeTo}
                         myInterval={this.props.myInterval}
                       />
                     </div>
                   </div>
-                  <div className='col-sm-12 col-md-3 d-flex justify-content-center'>
+                  <div className='col-md-12 col-lg-2 d-flex justify-content-center p-0  mt-2 mt-md-0'>
                     <button
-                      type='button' class='btn btn-primary m-1'
+                      type='button' class='btn btn-primary btn-sm m-1 px-1'
                       onClick={this.props.onClickAddPeriod}
                     >Añadir
                     </button>
                     <button
-                      type='button' class='btn btn-danger m-1'
+                      type='button' class='btn btn-danger btn-sm m-1 px-1'
                       onClick={this.props.onClickEmptyPeriod}
                     >Vaciar
                     </button>

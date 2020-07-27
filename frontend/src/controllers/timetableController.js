@@ -72,7 +72,7 @@ class timetableController {
                 const { id, monday, tuesday, wednesday, thursday, friday } = (this.state.myUser.timetable);
                 this.state.tableId = id;
                 if (monday != null) {
-                    this.state.mondayDDBB = monday; 
+                    this.state.mondayDDBB = monday;
                 }
                 if (tuesday != null) {
                     this.state.tuesdayDDBB = tuesday;
@@ -86,7 +86,7 @@ class timetableController {
                 if (friday != null) {
                     this.state.fridayDDBB = friday;
                 }
-                
+
             } else {
                 console.error('Error quering timetable');
             }
@@ -166,12 +166,11 @@ class timetableController {
 
         switch (day) {
             case 'monday':
-                console.log(this.state.monday.from +" "+ this.state.monday.to);
+                console.log(this.state.monday.from + " " + this.state.monday.to);
                 if (this.state.monday.from && this.state.monday.to) {
                     week.monday = this.state.monday.from + "-" + this.state.monday.to;
                     this.updateTimetable(week);
                 }
-                break;
                 break;
             case 'tuesday':
                 if (this.state.tuesday.from && this.state.tuesday.to) {

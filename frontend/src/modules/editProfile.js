@@ -19,9 +19,7 @@ import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
 import { Redirect } from 'react-router-dom';
-import ProfessionalService from '../services/professional.service';
 import ProfileController from '../controllers/profileController';
-import Swal from 'sweetalert2';
 import $ from 'jquery';
 import Nav from '../components/nav';
 
@@ -41,7 +39,8 @@ class profileComponent extends React.Component {
       tutorId: null,
       comment: '',
       image: {},
-      imageId: null
+      imageId: null,
+      aux: null
     };
 
     // CAN'T TOUCH THIS
@@ -74,7 +73,7 @@ class profileComponent extends React.Component {
   }
 
   isUserRegistered () {
-    if (sessionStorage.getItem('isUserRegistered') == 'false') {
+    if (sessionStorage.getItem('isUserRegistered') === 'false') {
       this.setState({ redirect: '/crear-perfil' });
     }
   }
@@ -100,8 +99,8 @@ class profileComponent extends React.Component {
                     />
                   </div>
 
-                  <div class='row'>
-                    <div class='col-lg-3'>
+                  <div class='form-row'>
+                    <div class='col-md-12 col-lg-4'>
                       <div class='form-group'>
                         <select
                           class='form-control'
@@ -115,7 +114,7 @@ class profileComponent extends React.Component {
                       </div>
                     </div>
 
-                    <div class='col-lg-2'>
+                    <div class='col-md-12 col-lg-4'>
                       <div class='form-group'>
                         <select
                           class='form-control'
@@ -128,7 +127,7 @@ class profileComponent extends React.Component {
                       </div>
                     </div>
 
-                    <div class='col-lg-3'>
+                    <div class='col-md-12 col-lg-4'>
                       <div class='form-group'>
                         <select
                           class='form-control'
@@ -226,6 +225,8 @@ class profileComponent extends React.Component {
     };
 
     ProfileController.updateProfessional(datapost);
+    sessionStorage.userName = this.state.name;
+    this.forceUpdate();
   }
 }
 

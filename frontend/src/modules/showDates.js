@@ -27,7 +27,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Nav from '../components/nav';
 
 class homeComponent extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       redirect: null,
@@ -40,35 +40,35 @@ class homeComponent extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.isUserRegistered();
     this.showTodayDates();
   }
 
-  isUserRegistered() {
-    if (sessionStorage.getItem('isUserRegistered') == 'false') {
+  isUserRegistered () {
+    if (sessionStorage.getItem('isUserRegistered') === 'false') {
       this.setState({ redirect: '/crear-perfil' });
     }
   }
 
-  async showTodayDates() {
+  async showTodayDates () {
     const myDates = await DateController.showTodayDates(this.state.daysToQuery, this.state.id);
     this.setState({ dates: myDates });
   }
 
-  async setStartDate(date) {
+  async setStartDate (date) {
     await this.setState({ startDate: date });
     this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
   }
 
-  async setEndDate(date) {
+  async setEndDate (date) {
     await this.setState({ endDate: date });
     this.setState({ daysToQuery: DateController.getDaysToQuery(this.state.startDate, this.state.endDate) });
     this.showTodayDates();
   }
 
-  render() {
+  render () {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
