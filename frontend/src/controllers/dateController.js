@@ -16,7 +16,7 @@
  */
 
 import DateService from '../services/date.service';
-import React, { Component } from 'react';
+import React from 'react';
 
 class DateController {
   constructor () {
@@ -35,7 +35,7 @@ class DateController {
     const myDates = [];
 
     let aux = daysToQuery;
-    if (aux.length == 0) {
+    if (aux.length === 0) {
       aux = [this.filterDate(new Date())];
     }
 

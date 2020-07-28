@@ -169,7 +169,7 @@ professionalController.edit = async (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err);
+      console.log("ERROR UPDATING PROFESSIONAL"+err);
     });
 };
 

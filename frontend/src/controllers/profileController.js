@@ -15,20 +15,17 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import ProfessionalService from '../services/professional.service';
 import DepartmentService from '../services/department.service';
 import TutorService from '../services/tutor.service';
 import RoleService from '../services/role.service';
 import ImageService from '../services/image.service';
-import ProfileController from '../controllers/profileController';
-
 import Swal from 'sweetalert2';
-import { data } from 'jquery';
 
-const jsSHA3 = require('jssha/dist/sha3');
+const JSSHA3 = require('jssha/dist/sha3');
 
-class profileController {
+class ProfileController {
   constructor () {
     this.state = {
       email: sessionStorage.getItem('userEmail'),
@@ -43,8 +40,7 @@ class profileController {
   async loadUserId () {
     await ProfessionalService.getWithEmail({ email: sessionStorage.getItem('userEmail') })
       .then(res => {
-        console.log('then');
-        if (res.success) {
+        if (res.data.success) {
           this.state.response = { redirect: '/', allowCreation: false };
         } else {
           this.state.response = { redirect: null, allowCreation: true };
@@ -199,7 +195,7 @@ class profileController {
     let emptyFields = '';
     let count = 0;
 
-    if (nombre.replace(/\s/g, '').length == 0) {
+    if (nombre.replace(/\s/g, '').length === 0) {
       emptyFields += ' Nombre ';
       count++;
     }
@@ -217,7 +213,7 @@ class profileController {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: (count == 1 ? 'Falta el campo' : 'Faltan los campos: ') + emptyFields,
+        title: (count === 1 ? 'Falta el campo' : 'Faltan los campos: ') + emptyFields,
         showConfirmButton: false,
         timer: 2000
       });
@@ -229,7 +225,7 @@ class profileController {
 
   async addProfessional (datapost) {
     const { name, departmentId, roleId } = datapost;
-    if (this.validateFields(name, departmentId, roleId) == false) {
+    if (this.validateFields(name, departmentId, roleId) === false) {
       return;
     }
 
@@ -292,7 +288,7 @@ class profileController {
             timer: 2000
           });
           console.error('Error en lectura de imagen');
-          reject(null);
+          reject(new Error('fail'));
         } else if (myValue.size > 2000000) {
           Swal.fire({
             position: 'top',
@@ -302,7 +298,7 @@ class profileController {
             timer: 2000
           });
           console.error('Error en lectura de imagen');
-          reject(null);
+          reject(new Error('fail'));
         }
 
         if (myValue.type.includes('image')) {
@@ -310,7 +306,7 @@ class profileController {
           reader.readAsDataURL(myValue);
 
           reader.onload = (event) => {
-            const shaObj = new jsSHA3('SHA3-512', 'TEXT', { encoding: 'UTF8' });
+            const shaObj = new JSSHA3('SHA3-512', 'TEXT', { encoding: 'UTF8' });
             shaObj.update(event.target.result);
 
             miImagen.id = shaObj.getHash('HEX');
@@ -320,7 +316,7 @@ class profileController {
           };
           reader.onerror = (err) => {
             console.error('Error en lectura de imagen --> ' + err);
-            reject(null);
+            reject(new Error('fail'));
           };
         } else {
           Swal.fire({
@@ -331,7 +327,7 @@ class profileController {
             timer: 2000
           });
           console.error('Error en lectura de imagen');
-          reject(null);
+          reject(new Error('fail'));
         }
       }
     });
@@ -350,4 +346,4 @@ class profileController {
     return datapost;
   }
 }
-export default new profileController();
+export default new ProfileController();

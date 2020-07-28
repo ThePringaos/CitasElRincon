@@ -24,46 +24,45 @@ class timetableDayComponent extends React.Component {
     this.state = {};
   }
 
-  componentDidMount () {
-  }
-
   render () {
     return (
       <div className='row my-3'>
         <div className='col-lg-12'>
           <div className='card'>
             <div className='card-body'>
-              <div class='container'>
-                <div class='row'>
-                  <div class='col-sm'>
-                    <h3>{this.props.dayName}</h3>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-md-12 col-lg-2 d-flex justify-content-center p-0'>
+                    <h4 className='my-auto'>{this.props.dayName}</h4>
                   </div>
-                  <div class='col-sm'>
-                    <label className='float-left'>Desde </label>
-                    <div className='w-10'>
+                  <div className='col-md-12 col-lg-4 d-md-flex justify-content-center p-0 my-auto'>
+                    <label className='my-md-auto my-md-2 d-md-block mr-1'>Desde</label>
+                    <div className='w-10 my-md-auto my-md-2'>
                       <MyPicker
                         myDate={this.props.day.myDateFrom}
-                        handleChange={this.props.handleChangeFrom}
+                        onHandleChange={this.props.handleChangeFrom}
                         myInterval={this.props.myInterval}
                       />
                     </div>
                   </div>
-                  <div class='col-sm'>
-                    <label className='float-left'>Hasta </label>
-                    <MyPicker
-                      myDate={this.props.day.myDateTo}
-                      handleChange={this.props.handleChangeTo}
-                      myInterval={this.props.myInterval}
-                    />
+                  <div className='col-md-12 col-lg-4 d-md-flex justify-content-center p-0 my-auto'>
+                    <label className='my-lg-auto my-md-2 d-md-block mr-1'>Hasta</label>
+                    <div className='w-10 my-lg-auto my-md-2'>
+                      <MyPicker
+                        myDate={this.props.day.myDateTo}
+                        onHandleChange={this.props.handleChangeTo}
+                        myInterval={this.props.myInterval}
+                      />
+                    </div>
                   </div>
-                  <div class='col-sm'>
+                  <div className='col-md-12 col-lg-2 d-flex justify-content-center p-0  mt-2 mt-md-0'>
                     <button
-                      type='button' class='btn btn-primary m-1'
+                      type='button' class='btn btn-primary btn-sm m-1 px-1'
                       onClick={this.props.onClickAddPeriod}
                     >Añadir
                     </button>
                     <button
-                      type='button' class='btn btn-danger m-1'
+                      type='button' class='btn btn-danger btn-sm m-1 px-1'
                       onClick={this.props.onClickEmptyPeriod}
                     >Vaciar
                     </button>
