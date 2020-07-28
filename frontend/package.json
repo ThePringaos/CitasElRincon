@@ -48,13 +48,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JonEG/backendElRincon.git"
+    "url": "git+https://github.com/ThePringaos/CitasElRincon.git"
   },
   "keywords": [],
   "author": "",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/JonEG/backendElRincon/issues"
-  },
-  "homepage": "https://github.com/JonEG/backendElRincon"
+    "url": "https://github.com/ThePringaos/CitasElRincon/issues"
+  }
 }

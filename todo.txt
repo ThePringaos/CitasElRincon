@@ -6,8 +6,16 @@ Redefine styles
   - ancho de las tablas (igualar)
   - alinear horizontal y vertical (días)
 
-- primera ruta tras frontend npm start
-
 - posibilidad de cancelar dias concretos 
 
 - hacer que el nombre(nav) sea el del perfil 
+
+- en imágenes (DDBB) añadir alt
+
+- components a jsx 
+
+- https://emotion.sh/docs/styled (estilos dentro de js)
+
+- corregir DDBB dateState
+
+- comprobar email profesionales (si es del instituto o no, creando una tabla nueva)
