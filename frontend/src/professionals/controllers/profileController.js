@@ -16,11 +16,11 @@
  */
 
 import React from 'react';
-import ProfessionalService from '../services/professional.service';
-import DepartmentService from '../services/department.service';
-import TutorService from '../services/tutor.service';
-import RoleService from '../services/role.service';
-import ImageService from '../services/image.service';
+import ProfessionalService from '../../services/professional.service';
+import DepartmentService from '../../services/department.service';
+import TutorService from '../../services/tutor.service';
+import RoleService from '../../services/role.service';
+import ImageService from '../../services/image.service';
 import Swal from 'sweetalert2';
 
 const JSSHA3 = require('jssha/dist/sha3');

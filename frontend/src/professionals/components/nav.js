@@ -17,13 +17,13 @@
 
 import React from 'react';
 
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { GoogleLogout } from 'react-google-login';
 import authController from '../controllers/authController';
 import { Redirect } from 'react-router-dom';
 
-import ProfessionalService from '../services/professional.service';
+import ProfessionalService from '../../services/professional.service';
 
 class navComponent extends React.Component {
   constructor (props) {
@@ -77,7 +77,7 @@ class navComponent extends React.Component {
       return (
         <nav class='navbar navbar-expand-lg navbar-light d-flex' style={{ 'background-color': '#4d88ff' }}>
           <img
-            src={require('../images/rincon-icon.png')} alt='Icon IES El Rincon'
+            src={require('../../images/rincon-icon.png')} alt='Icon IES El Rincon'
             width='30' height='30' className='d-inline-block align-top rounded-circle z-depth-1-half img-fluid img-thumbnail order-0'
           />
           <a class='navbar-brand mx-2' href='http://www.ieselrincon.org' target='_blank' rel='noopener noreferrer'>IES EL RINCON</a>

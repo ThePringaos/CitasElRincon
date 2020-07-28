@@ -16,8 +16,8 @@
  */
 
 import React from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Redirect } from 'react-router-dom';
 import ProfileController from '../controllers/profileController';
 import $ from 'jquery';
@@ -166,7 +166,7 @@ class profileComponent extends React.Component {
                     <div class='file-field'>
                       <div class='md-4'>
                         <img
-                          src={require('../images/profile-picture.jpg')}
+                          src={require('../../images/profile-picture.jpg')}
                           style={{ width: '10rem', height: '10rem' }}
                           ref={profilePicture => { this.myProfilePicture = profilePicture; }}
                           id='blah'
