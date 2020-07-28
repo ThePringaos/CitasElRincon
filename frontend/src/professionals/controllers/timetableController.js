@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import ProfessionalService from '../services/professional.service';
-import TimetableService from '../services/timetable.service';
+import ProfessionalService from '../../services/professional.service';
+import TimetableService from '../../services/timetable.service';
 import Swal from 'sweetalert2';
 
 class timetableController {
@@ -307,7 +307,7 @@ class timetableController {
             }).catch((error) => console.error("error creating timetable " + error))
         } else {
             await TimetableService.update(week).then((res) => {
-                if (res.data.success == true) {
+                if (res.data.success === true) {
                     //this.setState({ reloadTable: true })
                     Swal.fire({
                         toast: true,

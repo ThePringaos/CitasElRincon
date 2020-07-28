@@ -41,7 +41,7 @@ class signinComponent extends React.Component {
         <div class='container p-4'>
           <div class='row'>
             <div class='col-md-4 mx-auto'>
-              <img class='mb-4' src={require('../images/rincon-icon.png')} alt='icon' width='72' height='72' />
+              <img class='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' />
               <div class='card text-center'>
                 <div class='card-header'>
                   <h1 class='h3 py-3 my-0 font-weight-normal'>Iniciar sesión</h1>
@@ -51,7 +51,7 @@ class signinComponent extends React.Component {
                     <GoogleLogin
                       render={handleRenderProps => (
                         <button className='btn btn-outline-primary d-flex aling-self-center' onClick={handleRenderProps.onClick} onDisabled={handleRenderProps.disabled}>
-                          <img className='mr-2' src={require('../images/iconGoogle.png')} alt='iconGoogle' />
+                          <img className='mr-2' src={require('../../images/iconGoogle.png')} alt='iconGoogle' />
                           <span className='my-auto'>
                             Acceder con Google
                           </span>
