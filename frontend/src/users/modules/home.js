@@ -16,21 +16,40 @@
  */
 
 import React from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { Redirect } from 'react-router-dom';
+import Nav from '../components/nav';
 
-class homeComponent extends React.Component {
+class HomeComponent extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      redirect: null
+    };
+  }
+
   render () {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
     return (
-      <div className='container p-4'>
-        <div className='row'>
-          <img src='https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://eppeok.guru/wp-content/uploads/2019/12/main-bg.jpg' class='img-fluid' alt='image' />
-          <div className='col-md-12'>
-            <blockquote className='blockquote text-right'>
-              <p className='mb-0'>API Rest + React </p>
-              <footer className='blockquote-footer'><cite title='Source Title'>Jon Echeveste González</cite></footer>
-            </blockquote>
+      <div><Nav />
+        <div class='container p-4'>
+          <div class='row'>
+            <div class='col-md-4 mx-auto'>
+              <img class='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' />
+              <div class='card text-center'>
+                <div class='card-header'>
+                  <h1 class='h3 py-3 my-0 font-weight-normal'>Iniciar sesión</h1>
+                </div>
+                <div class='card-body d-flex justify-content-center'>
+                  <button type='button' class='btn btn-primary'>Primary</button>
+                  <button type='button' class='btn btn-primary'>Primary</button>
+                  <button type='button' class='btn btn-primary'>Primary</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,4 +57,4 @@ class homeComponent extends React.Component {
   }
 }
 
-export default homeComponent;
+export default HomeComponent;
