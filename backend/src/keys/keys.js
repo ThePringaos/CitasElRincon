@@ -17,12 +17,10 @@
 
 const KeysDatabase = ({
   host: 'localhost',
-  //user: 'dates',
- //password: 'your_password',
   user: 'root',
-  password: 'Malboros38@',
-  database: 'dates_db',
-  port: 3306,
+  password: '',
+  database: 'datesDB',
+  port: 3307,
   dialect: 'mysql'
 });
 
