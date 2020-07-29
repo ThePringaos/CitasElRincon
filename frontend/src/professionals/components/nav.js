@@ -75,29 +75,29 @@ class navComponent extends React.Component {
   controlUserSignedIn () {
     if (authController.isAuthenticated() === 'true' && sessionStorage.getItem('isUserRegistered') === 'true') {
       return (
-        <nav class='navbar navbar-expand-lg navbar-light d-flex' style={{ 'background-color': '#4d88ff' }}>
+        <nav className='navbar navbar-expand-lg navbar-light d-flex' style={{ 'backgroundColor': '#4d88ff' }}>
           <img
             src={require('../../images/rincon-icon.png')} alt='Icon IES El Rincon'
             width='30' height='30' className='d-inline-block align-top rounded-circle z-depth-1-half img-fluid img-thumbnail order-0'
           />
-          <a class='navbar-brand mx-2' href='http://www.ieselrincon.org' target='_blank' rel='noopener noreferrer'>IES EL RINCON</a>
-          <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarToggleExternalContent' aria-controls='navbarToggleExternalContent' aria-expanded='false' aria-label='Toggle navigation'>
-            <span class='navbar-toggler-icon' />
+          <a className='navbar-brand mx-2' href='http://www.ieselrincon.org' target='_blank' rel='noopener noreferrer'>IES EL RINCON</a>
+          <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarToggleExternalContent' aria-controls='navbarToggleExternalContent' aria-expanded='false' aria-label='Toggle navigation'>
+            <span className='navbar-toggler-icon' />
           </button>
-          <div class='collapse navbar-collapse' id='navbarToggleExternalContent'>
-            <ul class='navbar-nav navbar-collapse'>
-              <li class='nav-item'>
-                <a class='nav-link' href='/definir-horario'>Horario</a>
+          <div className='collapse navbar-collapse' id='navbarToggleExternalContent'>
+            <ul className='navbar-nav navbar-collapse'>
+              <li className='nav-item'>
+                <a className='nav-link' href='/definir-horario'>Horario</a>
               </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/'>Citas</a>
+              <li className='nav-item'>
+                <a className='nav-link' href='/'>Citas</a>
               </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/editar-perfil'>Editar Perfil <span class='sr-only'>(current)</span></a>
+              <li className='nav-item'>
+                <a className='nav-link' href='/editar-perfil'>Editar Perfil <span className='sr-only'>(current)</span></a>
               </li>
-              <li class='nav-item mr-auto' />
-              <a class='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
-              <li class='nav-item'>
+              <li className='nav-item mr-auto' />
+              <a className='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
+              <li className='nav-item'>
                 <GoogleLogout
                   clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
                   render={handleRenderProps => (
@@ -120,8 +120,8 @@ class navComponent extends React.Component {
       );
     } else {
       return (
-        <nav class='navbar navbar-expand-lg navbar-light d-flex flex-row-reverse' style={{ 'background-color': '#4d88ff' }}>
-          <a class='navbar-brand mx-auto' href='#'>IES EL RINCON</a>
+        <nav className='navbar navbar-expand-lg navbar-light d-flex flex-row-reverse' style={{ 'backgroundColor': '#4d88ff' }}>
+          <a className='navbar-brand mx-auto' href='#'>IES EL RINCON</a>
         </nav>
       );
     }
