@@ -78,7 +78,7 @@ class signinComponent extends React.Component {
                     {
                       <GoogleLogin
                         render={handleRenderProps => (
-                          <button className='btn btn-outline-primary d-flex aling-self-center' onClick={handleRenderProps.onClick} onDisabled={handleRenderProps.disabled}>
+                          <button className='btn btn-outline-primary d-flex aling-self-center' onClick={handleRenderProps.onClick} disabled={handleRenderProps.disabled}>
                             <img className='mr-2' src={require('../../images/iconGoogle.png')} alt='iconGoogle' />
                             <span className='my-auto'>
                                                             Acceder con Google
