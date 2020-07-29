@@ -10,9 +10,7 @@ frontend/package-lock.json
 backend/src/keys/keys.js
 
 # Mac system files
-.DS_Store
-frontend/.DS_Store
-backend/.DS_Store
+**/.DS_Store
 
 # Documentation file
 backend/docs/build.json

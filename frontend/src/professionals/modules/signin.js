@@ -28,7 +28,7 @@ import img from '../../images/fachada-rincon.jpg';
 
 import styled from 'styled-components';
 
-const Prueba = styled.div`
+const ContainerSignin = styled.div`
 position: absolute;
 top: 30%;
 left: 0;
@@ -39,7 +39,6 @@ margin: auto;
 z-index: 100;
 `;
 
-
 const ContainerHome = styled.div`
     height: 100vh;
     width:100%;
@@ -47,8 +46,7 @@ const ContainerHome = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     filter: saturate(135%) contrast(75%) invert(23%);
--webkit-filter: saturate(135%) contrast(75%) invert(23%);
--moz-filter: saturate(135%) contrast(75%) invert(23%);
+    -webkit-filter: saturate(135%) contrast(75%) invert(23%);
     z-index: 1;
 `;
 
@@ -69,11 +67,11 @@ class signinComponent extends React.Component {
                 <ContainerHome>
 
                 </ContainerHome>
-                <Prueba>
+                <ContainerSignin>
                     <div className='container'>
                         <div className='row'>
                             <div className='col-xs-8 col-sm-8 col-md-5 mx-auto'>
-                                <img className='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' />
+                                <img className='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' style={{'borderRadius': '.2rem'}} />
                                 <div className='card text-center'>
                                     <div className='card-header'>
                                         <h1 className='h3 py-3 my-0 font-weight-normal'>Iniciar sesión</h1>
@@ -110,7 +108,7 @@ class signinComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                </Prueba>
+                </ContainerSignin>
             </div>
         );
     }
