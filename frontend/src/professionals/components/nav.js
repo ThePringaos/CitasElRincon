@@ -75,7 +75,7 @@ class navComponent extends React.Component {
   controlUserSignedIn () {
     if (authController.isAuthenticated() === 'true' && sessionStorage.getItem('isUserRegistered') === 'true') {
       return (
-        <nav className='navbar navbar-expand-lg navbar-light d-flex' style={{ 'backgroundColor': '#4d88ff' }}>
+        <nav className='navbar navbar-expand-lg navbar-light d-flex' style={{ backgroundColor: '#4d88ff' }}>
           <img
             src={require('../../images/rincon-icon.png')} alt='Icon IES El Rincon'
             width='30' height='30' className='d-inline-block align-top rounded-circle z-depth-1-half img-fluid img-thumbnail order-0'
@@ -120,7 +120,7 @@ class navComponent extends React.Component {
       );
     } else {
       return (
-        <nav className='navbar navbar-expand-lg navbar-light d-flex flex-row-reverse' style={{ 'backgroundColor': '#4d88ff' }}>
+        <nav className='navbar navbar-expand-lg navbar-light d-flex flex-row-reverse' style={{ backgroundColor: '#4d88ff' }}>
           <a className='navbar-brand mx-auto' href='#'>IES EL RINCON</a>
         </nav>
       );

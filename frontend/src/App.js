@@ -39,7 +39,7 @@ class App extends React.Component {
             <ProtectedRoute exact path='/definir-horario' component={CreateTimeTable} />
             <ProtectedRoute exact path='/' component={ShowDates} />
             {/* USERS */}
-            
+
             <Route exact path='/signin' component={Signin} />
             <Route path='*' component={() => '404 NOT FOUND'} />
           </Switch>
