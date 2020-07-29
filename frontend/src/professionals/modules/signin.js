@@ -29,14 +29,13 @@ import img from '../../images/fachada-rincon.jpg';
 import styled from 'styled-components';
 
 const ContainerSignin = styled.div`
-position: absolute;
-top: 30%;
-left: 0;
-right: 0;
-bottom: 0;
-margin: auto;
-
-z-index: 100;
+    position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 100;
 `;
 
 const ContainerHome = styled.div`
@@ -64,7 +63,9 @@ class signinComponent extends React.Component {
     }
     return (
       <div><Nav />
-        <ContainerHome />
+        <ContainerHome>
+
+        </ContainerHome>
         <ContainerSignin>
           <div className='container'>
             <div className='row'>
