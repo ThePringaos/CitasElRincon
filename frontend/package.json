@@ -58,5 +58,6 @@
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/ThePringaos/CitasElRincon/issues"
-  }
+  },
+  "devDependencies": {}
 }
