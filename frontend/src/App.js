@@ -48,10 +48,10 @@ class App extends React.Component {
             <ProtectedRoute exact path='/' component={ShowDates} />
             {/* USERS */}
             <Route exact path='/home' component={Home} />
-            {/* <Route exact path='/profesorado-form' component={TeachersForm} />
-            <Route exact path='/secretaria-form' component={SecretaryForm} />
+            <Route exact path='/profesorado-form' component={TeachersForm} />
+            {/* <Route exact path='/secretaria-form' component={SecretaryForm} />
             <Route exact path='/definir-cita' component={DefineDate} />
-    <Route exact path='/validar-correo' component={ValidateEmail} /> */}
+            <Route exact path='/validar-correo' component={ValidateEmail} /> */}
 
             <Route exact path='/signin' component={Signin} />
             <Route path='*' component={() => '404 NOT FOUND'} />
