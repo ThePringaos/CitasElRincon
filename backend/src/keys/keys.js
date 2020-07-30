@@ -20,7 +20,7 @@ const KeysDatabase = ({
   user: 'dates',
   password: 'your_password',
   database: 'dates_db',
-  port: 3306, 
+  port: 3306,
   dialect: 'mysql'
 });
 
