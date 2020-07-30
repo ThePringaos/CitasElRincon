@@ -18,7 +18,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Nav from '../components/nav';
 
 const ProfileComponent = () => {
   let state = {
@@ -36,23 +35,19 @@ const ProfileComponent = () => {
     image: {}
   };
   return (
-    <div>
+    <div className='m-2'>
+      <h1 className='h3'>Lista de profesores</h1>
       <div className='container p-4'>
-        <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' />
         <div className='row'>
-          <div className='col-lg-9'>
+          <div className='col-lg-10 mx-auto'>
             <div className='card'>
               <div className='card-body'>
-                <div class='form-row'>
-                  <div class='col-lg-6'>
-                    <div class='form-group'>
+                <div class='form-group'>
+                  <div class='form-row'>
+                    <div class='col-lg-6 col-sm-12'>
                       <label>DEPARTAMENTO</label>
                     </div>
-                  </div>
-                </div>
-                <div class='form-row'>
-                  <div class='col-lg-6'>
-                    <div class='form-group'>
+                    <div class='col-lg-6 col-sm-12'>
                       <select
                         class='form-control'
                         onChange={(value) => this.setState({ departmentId: value.target.value })}
@@ -62,30 +57,36 @@ const ProfileComponent = () => {
                       </select>
                     </div>
                   </div>
+                </div>
 
+                <div class='form-group'>
                   <div class='form-row'>
-                    <div class='col-lg-12'>
-                      <div class='form-group'>
-                        <div class='custom-control custom-radio'>
-                          <input type='radio' class='custom-control-input' id='1' name='defaultExampleRadios' />
-                          <label class='custom-control-label' for='1'>Default unchecked</label>
-                        </div>
-                        <div class='custom-control custom-radio'>
-                          <input type='radio' class='custom-control-input' id='2' name='defaultExampleRadios' />
-                          <label class='custom-control-label' for='2'>Default checked</label>
-                        </div>
-                        <div class='custom-control custom-radio'>
-                          <input type='radio' class='custom-control-input' id='3' name='defaultExampleRadios' />
-                          <label class='custom-control-label' for='3'>Default unchecked</label>
-                        </div>
-                        <div class='custom-control custom-radio'>
-                          <input type='radio' class='custom-control-input' id='4' name='defaultExampleRadios' />
-                          <label class='custom-control-label' for='4'>Default checked</label>
-                        </div>
+                    <div class='col-lg-6 col-sm-12'>
+                      <label>PROFESORADO</label>
+                    </div>
+                    <div className='col-lg-6 col-sm-12 border p-2 my-auto'>
+                      <div class='custom-control custom-radio row'>
+                        <input type='radio' class='custom-control-input col-6' id='1' name='defaultExampleRadios' />
+                        <label class='custom-control-label col-6' for='1'>Default unchecked</label>
+                      </div>
+                      <div class='custom-control custom-radio row'>
+                        <input type='radio' class='custom-control-input col-6' id='2' name='defaultExampleRadios' />
+                        <label class='custom-control-label col-6' for='2'>Default checked</label>
+                      </div>
+                      <div class='custom-control custom-radio row'>
+                        <input type='radio' class='custom-control-input col-6' id='3' name='defaultExampleRadios' />
+                        <label class='custom-control-label col-6' for='3'>Default unchecked</label>
+                      </div>
+                      <div class='custom-control custom-radio row'>
+                        <input type='radio' class='custom-control-input col-6' id='4' name='defaultExampleRadios' />
+                        <label class='custom-control-label col-6' for='4'>Default checked</label>
                       </div>
                     </div>
                   </div>
                 </div>
+                <button class='btn btn-primary btn-lg mx-auto' type='submit'>
+                  Button
+                </button>
               </div>
             </div>
           </div>
