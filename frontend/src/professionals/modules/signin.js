@@ -86,69 +86,66 @@ const Button = styled.button`
     box-shadow .15s ease-in-out;
 `;
 
-
 class signinComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: null
-        };
+  constructor (props) {
+    super(props);
+    this.state = {
+      redirect: null
+    };
+  }
+
+  render () {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
     }
+    return (
+      <div><Nav />
+        <ContainerHome />
+        <ContainerSignin>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-xs-8 col-sm-8 col-md-5 mx-auto'>
+                <img className='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' style={{ borderRadius: '.2rem' }} />
 
-    render() {
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />;
-        }
-        return (
-            <div><Nav />
-                <ContainerHome>
+                <ContainerCard>
+                  <div className='card-header'>
+                    <h1 className='h3 py-3 my-0 font-weight-normal'>Iniciar sesión</h1>
+                  </div>
+                  <div className='card-body d-flex justify-content-center'>
+                    {
+                      <GoogleLogin
+                        render={handleRenderProps => (
 
-                </ContainerHome>
-                <ContainerSignin>
-                    <div className='container'>
-                        <div className='row'>
-                            <div className='col-xs-8 col-sm-8 col-md-5 mx-auto'>
-                                <img className='mb-4' src={require('../../images/rincon-icon.png')} alt='icon' width='72' height='72' style={{ borderRadius: '.2rem' }} />
-
-                                <ContainerCard >
-                                    <div className='card-header'>
-                                        <h1 className='h3 py-3 my-0 font-weight-normal'>Iniciar sesión</h1>
-                                    </div>
-                                    <div className='card-body d-flex justify-content-center'>
-                                        {
-                                            <GoogleLogin
-                                                render={handleRenderProps => (
-                                                   
-                                                    <Button onClick={handleRenderProps.onClick} disabled={handleRenderProps.disabled}>
-                                                        <img className='mr-2' src={require('../../images/iconGoogle.png')} alt='iconGoogle' />
-                                                        <span className='my-auto'>Acceder con Google</span>
-                                                    </Button>
-                                                )}
-                                                clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
-                                                // clientId='516377320931-dt0rjb2jipavh3q00ou316leltrf4de4.apps.googleusercontent.com'
-                                                buttonText='Google'
-                                                onSuccess={(res) => {
-                                                    SigninController.responseGoogle(res).then(async (successMessage) => {
-                                                        await SigninController.loadUserId(res);
-                                                        AuthController.login(() => {
-                                                            this.setState({ redirect: '/crear-perfil' });
-                                                        }
-                                                        );
-                                                    }).catch((err) => console.error('ERROR WITH SIGN IN', err));
-                                                }}
-                                                onFailure={() => console.error('error with login')}
-                                                cookiePolicy='single_host_origin'
-                                            />
-                                        }
-                                    </div>
-                                </ContainerCard>
-                            </div>
-                        </div>
-                    </div>
-                </ContainerSignin>
+                          <Button onClick={handleRenderProps.onClick} disabled={handleRenderProps.disabled}>
+                            <img className='mr-2' src={require('../../images/iconGoogle.png')} alt='iconGoogle' />
+                            <span className='my-auto'>Acceder con Google</span>
+                          </Button>
+                        )}
+                        clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
+                        // clientId='516377320931-dt0rjb2jipavh3q00ou316leltrf4de4.apps.googleusercontent.com'
+                        buttonText='Google'
+                        onSuccess={(res) => {
+                          SigninController.responseGoogle(res).then(async (successMessage) => {
+                            await SigninController.loadUserId(res);
+                            AuthController.login(() => {
+                              this.setState({ redirect: '/crear-perfil' });
+                            }
+                            );
+                          }).catch((err) => console.error('ERROR WITH SIGN IN', err));
+                        }}
+                        onFailure={() => console.error('error with login')}
+                        cookiePolicy='single_host_origin'
+                      />
+                    }
+                  </div>
+                </ContainerCard>
+              </div>
             </div>
-        );
-    }
+          </div>
+        </ContainerSignin>
+      </div>
+    );
+  }
 }
 
 export default signinComponent;
