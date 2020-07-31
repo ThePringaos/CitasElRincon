@@ -240,6 +240,9 @@ class ProfileController {
             timer: 2000
           });
           this.state.correctlyCreated = 'true';
+          console.log('profileController.create');
+          console.log(res.data);
+          sessionStorage.userId = res.data.id;
         } else {
           console.error('Error creating professional');
         }

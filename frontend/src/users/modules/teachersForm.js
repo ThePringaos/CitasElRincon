@@ -19,21 +19,17 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-const ProfileComponent = () => {
+import BtnSubmit from './components/buttons/forms/BtnSubmit';
+
+const TeachersForm = () => {
   let state = {
-    redirect: null,
-    allowCreation: false,
+    // redirect: null,
     departments: [],
-    roles: [],
-    tutors: [],
-    name: sessionStorage.getItem('userName'),
+    professionals: [],
     departmentId: null,
-    roleId: null,
-    email: sessionStorage.getItem('userEmail'),
-    tutorId: null,
-    comment: '',
-    image: {}
+    professionalId: null
   };
+
   return (
     <div className='m-2'>
       <h1 className='h3'>Lista de profesores</h1>
@@ -47,7 +43,7 @@ const ProfileComponent = () => {
                     <div class='col-lg-6 col-sm-12'>
                       <label>DEPARTAMENTO</label>
                     </div>
-                    <div class='col-lg-6 col-sm-12'>
+                    <div class='col-lg-6 col-sm-12 p-0'>
                       <select
                         class='form-control'
                         onChange={(value) => this.setState({ departmentId: value.target.value })}
@@ -65,28 +61,54 @@ const ProfileComponent = () => {
                       <label>PROFESORADO</label>
                     </div>
                     <div className='col-lg-6 col-sm-12 border p-2 my-auto'>
-                      <div class='custom-control custom-radio row'>
-                        <input type='radio' class='custom-control-input col-6' id='1' name='defaultExampleRadios' />
-                        <label class='custom-control-label col-6' for='1'>Default unchecked</label>
+                      <div class='form-row'>
+                        <div className='col-2' />
+                        <div className='col-2'>
+                          <input
+                            type='radio'
+                            id='1'
+                            name='defaultExampleRadios'
+                          />
+                        </div>
+                        <div className='col-6'>
+                          <label className='my-0 d-block' for='1'>Default unchecked</label>
+                        </div>
+                        <div className='col-2' />
                       </div>
-                      <div class='custom-control custom-radio row'>
-                        <input type='radio' class='custom-control-input col-6' id='2' name='defaultExampleRadios' />
-                        <label class='custom-control-label col-6' for='2'>Default checked</label>
+                      <div class='form-row'>
+                        <div className='col-2' />
+                        <div className='col-2'>
+                          <input type='radio' id='2' name='defaultExampleRadios' />
+                        </div>
+                        <div className='col-6'>
+                          <label className='my-0 d-block' for='2'>Default unchecked</label>
+                        </div>
+                        <div className='col-2' />
                       </div>
-                      <div class='custom-control custom-radio row'>
-                        <input type='radio' class='custom-control-input col-6' id='3' name='defaultExampleRadios' />
-                        <label class='custom-control-label col-6' for='3'>Default unchecked</label>
+                      <div class='form-row'>
+                        <div className='col-2' />
+                        <div className='col-2'>
+                          <input type='radio' id='3' name='defaultExampleRadios' />
+                        </div>
+                        <div className='col-6'>
+                          <label className='my-0 d-block' for='3'>Default unchecked</label>
+                        </div>
+                        <div className='col-2' />
                       </div>
-                      <div class='custom-control custom-radio row'>
-                        <input type='radio' class='custom-control-input col-6' id='4' name='defaultExampleRadios' />
-                        <label class='custom-control-label col-6' for='4'>Default checked</label>
+                      <div class='form-row'>
+                        <div className='col-2' />
+                        <div className='col-2'>
+                          <input type='radio' id='4' name='defaultExampleRadios' />
+                        </div>
+                        <div className='col-6'>
+                          <label className='my-0 d-block' for='4'>Default unchecked</label>
+                        </div>
+                        <div className='col-2' />
                       </div>
                     </div>
                   </div>
                 </div>
-                <button class='btn btn-primary btn-lg mx-auto' type='submit'>
-                  Button
-                </button>
+                <BtnSubmit content='Elegir' />
               </div>
             </div>
           </div>
@@ -96,4 +118,4 @@ const ProfileComponent = () => {
   );
 };
 
-export default ProfileComponent;
+export default TeachersForm;

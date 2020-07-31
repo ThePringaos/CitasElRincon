@@ -92,7 +92,7 @@ professionalController.getWithEmail = (req, res) => {
     });
 };
 
-async function checkImageExistance(image) {
+async function checkImageExistance (image) {
   await Image.findAll({
     where: { id: image.id }
   })
@@ -128,7 +128,7 @@ professionalController.add = async (req, res) => {
   })
     .then(each => {
       if (each.id) {
-        res.json({ success: true, message: `Successfully added, id: ${each.id}` });
+        res.json({ success: true, message: 'Successfully added', id: each.id });
       } else {
         res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
@@ -157,9 +157,9 @@ professionalController.edit = async (req, res) => {
     imageId: finalId,
     tutorId: tutorId
   },
-    {
-      where: { id }
-    })
+  {
+    where: { id }
+  })
     .then(each => {
       const data = JSON.parse(JSON.stringify(each));
       if (data.length > 0) {
@@ -169,7 +169,7 @@ professionalController.edit = async (req, res) => {
       }
     })
     .catch(err => {
-      console.log("ERROR UPDATING PROFESSIONAL"+err);
+      console.log('ERROR UPDATING PROFESSIONAL' + err);
     });
 };
 

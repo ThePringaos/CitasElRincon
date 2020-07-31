@@ -41,6 +41,7 @@ class App extends Component {
   componentDidMount () {
     this.isUserRegistered();
     this.setDaysInTimetable();
+    console.log('createTimetable' + sessionStorage.getItem('userId'));
   }
 
   isUserRegistered () {
@@ -65,6 +66,7 @@ class App extends Component {
       return <Redirect to={this.state.redirect} />;
     }
     if (this.state.reloadTable) {
+      console.log(this.state.reloadTable);
       this.setDaysInTimetable();
       this.setState({ reloadTable: false });
     }
