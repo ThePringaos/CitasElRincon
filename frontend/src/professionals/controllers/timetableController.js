@@ -65,10 +65,7 @@ class timetableController {
   }
 
   async queryTimetable() {
-    console.log("CARGO ID");
-    console.log(this.state.userId);
     await ProfessionalService.get(this.state.userId).then(res => {
-      console.log(res.data);
       if (res.data.success) {
         this.state.myUser = res.data.data[0];
         const { id, monday, tuesday, wednesday, thursday, friday } = (this.state.myUser.timetable);
@@ -168,34 +165,33 @@ class timetableController {
 
     switch (day) {
       case 'monday':
-        console.log(this.state.monday.from + " " + this.state.monday.to);
         if (this.state.monday.from && this.state.monday.to) {
           week.monday = this.state.monday.from + "-" + this.state.monday.to;
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'tuesday':
         if (this.state.tuesday.from && this.state.tuesday.to) {
           week.tuesday = this.state.tuesday.from + "-" + this.state.tuesday.to;
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'wednesday':
         if (this.state.wednesday.from && this.state.wednesday.to) {
           week.wednesday = this.state.wednesday.from + "-" + this.state.wednesday.to;
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'thursday':
         if (this.state.thursday.from && this.state.thursday.to) {
           week.thursday = this.state.thursday.from + "-" + this.state.thursday.to;
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'friday':
         if (this.state.friday.from && this.state.friday.to) {
           week.friday = this.state.friday.from + "-" + this.state.friday.to;
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
 
@@ -223,7 +219,7 @@ class timetableController {
         if (aux.isConfirmed) {
           //vaciamos el día
           week.monday = "";
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'tuesday':
@@ -231,7 +227,7 @@ class timetableController {
         if (aux.isConfirmed) {
           //vaciamos el día
           week.tuesday = "";
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'wednesday':
@@ -239,7 +235,7 @@ class timetableController {
         if (aux.isConfirmed) {
           //vaciamos el día
           week.wednesday = "";
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'thursday':
@@ -247,7 +243,7 @@ class timetableController {
         if (aux.isConfirmed) {
           //vaciamos el día
           week.thursday = "";
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
       case 'friday':
@@ -255,7 +251,7 @@ class timetableController {
         if (aux.isConfirmed) {
           //vaciamos el día
           week.friday = "";
-          this.updateTimetable(week);
+          await this.updateTimetable(week);
         }
         break;
 
@@ -291,12 +287,9 @@ class timetableController {
   async updateTimetable(week) {
     let updated = false;
     if (week.id === null) {
-      console.log(week.id);
-      await TimetableService.create(week).then((res) => {
+      await TimetableService.create(week).then(async (res) => {
         this.state.myUser.timetableId = res.data.id;
-        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-        console.log(this.state.myUser);
-        ProfessionalService.update(this.state.myUser).then(() => {
+        await ProfessionalService.update(this.state.myUser).then(() => {
           Swal.fire({
             toast: true,
             title: "Horario actualizado",
@@ -304,6 +297,7 @@ class timetableController {
             icon: 'success',
             showConfirmButton: false,
             timer: 2000
+
           });
           updated = true;
         }).catch((error) => console.error("error creating timetable " + error));
