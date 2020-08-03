@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -18,7 +18,7 @@
 const express = require('express');
 const app = express();
 
-const swaggerUi = require("swagger-ui-express");
+const swaggerUi = require('swagger-ui-express');
 
 // process.env.PORT -> enviroment variable hosted in our pc
 app.set('PORT', process.env.PORT || 8000);
@@ -50,11 +50,11 @@ app.use(require('./src/routes/tutorRoutes'));
 const options = {
   swaggerOptions: {
     supportedSubmitMethods: []
-   }
+  }
 };
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require('./docs/build.json'),options));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./docs/build.json'), options));
 
 app.listen(app.get('PORT'), '127.0.0.1', () => {
   console.log(`SERVER IN PORT ${app.get('PORT')}`);
-}); 
+});

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -63,8 +63,10 @@ professionalController.getId = (req, res) => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
       } else {
-        res.status(400).json({ status: `The ${controller} doesn't exist` });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
@@ -74,13 +76,15 @@ professionalController.getId = (req, res) => {
 
 professionalController.getWithEmail = (req, res) => {
   const { email } = req.body;
-  Professional.findAll({ where: { email } })
+  Professional.findAll({ where: { email: email } })
     .then(each => {
       if (each.length > 0) {
         const data = JSON.parse(JSON.stringify(each));
         return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
       } else {
-        res.status(400).json({ status: 'The email doesn\'t exist' });
+        res.status(400).json({ status: 'Unexpected error' });
       }
     })
     .catch(err => {
@@ -124,7 +128,7 @@ professionalController.add = async (req, res) => {
   })
     .then(each => {
       if (each.id) {
-        res.json({ success: true, message: `Successfully added, id: ${each.id}` });
+        res.json({ success: true, message: 'Successfully added', id: each.id });
       } else {
         res.status(400).json({ status: `The ${controller} couldn't be added` });
       }
@@ -165,7 +169,7 @@ professionalController.edit = async (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err);
+      console.log('ERROR UPDATING PROFESSIONAL' + err);
     });
 };
 

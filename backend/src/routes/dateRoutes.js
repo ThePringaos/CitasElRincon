@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -19,7 +19,6 @@ const express = require('express');
 const router = express.Router();
 
 const dateController = require('../controllers/dateController');
- 
 
 // GET ALL
 router.get('/date/list', dateController.getAll);

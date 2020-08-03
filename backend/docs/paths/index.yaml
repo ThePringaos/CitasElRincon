@@ -1,4 +1,6 @@
 $ref#date: ./dateRoutes.yaml
+$ref#dateState: ./dateStateRoutes.yaml
+$ref#dateType: ./dateTypeRoutes.yaml
 $ref#department: ./departmentRoutes.yaml
 $ref#image: ./imageRoutes.yaml
 $ref#professional: ./professionalRoutes.yaml

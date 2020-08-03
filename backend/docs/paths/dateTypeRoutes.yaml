@@ -1,0 +1,187 @@
+###################
+# /date_type/list #
+###################
+/date_type/list:
+  get:
+    tags:
+      - DateTypeRoutes
+    summary: Returns a list of with all date types.
+    description: Returns a list of with all date types.
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                data:
+                  type: array
+                  items:
+                    $ref: ../components/schemas/DateType.yaml
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+##################
+# /date_type/:id #
+##################
+/date_type/{id}:
+  get:
+    tags:
+      - DateTypeRoutes
+    summary: Returns the date type with this id.
+    parameters:
+      - name: id
+        in: path
+        description: DateType id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/DateType.yaml
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+  
+  delete:
+    tags:
+      - DateTypeRoutes
+    summary: Delete the date type with this ID.
+    parameters:
+      - name: id
+        in: path
+        description: DateType id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully deleted.
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+##############
+# /date_type #
+##############
+/date_type:
+  post:
+    tags:
+      - DateTypeRoutes
+    summary: Add a date type to DateType table.
+    parameters:
+      - name: name
+        in: params
+        required: True
+        description: DateType name
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: Correct.
+                message:
+                  type: string
+                  description: Status.
+                id:
+                  type: integer
+                  description: Date type id.
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
+
+  put:
+    tags:
+      - DateTypeRoutes
+    summary: Update a date type usign its id.
+    parameters:
+      - name: id
+        in: params
+        description: DateType id
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: params
+        required: True
+        description: DateType name
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  description: True
+                message:
+                  type: string
+                  description: Successfully updated.
+      400:
+        description: Bad request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: Error.
