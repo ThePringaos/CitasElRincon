@@ -2,17 +2,11 @@
 backend/node_modules
 frontend/node_modules
 
-# JSON package-lock files
-backend/package-lock.json
-frontend/package-lock.json
-
 # Database keys
 backend/src/keys/keys.js
 
 # Mac system files
-.DS_Store
-frontend/.DS_Store
-backend/.DS_Store
+**/.DS_Store
 
 # Documentation file
 backend/docs/build.json

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import DateService from '../services/date.service';
+import DateService from '../../services/date.service';
 import React from 'react';
 
 class DateController {

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import ProfessionalService from '../services/professional.service';
+import ProfessionalService from '../../services/professional.service';
 import Swal from 'sweetalert2';
 class SigninController {
   responseGoogle (response) {
