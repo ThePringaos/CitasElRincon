@@ -27,36 +27,71 @@ import ProfessionalService from '../../services/professional.service';
 import DepartmentService from '../../services/department.service';
 
 const TeachersForm = () => {
-  // const state = {
-  //   // redirect: null,
-  //   departments: [],
-  //   professionals: [],
-  //   departmentId: null,
-  //   professionalId: null
-  // };
-
-  // const departments = async () => await DepartmentService.getAll();
-
-  // console.log(typeof (await departments()).data.data);
-
-  // const { data: eschestupido } = await departments();
-
-  // console.log('data', eschestupido);
-
-  // const [...data] = eschestupido.data;
-
-  // console.log(typeof data);
-
-  // data.map(d => console.log(d.id));
-
-  // console.log('data2 ', data);
-
   const [formValues, handleInputChange] = useForm({
-    department: '',
-    teacher: ''
+    department: {},
+    teacher: {}
   });
 
   const { department, teacher } = formValues;
+
+  const [departmentValue, setDepartmentValue] = useState([]);
+  const [teacherValue, setTeacherValue] = useState([]);
+
+  const { id: idDepartment } = departmentValue;
+
+  useEffect(() => {
+    // Se le llama al cargar la página
+    if (departmentValue.length === 0) getDepartmentsFromDB();
+  }, [idDepartment]);
+
+  useEffect(() => {
+    // Se le llama al cargar la página
+    if (department === null) {
+      console.log('vacio');
+    } else if (department !== 0) {
+      console.log('primero');
+      getTeachersFromDB(parseInt(department));
+    } else {
+      console.log('segundoo');
+      getAllTeachers();
+    }
+  }, [teacherValue]);
+
+  const getDepartmentsFromDB = () => {
+    new Promise((resolve, reject) => {
+      resolve(DepartmentService.getAll());
+    }).then((res) => {
+      if (res.data.data != null) {
+        // llamar inflador
+        setDepartmentValue(res.data.data);
+      }
+    });
+  };
+
+  // Se le llama al hacer onClick en algún departamento
+  const getTeachersFromDB = (ChosenDepartmentId) => {
+    new Promise((resolve, reject) => {
+      resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
+    }).then((res) => {
+      if (res.data.data != null) {
+        if (res.data.data.length > 0) setTeacherValue(res.data.data);
+      }
+    });
+  };
+
+  const getAllTeachers = () => {
+    new Promise((resolve, reject) => {
+      resolve(ProfessionalService.getAll());
+    }).then((res) => {
+      if (res.data != null) {
+        if (res.data.data != null) {
+          const teachers = res.data.data;
+          const filteredTeachers = teachers.filter((teacher) => teacher.department !== 1);
+          setTeacherValue(filteredTeachers);
+        }
+      }
+    });
+  };
 
   const handleSubmit = (e) => {
     console.log('ESTOY DENTRO DEL SUBMIT');
@@ -79,64 +114,33 @@ const TeachersForm = () => {
                         <label>DEPARTAMENTO</label>
                       </div>
                       <div class='col-lg-6 col-sm-12 p-0'>
-                        <select
-                          class='form-control'
-                          name='department'
-                          onChange={handleInputChange}
-                        >
-                          <option selected disabled>Departamento</option>
-                          <option>Prueba</option>
+                        <select class='form-control' name='department' onChange={handleInputChange}>
+                          <option selected>Todos</option>
+                          {departmentValue.map(d => (
+                            <option key={d.id} value={d.id}>{d.name}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
                   </div>
-
                   <div class='form-group'>
                     <div class='form-row'>
                       <div class='col-lg-6 col-sm-12'>
                         <label>PROFESORADO</label>
                       </div>
                       <div className='col-lg-6 col-sm-12 border p-2 my-auto'>
-                        <div class='form-row'>
-                          <div className='col-2' />
-                          <div className='col-2'>
-                            <input type='radio' id='1' name='teacher' value='1' />
+                        {teacherValue.map(t => (
+                          <div class='form-row'>
+                            <div className='col-2' />
+                            <div className='col-2'>
+                              <input key={t.id} type='radio' id={t.id} name='teacher' value={t.id} onChange={handleInputChange} />
+                            </div>
+                            <div className='col-6'>
+                              <label className='my-0 d-block' for={t.id}>{t.name}</label>
+                            </div>
+                            <div className='col-2' />
                           </div>
-                          <div className='col-6'>
-                            <label className='my-0 d-block' for='1'>Default unchecked</label>
-                          </div>
-                          <div className='col-2' />
-                        </div>
-                        <div class='form-row'>
-                          <div className='col-2' />
-                          <div className='col-2'>
-                            <input type='radio' id='2' name='teacher' value='2' />
-                          </div>
-                          <div className='col-6'>
-                            <label className='my-0 d-block' for='2'>Default unchecked</label>
-                          </div>
-                          <div className='col-2' />
-                        </div>
-                        <div class='form-row'>
-                          <div className='col-2' />
-                          <div className='col-2'>
-                            <input type='radio' id='3' name='teacher' value='3' />
-                          </div>
-                          <div className='col-6'>
-                            <label className='my-0 d-block' for='3'>Default unchecked</label>
-                          </div>
-                          <div className='col-2' />
-                        </div>
-                        <div class='form-row'>
-                          <div className='col-2' />
-                          <div className='col-2'>
-                            <input type='radio' id='4' name='teacher' value='4' />
-                          </div>
-                          <div className='col-6'>
-                            <label className='my-0 d-block' for='4'>Default unchecked</label>
-                          </div>
-                          <div className='col-2' />
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
