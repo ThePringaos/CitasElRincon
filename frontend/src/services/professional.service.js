@@ -30,6 +30,10 @@ class ProfessionalDataService {
     return http.post('/professional-email', email);
   }
 
+  getWithDepartmentId (id) {
+    return http.post('/professional-department', id);
+  }
+
   create (data) {
     return http.post('/professional/', data, {
       onUploadProgress: progressEvent => {
