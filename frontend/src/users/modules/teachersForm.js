@@ -97,7 +97,7 @@ const TeachersForm = () => {
   };
 
   return (
-    <div className='m-2'>
+    <div className='m-2' style={{ position: 'absolute', top: '15%', left: 0, right: 0, bottom: 0, margin: 'auto' }}>
       <h1 className='h3'>Lista de profesores</h1>
       <div className='container p-4'>
         <div className='row'>
@@ -105,13 +105,13 @@ const TeachersForm = () => {
             <div className='card'>
               <div className='card-body'>
                 <form onSubmit={handleSubmit}>
-                  <div class='form-group'>
-                    <div class='form-row'>
-                      <div class='col-lg-6 col-sm-12'>
-                        <label>DEPARTAMENTO</label>
+                  <div className='form-row'>
+                    <div className='form-group col d-flex align-items-center'>
+                      <div className='col-sm-4 col-lg-6'>
+                        <label className='m-0'>DEPARTAMENTO</label>
                       </div>
-                      <div class='col-lg-6 col-sm-12 p-0'>
-                        <select class='form-control' name='department' onChange={handleInputChange}>
+                      <div className='col-sm-8 col-lg-6 p-0'>
+                        <select className='form-control' name='department' onChange={handleInputChange}>
                           <option selected>Todos</option>
                           {departmentValues.map(d => (
                             <option key={d.id} value={d.id}>{d.name}</option>
@@ -120,14 +120,14 @@ const TeachersForm = () => {
                       </div>
                     </div>
                   </div>
-                  <div class='form-group'>
-                    <div class='form-row'>
-                      <div class='col-lg-6 col-sm-12'>
-                        <label>PROFESORADO</label>
+                  <div className='form-row'>
+                    <div className='form-group col d-flex align-items-center'>
+                      <div className='col-sm-4 col-lg-6'>
+                        <label className='m-0'>PROFESORADO</label>
                       </div>
-                      <div className='col-lg-6 col-sm-12 border p-2 my-auto'>
+                      <div className='col-sm-8 col-lg-6 border p-2 my-auto'>
                         {teacherValues.map(t => (
-                          <div class='form-row'>
+                          <div className='form-row'>
                             <div className='col-2' />
                             <div className='col-2'>
                               <input key={t.id} type='radio' id={t.id} name='teacher' value={t.id} onChange={handleInputChange} />
