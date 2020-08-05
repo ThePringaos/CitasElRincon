@@ -93,7 +93,9 @@ professionalController.getWithEmail = (req, res) => {
 };
 
 professionalController.getWithDepartmentId = (req, res) => {
+  console.log('PUTO REQ.BODY', req.body);
   const { id } = req.body;
+  console.log('PUTO ID', id);
   Professional.findAll({ where: { departmentId: id } })
     .then(each => {
       if (each.length > 0) {
@@ -106,7 +108,7 @@ professionalController.getWithDepartmentId = (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err);
+      console.log('ERROR TOKEN -> ', err);
     });
 };
 
