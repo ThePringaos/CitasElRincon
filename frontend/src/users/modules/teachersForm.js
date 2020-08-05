@@ -34,37 +34,33 @@ const TeachersForm = () => {
 
   const { department, teacher } = formValues;
 
-  const [departmentValue, setDepartmentValue] = useState([]);
-  const [teacherValue, setTeacherValue] = useState([]);
+  const [departmentValues, setDepartmentValues] = useState([]);
+  const [teacherValues, setTeacherValues] = useState([]);
 
-  const { id: idDepartment } = departmentValue;
-
-  useEffect(() => {
-    // Se le llama al cargar la página
-    if (departmentValue.length === 0) getDepartmentsFromDB();
-  }, [idDepartment]);
+  // const { id: idDepartment } = departmentValues;
 
   useEffect(() => {
     // Se le llama al cargar la página
-    if (department === null) {
-      console.log('vacio');
-    } else if (department !== 0) {
-      console.log('primero');
-      getTeachersFromDB(parseInt(department));
-    } else {
-      console.log('segundoo');
+    if (departmentValues.length === 0) getDepartmentsFromDB();
+
+    if (Object.keys(department).length === 0) {
       getAllTeachers();
+    } else if (department.length > 0) {
+      console.log('primero', department);
+      getTeachersFromDB(parseInt(department));
     }
-  }, [teacherValue]);
+  }, [department]);
+
+  /* useEffect(() => {
+    // Se le llama al cargar la página
+    console.log('valores actuales teacher', teacherValues);
+  }, [teacherValues]); */
 
   const getDepartmentsFromDB = () => {
     new Promise((resolve, reject) => {
       resolve(DepartmentService.getAll());
     }).then((res) => {
-      if (res.data.data != null) {
-        // llamar inflador
-        setDepartmentValue(res.data.data);
-      }
+      if (res.data.data != null) setDepartmentValues(...departmentValues, res.data.data);
     });
   };
 
@@ -74,7 +70,8 @@ const TeachersForm = () => {
       resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
     }).then((res) => {
       if (res.data.data != null) {
-        if (res.data.data.length > 0) setTeacherValue(res.data.data);
+        console.log('valores consulta', res.data.data);
+        if (res.data.data.length > 0) setTeacherValues(res.data.data);
       }
     });
   };
@@ -87,7 +84,7 @@ const TeachersForm = () => {
         if (res.data.data != null) {
           const teachers = res.data.data;
           const filteredTeachers = teachers.filter((teacher) => teacher.department !== 1);
-          setTeacherValue(filteredTeachers);
+          setTeacherValues(filteredTeachers);
         }
       }
     });
@@ -116,7 +113,7 @@ const TeachersForm = () => {
                       <div class='col-lg-6 col-sm-12 p-0'>
                         <select class='form-control' name='department' onChange={handleInputChange}>
                           <option selected>Todos</option>
-                          {departmentValue.map(d => (
+                          {departmentValues.map(d => (
                             <option key={d.id} value={d.id}>{d.name}</option>
                           ))}
                         </select>
@@ -129,7 +126,7 @@ const TeachersForm = () => {
                         <label>PROFESORADO</label>
                       </div>
                       <div className='col-lg-6 col-sm-12 border p-2 my-auto'>
-                        {teacherValue.map(t => (
+                        {teacherValues.map(t => (
                           <div class='form-row'>
                             <div className='col-2' />
                             <div className='col-2'>
