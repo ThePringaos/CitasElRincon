@@ -16,6 +16,7 @@
  */
 
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const swaggerUi = require('swagger-ui-express');
@@ -28,6 +29,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ limit: '2mb' }));
 
 // Configure headers and cors
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
+
+app.use(cors());
 
 // routes
 app.use(require('./src/routes/imageRoutes'));

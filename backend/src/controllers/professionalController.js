@@ -41,7 +41,7 @@ Professional.sync({ force: false })
 
 const professionalController = {};
 
-professionalController.getAll = async (req, res) => {
+professionalController.getAll = (req, res) => {
   Professional.findAll({
     include: [Role, Department, Image]
   })
@@ -93,9 +93,7 @@ professionalController.getWithEmail = (req, res) => {
 };
 
 professionalController.getWithDepartmentId = (req, res) => {
-  console.log('PUTO REQ.BODY', req.body);
   const { id } = req.body;
-  console.log('PUTO ID', id);
   Professional.findAll({ where: { departmentId: id } })
     .then(each => {
       if (each.length > 0) {
@@ -164,7 +162,7 @@ professionalController.edit = async (req, res) => {
 
   if (image != null) {
     finalId = image.id;
-    checkImageExistance(image);
+    await checkImageExistance(image);
   }
 
   Professional.update({

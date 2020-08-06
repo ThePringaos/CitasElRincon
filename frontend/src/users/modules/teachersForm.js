@@ -28,8 +28,8 @@ import DepartmentService from '../../services/department.service';
 
 const TeachersForm = () => {
   const [formValues, handleInputChange] = useForm({
-    department: {},
-    teacher: {}
+    department: '',
+    teacher: ''
   });
 
   const { department, teacher } = formValues;
@@ -48,19 +48,23 @@ const TeachersForm = () => {
     } else if (department.length > 0) {
       console.log('primero', department);
       getTeachersFromDB(parseInt(department));
+      console.log('valores actuales teacher', teacherValues);
     }
   }, [department]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     // Se le llama al cargar la página
     console.log('valores actuales teacher', teacherValues);
-  }, [teacherValues]); */
+  }, [teacherValues]);
 
   const getDepartmentsFromDB = () => {
     new Promise((resolve, reject) => {
       resolve(DepartmentService.getAll());
     }).then((res) => {
-      if (res.data.data != null) setDepartmentValues(...departmentValues, res.data.data);
+      if (res.data.data != null) setDepartmentValues(res.data.data);
+      console.log('departmentValues: ', departmentValues);
+    }).catch((error) => {
+      console.error('getDepartmentsFromDB ', error);
     });
   };
 
@@ -69,9 +73,11 @@ const TeachersForm = () => {
     new Promise((resolve, reject) => {
       resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
     }).then((res) => {
-      if (res.data.data != null) {
-        console.log('valores consulta', res.data.data);
-        if (res.data.data.length > 0) setTeacherValues(res.data.data);
+      if (res.data != null) {
+        if (res.data.data != null) {
+          console.log('valores consulta', res.data.data);
+          if (res.data.data.length > 0) setTeacherValues(res.data.data);
+        }
       }
     });
   };
@@ -112,7 +118,7 @@ const TeachersForm = () => {
                       </div>
                       <div className='col-sm-12 col-lg-6 p-0'>
                         <select className='form-control' name='department' onChange={handleInputChange}>
-                          <option selected>Todos</option>
+                          <option selected value=''>Todos</option>
                           {departmentValues.map(d => (
                             <option key={d.id} value={d.id}>{d.name}</option>
                           ))}
