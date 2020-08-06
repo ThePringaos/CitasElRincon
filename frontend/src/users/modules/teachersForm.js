@@ -101,16 +101,16 @@ const TeachersForm = () => {
       <h1 className='h3'>Lista de profesores</h1>
       <div className='container p-4'>
         <div className='row'>
-          <div className='col-lg-10 mx-auto'>
+          <div className='col-lg-10 mx-auto px-0'>
             <div className='card'>
               <div className='card-body'>
                 <form onSubmit={handleSubmit}>
                   <div className='form-row'>
-                    <div className='form-group col d-flex align-items-center'>
-                      <div className='col-sm-4 col-lg-6'>
+                    <div className='form-group col d-lg-flex align-items-center'>
+                      <div className='col-sm-12 col-lg-6'>
                         <label className='m-0'>DEPARTAMENTO</label>
                       </div>
-                      <div className='col-sm-8 col-lg-6 p-0'>
+                      <div className='col-sm-12 col-lg-6 p-0'>
                         <select className='form-control' name='department' onChange={handleInputChange}>
                           <option selected>Todos</option>
                           {departmentValues.map(d => (
@@ -121,21 +121,19 @@ const TeachersForm = () => {
                     </div>
                   </div>
                   <div className='form-row'>
-                    <div className='form-group col d-flex align-items-center'>
-                      <div className='col-sm-4 col-lg-6'>
+                    <div className='form-group col d-lg-flex align-items-center'>
+                      <div className='col-sm-12 col-lg-6'>
                         <label className='m-0'>PROFESORADO</label>
                       </div>
-                      <div className='col-sm-8 col-lg-6 border p-2 my-auto'>
+                      <div className='col-sm-12 col-lg-6 border p-2 my-auto'>
                         {teacherValues.map(t => (
-                          <div className='form-row'>
-                            <div className='col-2' />
-                            <div className='col-2'>
-                              <input key={t.id} type='radio' id={t.id} name='teacher' value={t.id} onChange={handleInputChange} />
+                          <div className='form-check p-0 d-flex' key={t.id}>
+                            <div className='col-4'>
+                              <input type='radio' id={t.id} name='teacher' value={t.id} onChange={handleInputChange} />
                             </div>
-                            <div className='col-6'>
-                              <label className='my-0 d-block' for={t.id}>{t.name}</label>
+                            <div className='col-8 text-left overflow-auto'>
+                              <label className='form-check-label' htmlFor={t.id}>{t.name}</label>
                             </div>
-                            <div className='col-2' />
                           </div>
                         ))}
                       </div>
