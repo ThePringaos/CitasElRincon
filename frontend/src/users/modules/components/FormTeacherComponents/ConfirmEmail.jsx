@@ -28,7 +28,7 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
               htmlFor='email'
               className='m-0'
             >
-                            Email
+            Email
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
@@ -50,7 +50,7 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
               htmlFor='date'
               className='m-0'
             >
-                            Confirmar Email
+            Confirmar Email
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>

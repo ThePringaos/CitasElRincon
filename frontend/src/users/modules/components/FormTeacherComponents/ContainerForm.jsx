@@ -22,7 +22,15 @@ const ContainerForm = ({ step, handleInputChange, values, nextStep, prevStep }) 
   };
 
   let titleForm;
-  if (step === 1) { titleForm = 'Lista de profesores'; } else if (step === 2) { titleForm = 'Elegir fecha y hora'; } else if (step === 3) { titleForm = 'Comfirmar Email'; } else if (step === 4) { titleForm = 'Comfirmar la cita'; }
+  if (step === 1) {
+    titleForm = 'Lista de profesores';
+  } else if (step === 2) {
+    titleForm = 'Elegir fecha y hora';
+  } else if (step === 3) {
+    titleForm = 'Confirmar Email';
+  } else if (step === 4) {
+    titleForm = 'Confirmar la cita';
+  }
 
   return (
     <ContainerF>
