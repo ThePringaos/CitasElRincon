@@ -30,7 +30,7 @@ import { ProtectedRoute } from './professionals/modules/protected.route';
 
 // USERS
 import Home from './users/modules/home';
-import TeachersForm from './users/modules/teachersForm';
+import TeachersForm from './users/modules/TeachersForm';
 import SecretaryForm from './users/modules/secretaryForm';
 import DefineDate from './users/modules/defineDate';
 import ValidateEmail from './users/modules/validateEmail';
@@ -49,6 +49,7 @@ class App extends React.Component {
             {/* USERS */}
             <Route exact path='/home' component={Home} />
             <Route exact path='/profesorado-form' component={TeachersForm} />
+            
             {/* <Route exact path='/secretaria-form' component={SecretaryForm} />
             <Route exact path='/definir-cita' component={DefineDate} />
             <Route exact path='/validar-correo' component={ValidateEmail} /> */}

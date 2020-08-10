@@ -93,7 +93,7 @@ professionalController.getWithEmail = (req, res) => {
 };
 
 professionalController.getWithDepartmentId = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   Professional.findAll({ where: { departmentId: id } })
     .then(each => {
       if (each.length > 0) {
