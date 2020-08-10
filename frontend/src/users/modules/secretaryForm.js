@@ -22,7 +22,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import BtnSubmit from './components/buttons/forms/BtnSubmit';
 
 const SecretaryForm = () => {
-  let state = {
+  const state = {
     // redirect: null,
     departments: [],
     professionals: [],

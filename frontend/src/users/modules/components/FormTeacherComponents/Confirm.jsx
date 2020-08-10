@@ -6,25 +6,22 @@ import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnSubmit from '../buttons/forms/BtnSubmit';
 
 const Confirm = ({ prevStep }) => {
-
-
-
-    return (
-        <>
-            <Form.Row>
-                <Col className='d-flex justify-content-center mt-2'>
-                    <BtnGoBack 
-                        content='Volver'
-                        prevStep={prevStep}
-                        className='mx-1'
-                    />
-                    <BtnSubmit 
-                        content='Comfirmar solicitud'
-                    />
-                </Col>
-            </Form.Row>   
-        </>
-    )
-}
+  return (
+    <>
+      <Form.Row>
+        <Col className='d-flex justify-content-center mt-2'>
+          <BtnGoBack
+            content='Volver'
+            prevStep={prevStep}
+            className='mx-1'
+          />
+          <BtnSubmit
+            content='Comfirmar solicitud'
+          />
+        </Col>
+      </Form.Row>
+    </>
+  );
+};
 
 export default Confirm;

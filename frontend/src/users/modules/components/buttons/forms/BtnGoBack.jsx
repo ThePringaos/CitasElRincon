@@ -6,22 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 const BtnGoBack = ({ content, prevStep }) => {
+  const goBack = e => {
+    e.preventDefault();
+    prevStep();
+  };
 
-    const goBack = e => {
-        e.preventDefault();
-        prevStep();
-    };
-
-    return (
-        <Button
-            onClick={goBack}
-            variant='primary'
-            className='mx-1'
-        >
-            <FontAwesomeIcon icon={faAngleLeft} className='mr-2 pt-1 fa-lg' />
-            {content}
-        </Button>
-    )
+  return (
+    <Button
+      onClick={goBack}
+      variant='primary'
+      className='mx-1'
+    >
+      <FontAwesomeIcon icon={faAngleLeft} className='mr-2 pt-1 fa-lg' />
+      {content}
+    </Button>
+  );
 };
 
 export default BtnGoBack;
