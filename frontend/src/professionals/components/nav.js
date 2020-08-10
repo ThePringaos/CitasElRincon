@@ -96,7 +96,7 @@ class navComponent extends React.Component {
                 <NavLink exact className='nav-link' activeClassName='active' to='/editar-perfil'>Editar Perfil <span className='sr-only'>(current)</span></NavLink>
               </li>
               <li className='nav-item mr-auto' />
-              <a className='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
+              <a className='nav-link disabled' href='#' tabIndex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
               <li className='nav-item'>
                 <GoogleLogout
                   clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'

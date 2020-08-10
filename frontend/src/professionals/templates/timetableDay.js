@@ -57,12 +57,12 @@ class timetableDayComponent extends React.Component {
                   </div>
                   <div className='col-md-12 col-lg-2 d-flex justify-content-center p-0  mt-2 mt-md-0'>
                     <button
-                      type='button' class='btn btn-primary btn-sm m-1 px-1'
+                      type='button' className='btn btn-primary btn-sm m-1 px-1'
                       onClick={this.props.onClickAddPeriod}
                     >Añadir
                     </button>
                     <button
-                      type='button' class='btn btn-danger btn-sm m-1 px-1'
+                      type='button' className='btn btn-danger btn-sm m-1 px-1'
                       onClick={this.props.onClickEmptyPeriod}
                     >Vaciar
                     </button>

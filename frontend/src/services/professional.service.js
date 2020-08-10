@@ -31,8 +31,7 @@ class ProfessionalDataService {
   }
 
   getWithDepartmentId (id) {
-    console.log('id pasado', id);
-    return http.post('/professional-department', id);
+    return http.get(`/professional-department/${id}`);
   }
 
   create (data) {
