@@ -25,10 +25,8 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
           if (res.data.data.length > 0) console.log(res.data.data);
         }
       }
-    }).catch(err => console.log('Falló la consulta getTeachersFromDB', err));
+    }).catch(err => console.error('Falló la consulta getTeachersFromDB', err));
   };
-
-
 
   return (
     <>

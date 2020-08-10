@@ -18,7 +18,6 @@ const ContainerF = styled.div`
 const ContainerForm = ({ step, handleInputChange, values, nextStep, prevStep }) => {
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('click el submit');
   };
 
   let titleForm;

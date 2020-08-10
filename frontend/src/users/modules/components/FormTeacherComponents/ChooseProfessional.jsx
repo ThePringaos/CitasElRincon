@@ -27,7 +27,6 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
 
   useEffect(() => {
     teacher && setIsUndefined('');
-    console.log('Valor de teacher', teacher);
   }, [teacher]);
 
   // Devuelve todos los departamentos para pintarlos en el select
@@ -53,7 +52,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
           setTeacherValues(teachers);
         }
       }
-    }).catch(err => console.log('Falló la consulta getTeachersFromDB', err));
+    }).catch(err => console.error('Falló la consulta getTeachersFromDB', err));
   };
 
   // Devuelve todos los profesores para pintarlos en los radio button
@@ -68,7 +67,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
           setTeacherValues(filteredTeachers);
         }
       }
-    }).catch(err => console.log('Falló la consulta getAllTeachers', err));
+    }).catch(err => console.error('Falló la consulta getAllTeachers', err));
   };
 
   return (
