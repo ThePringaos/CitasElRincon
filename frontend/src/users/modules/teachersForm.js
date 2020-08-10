@@ -1,159 +1,45 @@
-/*
- *  Copyright (C) 2020 ThePringaos
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Affero General Public License as published
- *  by the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Affero General Public License for more details.
- *
- *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
+import ContainerForm from './components/FormTeacherComponents/ContainerForm';
 
-import BtnSubmit from './components/buttons/forms/BtnSubmit';
-
-import ProfessionalService from '../../services/professional.service';
-import DepartmentService from '../../services/department.service';
 
 const TeachersForm = () => {
-  const [formValues, handleInputChange] = useForm({
-    department: '',
-    teacher: ''
-  });
 
-  const { department, teacher } = formValues;
+    const [formFields, handleInputChange] = useForm({
+        department: '0',
+        teacher: '',
+        date: '',
+        time: '',
+        dateTypeId: '',
+        email: '',
+        confirmEmail: '',
+    });
 
-  const [departmentValues, setDepartmentValues] = useState([]);
-  const [teacherValues, setTeacherValues] = useState([]);
+    const [step, setStep] = useState(1);
 
-  // const { id: idDepartment } = departmentValues;
+    const { department, teacher, date, time, dateTypeId, email, confirmEmail } = formFields;
+    const values = { department, teacher, date, time, dateTypeId, email, confirmEmail };
 
-  useEffect(() => {
-    // Se le llama al cargar la página
-    if (departmentValues.length === 0) getDepartmentsFromDB();
-
-    if (Object.keys(department).length === 0) {
-      getAllTeachers();
-    } else if (department.length > 0) {
-      console.log('primero', department);
-      getTeachersFromDB(parseInt(department));
-      console.log('valores actuales teacher', teacherValues);
+    // Proceed to next step
+    const nextStep = () => {
+        setStep(step + 1);
     }
-  }, [department]);
 
-  useEffect(() => {
-    // Se le llama al cargar la página
-    console.log('valores actuales teacher', teacherValues);
-  }, [teacherValues]);
+    // Go back to prev step
+    const prevStep = () => {
+        setStep(step - 1);
+    }
 
-  const getDepartmentsFromDB = () => {
-    new Promise((resolve, reject) => {
-      resolve(DepartmentService.getAll());
-    }).then((res) => {
-      if (res.data.data != null) setDepartmentValues(res.data.data);
-      console.log('departmentValues: ', departmentValues);
-    }).catch((error) => {
-      console.error('getDepartmentsFromDB ', error);
-    });
-  };
+    return (
+        <ContainerForm 
+            step={step}
+            handleInputChange={handleInputChange}
+            values={values}
+            nextStep={nextStep}
+            prevStep={prevStep}
+        />
+    )
+}
 
-  // Se le llama al hacer onClick en algún departamento
-  const getTeachersFromDB = (ChosenDepartmentId) => {
-    new Promise((resolve, reject) => {
-      resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
-    }).then((res) => {
-      if (res.data != null) {
-        if (res.data.data != null) {
-          console.log('valores consulta', res.data.data);
-          if (res.data.data.length > 0) setTeacherValues(res.data.data);
-        }
-      }
-    });
-  };
-
-  const getAllTeachers = () => {
-    new Promise((resolve, reject) => {
-      resolve(ProfessionalService.getAll());
-    }).then((res) => {
-      if (res.data != null) {
-        if (res.data.data != null) {
-          const teachers = res.data.data;
-          const filteredTeachers = teachers.filter((teacher) => teacher.department !== 1);
-          setTeacherValues(filteredTeachers);
-        }
-      }
-    });
-  };
-
-  const handleSubmit = (e) => {
-    console.log('ESTOY DENTRO DEL SUBMIT');
-    e.preventDefault();
-    console.log(department, teacher);
-  };
-
-  return (
-    <div className='m-2' style={{ position: 'absolute', top: '15%', left: 0, right: 0, bottom: 0, margin: 'auto' }}>
-      <h1 className='h3'>Lista de profesores</h1>
-      <div className='container p-4'>
-        <div className='row'>
-          <div className='col-lg-10 mx-auto px-0'>
-            <div className='card'>
-              <div className='card-body'>
-                <form onSubmit={handleSubmit}>
-                  <div className='form-row'>
-                    <div className='form-group col d-lg-flex align-items-center'>
-                      <div className='col-sm-12 col-lg-6'>
-                        <label className='m-0'>DEPARTAMENTO</label>
-                      </div>
-                      <div className='col-sm-12 col-lg-6 p-0'>
-                        <select className='form-control' name='department' onChange={handleInputChange}>
-                          <option selected value=''>Todos</option>
-                          {departmentValues.map(d => (
-                            <option key={d.id} value={d.id}>{d.name}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='form-row'>
-                    <div className='form-group col d-lg-flex align-items-center'>
-                      <div className='col-sm-12 col-lg-6'>
-                        <label className='m-0'>PROFESORADO</label>
-                      </div>
-                      <div className='col-sm-12 col-lg-6 border p-2 my-auto'>
-                        {teacherValues.map(t => (
-                          <div className='form-check p-0 d-flex' key={t.id}>
-                            <div className='col-4'>
-                              <input type='radio' id={t.id} name='teacher' value={t.id} onChange={handleInputChange} />
-                            </div>
-                            <div className='col-8 text-left overflow-auto'>
-                              <label className='form-check-label' htmlFor={t.id}>{t.name}</label>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <BtnSubmit content='Elegir' />
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default TeachersForm;

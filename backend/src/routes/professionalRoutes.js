@@ -30,7 +30,7 @@ router.get('/professional/:id', professionalController.getId);
 router.post('/professional-email', professionalController.getWithEmail);
 
 // GET WITH DEPARTMENT ID
-router.post('/professional-department', professionalController.getWithDepartmentId);
+router.get('/professional-department/:id', professionalController.getWithDepartmentId);
 
 // CREATE
 router.post('/professional', professionalController.add);

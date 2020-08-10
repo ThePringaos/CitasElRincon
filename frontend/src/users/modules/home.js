@@ -20,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import styled from 'styled-components';
 import BtnLink from './components/buttons/home/BtnLink';
+import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 
 import logoImg from '../../images/rincon-icon.png';
 import backImg from '../../images/fachada-rincon.jpg';
@@ -59,36 +60,43 @@ const ContainerCard = styled.div`
 `;
 
 const HomeComponent = () => {
-  return (
-    <div>
-      <ContainerHome />
-      <ContainerRequestDate>
-        <div className='container p-4'>
-          <div className='row'>
-            <div className='col-md-4 mx-auto'>
-              <img class='mb-4' src={logoImg} alt='icon' height='72' width='72' style={{ borderRadius: '.2rem' }} />
-              <ContainerCard>
-                <div className='card-header'>
-                  <h1 className='h3 py-3 my-0 font-weight-normal'>Pedir cita</h1>
-                </div>
-                <div className='card-body d-flex flex-column'>
-                  <BtnLink
-                    content='Profesorado'
-                    destiny='/profesorado-form'
-                    style='mb-4'
-                  />
-                  <BtnLink
-                    content='Secretaría'
-                    destiny='/secretaria-form'
-                  />
-                </div>
-              </ContainerCard>
-            </div>
-          </div>
-        </div>
-      </ContainerRequestDate>
-    </div>
-  );
+    return (
+        <>
+            <ContainerHome />
+            <ContainerRequestDate>
+                <Container className='p-4'>
+                    <Row>
+                        <Col lg={{ span: 4, offset: 4 }}>
+                            <Image
+                                className='mb-4' 
+                                src={logoImg} 
+                                alt='icon' 
+                                height='72' 
+                                width='72' 
+                                rounded 
+                            />
+                            <ContainerCard>
+                                <Card.Header>
+                                    <h1 className='h3 py-3 my-0 font-weight-normal'>Pedir cita</h1>
+                                </Card.Header>
+                                <Card.Body className='d-flex flex-column'>
+                                    <BtnLink
+                                        content='Profesorado'
+                                        destiny='/profesorado-form'
+                                        style='mb-4'
+                                    />
+                                    <BtnLink
+                                        content='Secretaría'
+                                        destiny='/secretaria-form'
+                                    />
+                                </Card.Body>
+                            </ContainerCard>
+                        </Col>
+                    </Row>
+                </Container>
+            </ContainerRequestDate>
+        </>
+    );
 };
 
 export default HomeComponent;
