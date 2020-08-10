@@ -60,43 +60,43 @@ const ContainerCard = styled.div`
 `;
 
 const HomeComponent = () => {
-    return (
-        <>
-            <ContainerHome />
-            <ContainerRequestDate>
-                <Container className='p-4'>
-                    <Row>
-                        <Col lg={{ span: 4, offset: 4 }}>
-                            <Image
-                                className='mb-4' 
-                                src={logoImg} 
-                                alt='icon' 
-                                height='72' 
-                                width='72' 
-                                rounded 
-                            />
-                            <ContainerCard>
-                                <Card.Header>
-                                    <h1 className='h3 py-3 my-0 font-weight-normal'>Pedir cita</h1>
-                                </Card.Header>
-                                <Card.Body className='d-flex flex-column'>
-                                    <BtnLink
-                                        content='Profesorado'
-                                        destiny='/profesorado-form'
-                                        style='mb-4'
-                                    />
-                                    <BtnLink
-                                        content='Secretaría'
-                                        destiny='/secretaria-form'
-                                    />
-                                </Card.Body>
-                            </ContainerCard>
-                        </Col>
-                    </Row>
-                </Container>
-            </ContainerRequestDate>
-        </>
-    );
+  return (
+    <>
+      <ContainerHome />
+      <ContainerRequestDate>
+        <Container className='p-4'>
+          <Row>
+            <Col lg={{ span: 4, offset: 4 }}>
+              <Image
+                className='mb-4'
+                src={logoImg}
+                alt='icon'
+                height='72'
+                width='72'
+                rounded
+              />
+              <ContainerCard>
+                <Card.Header>
+                  <h1 className='h3 py-3 my-0 font-weight-normal'>Pedir cita</h1>
+                </Card.Header>
+                <Card.Body className='d-flex flex-column'>
+                  <BtnLink
+                    content='Profesorado'
+                    destiny='/profesorado-form'
+                    style='mb-4'
+                  />
+                  <BtnLink
+                    content='Secretaría'
+                    destiny='/secretaria-form'
+                  />
+                </Card.Body>
+              </ContainerCard>
+            </Col>
+          </Row>
+        </Container>
+      </ContainerRequestDate>
+    </>
+  );
 };
 
 export default HomeComponent;

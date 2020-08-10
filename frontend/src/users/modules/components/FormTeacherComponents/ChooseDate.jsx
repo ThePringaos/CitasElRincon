@@ -4,100 +4,113 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Form, Col } from 'react-bootstrap';
 import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
-import DatePicker from 'react-datepicker';
-
+import ProfessionalService from '../../../../services/professional.service';
 
 const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
-    const { date, time, dateTypeId, teacher } = values;
+  const { date, time, dateTypeId, teacher } = values;
 
-    const [isUndefined, setIsUndefined] = useState('disabled');
+  const [isUndefined, setIsUndefined] = useState('disabled');
 
-    useEffect(() => {
-        (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
-    }, [date, time, dateTypeId]);
+  useEffect(() => {
+    (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
+    getTeachersFromDB();
+  }, [date, time, dateTypeId]);
 
-    return (
-        <>
-            <Form.Row>
-                <Form.Group className='col d-lg-flex align-items-center'>
-                    <Col sm={12} lg={6}>
-                        <Form.Label
-                            htmlFor='date'
-                            className='m-0'
-                        >
+  const getTeachersFromDB = () => {
+    new Promise((resolve, reject) => {
+      resolve(ProfessionalService.get(teacher));
+    }).then((res) => {
+      if (res.data != null) {
+        if (res.data.data != null) {
+          if (res.data.data.length > 0) console.log(res.data.data);
+        }
+      }
+    }).catch(err => console.log('Falló la consulta getTeachersFromDB', err));
+  };
+
+
+
+  return (
+    <>
+      <Form.Row>
+        <Form.Group className='col d-lg-flex align-items-center'>
+          <Col sm={12} lg={6}>
+            <Form.Label
+              htmlFor='date'
+              className='m-0'
+            >
                             Fecha
-                        </Form.Label>
-                    </Col>
-                    <Col sm={12} lg={6} className='p-0'>
-                        <Form.Control
-                            type='date'
-                            name='date'
-                            onChange={handleInputChange}
-                            value={date}
-                        />
-                    </Col>
-                </Form.Group>
-            </Form.Row>
+            </Form.Label>
+          </Col>
+          <Col sm={12} lg={6} className='p-0'>
+            <Form.Control
+              type='date'
+              name='date'
+              onChange={handleInputChange}
+              value={date}
+            />
+          </Col>
+        </Form.Group>
+      </Form.Row>
 
-            <Form.Row>
-                <Form.Group className='col d-lg-flex align-items-center'>
-                    <Col sm={12} lg={6}>
-                        <Form.Label
-                            htmlFor='date'
-                            className='m-0'
-                        >
+      <Form.Row>
+        <Form.Group className='col d-lg-flex align-items-center'>
+          <Col sm={12} lg={6}>
+            <Form.Label
+              htmlFor='date'
+              className='m-0'
+            >
                             Hora
-                        </Form.Label>
-                    </Col>
-                    <Col sm={12} lg={6} className='p-0'>
-                        <Form.Control
-                            type='time'
-                            name='time'
-                            onChange={handleInputChange}
-                            value={time}
-                        />
-                    </Col>
-                </Form.Group>
-            </Form.Row>
+            </Form.Label>
+          </Col>
+          <Col sm={12} lg={6} className='p-0'>
+            <Form.Control
+              type='time'
+              name='time'
+              onChange={handleInputChange}
+              value={time}
+            />
+          </Col>
+        </Form.Group>
+      </Form.Row>
 
-            <Form.Row>
-                <Form.Group className='col d-lg-flex align-items-center'>
-                    <Col sm={12} lg={6}>
-                        <Form.Label
-                            htmlFor='date'
-                            className='m-0'
-                        >
+      <Form.Row>
+        <Form.Group className='col d-lg-flex align-items-center'>
+          <Col sm={12} lg={6}>
+            <Form.Label
+              htmlFor='date'
+              className='m-0'
+            >
                             Atención
-                        </Form.Label>
-                    </Col>
-                    <Col sm={12} lg={6} className='p-0'>
-                        <Form.Control
-                            placeholder='DateTypeId'
-                            name='dateTypeId'
-                            onChange={handleInputChange}
-                            value={dateTypeId}
-                        />
-                    </Col>
-                </Form.Group>
-            </Form.Row>
+            </Form.Label>
+          </Col>
+          <Col sm={12} lg={6} className='p-0'>
+            <Form.Control
+              placeholder='DateTypeId'
+              name='dateTypeId'
+              onChange={handleInputChange}
+              value={dateTypeId}
+            />
+          </Col>
+        </Form.Group>
+      </Form.Row>
 
-            <Form.Row>
-                <Col className='d-flex justify-content-center mt-2'>
-                    <BtnGoBack
-                        content='volver'
-                        prevStep={prevStep}
-                    />
+      <Form.Row>
+        <Col className='d-flex justify-content-center mt-2'>
+          <BtnGoBack
+            content='volver'
+            prevStep={prevStep}
+          />
 
-                    <BtnGoOn
-                        content='siguiente'
-                        nextStep={nextStep}
-                        isUndefined={isUndefined}
-                    />
-                </Col>
-            </Form.Row>
-        </>
-    )
-}
-
+          <BtnGoOn
+            content='siguiente'
+            nextStep={nextStep}
+            isUndefined={isUndefined}
+          />
+        </Col>
+      </Form.Row>
+    </>
+  );
+};
 
 export default ChooseDate;
