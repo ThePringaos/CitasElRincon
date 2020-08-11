@@ -28,7 +28,6 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
 
     useEffect(() => {
         teacher && setIsUndefined('');
-        console.log('Valor de teacher', teacher);
     }, [teacher]);
 
     // Devuelve todos los departamentos para pintarlos en el select
@@ -36,7 +35,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
         new Promise((resolve, reject) => {
             resolve(DepartmentService.getAll());
         }).then((res) => {
-            if (res.data.data != null) setDepartmentValues(res.data.data);
+            if (res.data.data !== null) setDepartmentValues(res.data.data);
         }).catch(err => console.error('Falló la consulta getDepartmentsFromDB ', err));
     };
 
@@ -45,9 +44,13 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
         new Promise((resolve, reject) => {
             resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
         }).then((res) => {
-            if (res.data != null) {
-                if (res.data.data != null) {
-                    if (res.data.data.length > 0) setTeacherValues(res.data.data);
+            let teachers = res.data;
+            if (teachers !== null) {
+                if (teachers.data !== null) {
+                    if (teachers.data.length > 0) setTeacherValues(res.data.data);
+                } else {
+                    teachers = [];
+                    setTeacherValues(teachers);
                 }
             }
         }).catch(err => console.log('Falló la consulta getTeachersFromDB', err));
