@@ -217,7 +217,7 @@ class timetableController {
       case 'monday':
         aux = await this.showConfirmNotification('Lunes');
         if (aux.isConfirmed) {
-          //vaciamos el día
+          // vaciamos el día
           week.monday = "";
           await this.updateTimetable(week);
         }
@@ -225,7 +225,7 @@ class timetableController {
       case 'tuesday':
         aux = await this.showConfirmNotification('Martes');
         if (aux.isConfirmed) {
-          //vaciamos el día
+          // vaciamos el día
           week.tuesday = "";
           await this.updateTimetable(week);
         }
@@ -233,7 +233,7 @@ class timetableController {
       case 'wednesday':
         aux = await this.showConfirmNotification('Miércoles');
         if (aux.isConfirmed) {
-          //vaciamos el día
+          // vaciamos el día
           week.wednesday = "";
           await this.updateTimetable(week);
         }
@@ -241,7 +241,7 @@ class timetableController {
       case 'thursday':
         aux = await this.showConfirmNotification('Jueves');
         if (aux.isConfirmed) {
-          //vaciamos el día
+          // vaciamos el día
           week.thursday = "";
           await this.updateTimetable(week);
         }
@@ -249,7 +249,7 @@ class timetableController {
       case 'friday':
         aux = await this.showConfirmNotification('Viernes');
         if (aux.isConfirmed) {
-          //vaciamos el día
+          // vaciamos el día
           week.friday = "";
           await this.updateTimetable(week);
         }
@@ -297,7 +297,6 @@ class timetableController {
             icon: 'success',
             showConfirmButton: false,
             timer: 2000
-
           });
           updated = true;
         }).catch((error) => console.error("error creating timetable " + error));
@@ -305,7 +304,7 @@ class timetableController {
     } else {
       await TimetableService.update(week).then((res) => {
         if (res.data.success === true) {
-          //this.setState({ reloadTable: true })
+          // this.setState({ reloadTable: true })
           Swal.fire({
             toast: true,
             title: "Horario actualizado",

@@ -41,7 +41,7 @@ Professional.sync({ force: false })
 
 const professionalController = {};
 
-professionalController.getAll = async (req, res) => {
+professionalController.getAll = (req, res) => {
   Professional.findAll({
     include: [Role, Department, Image]
   })
@@ -89,6 +89,24 @@ professionalController.getWithEmail = (req, res) => {
     })
     .catch(err => {
       console.log(err);
+    });
+};
+
+professionalController.getWithDepartmentId = (req, res) => {
+  const { id } = req.params;
+  Professional.findAll({ where: { departmentId: id } })
+    .then(each => {
+      if (each.length > 0) {
+        const data = JSON.parse(JSON.stringify(each));
+        return res.json({ success: true, data: data });
+      } else if (each.length === 0) {
+        return res.json({ success: false, data: null });
+      } else {
+        res.status(400).json({ status: 'Unexpected error' });
+      }
+    })
+    .catch(err => {
+      console.log('ERROR TOKEN -> ', err);
     });
 };
 
@@ -144,7 +162,7 @@ professionalController.edit = async (req, res) => {
 
   if (image != null) {
     finalId = image.id;
-    checkImageExistance(image);
+    await checkImageExistance(image);
   }
 
   Professional.update({

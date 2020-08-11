@@ -21,7 +21,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { GoogleLogout } from 'react-google-login';
 import authController from '../controllers/authController';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 
 import ProfessionalService from '../../services/professional.service';
 
@@ -87,16 +87,16 @@ class navComponent extends React.Component {
           <div className='collapse navbar-collapse' id='navbarToggleExternalContent'>
             <ul className='navbar-nav navbar-collapse'>
               <li className='nav-item'>
-                <a className='nav-link' href='/definir-horario'>Horario</a>
+                <NavLink exact className='nav-link' activeClassName='active' to='/definir-horario'>Horario</NavLink>
               </li>
               <li className='nav-item'>
-                <a className='nav-link' href='/'>Citas</a>
+                <NavLink exact className='nav-link' activeClassName='active' to='/'>Citas</NavLink>
               </li>
               <li className='nav-item'>
-                <a className='nav-link' href='/editar-perfil'>Editar Perfil <span className='sr-only'>(current)</span></a>
+                <NavLink exact className='nav-link' activeClassName='active' to='/editar-perfil'>Editar Perfil <span className='sr-only'>(current)</span></NavLink>
               </li>
               <li className='nav-item mr-auto' />
-              <a className='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
+              <a className='nav-link disabled' href='#' tabIndex='-1' aria-disabled='true'>{sessionStorage.getItem('userName')}</a>
               <li className='nav-item'>
                 <GoogleLogout
                   clientId='820637070016-genrk31ge28bjg97du1q9bkvsa0p6bdq.apps.googleusercontent.com'
