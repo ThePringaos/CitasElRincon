@@ -3,20 +3,21 @@ import { useForm } from '../../hooks/useForm';
 import ContainerForm from './components/FormTeacherComponents/ContainerForm';
 
 const TeachersForm = () => {
+  const myTime = new Date();
   const [formFields, handleInputChange] = useForm({
     department: '0',
     teacher: '',
-    date: '',
-    time: '',
-    dateTypeId: '',
     email: '',
-    confirmEmail: ''
+    confirmEmail: '',
+    date: myTime,
+    time: '',
+    dateTypeId: ''
   });
 
   const [step, setStep] = useState(1);
 
-  const { department, teacher, date, time, dateTypeId, email, confirmEmail } = formFields;
-  const values = { department, teacher, date, time, dateTypeId, email, confirmEmail };
+  const { department, teacher, email, confirmEmail, date, time, dateTypeId } = formFields;
+  const values = { department, teacher, email, confirmEmail, date, time, dateTypeId };
 
   // Proceed to next step
   const nextStep = () => {
