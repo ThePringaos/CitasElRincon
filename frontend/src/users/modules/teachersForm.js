@@ -3,13 +3,12 @@ import { useForm } from '../../hooks/useForm';
 import ContainerForm from './components/FormTeacherComponents/ContainerForm';
 
 const TeachersForm = () => {
-  const myTime = new Date();
   const [formFields, handleInputChange] = useForm({
     department: '0',
     teacher: '',
     email: '',
     confirmEmail: '',
-    date: myTime,
+    date: null,
     time: '',
     dateTypeId: ''
   });

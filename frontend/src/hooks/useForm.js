@@ -18,6 +18,11 @@ export const useForm = (initialState = {}) => {
         ...values,
         date: e
       });
+    } else if (name === 'time') {
+      setValues({
+        ...values,
+        time: e
+      });
     } else {
       const { target } = e;
       if (name != null) {

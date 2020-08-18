@@ -11,14 +11,51 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { teacher, date, time, dateTypeId } = values;
   const [isUndefined, setIsUndefined] = useState('disabled');
   const [myTimetable, setMyTimetable] = useState('');
-  const [times, setTimes] = useState([]);
   const [excludedDates, setExcludedDates] = useState([]);
   const [excludedCalendar, setExcludedCalendar] = useState([]);
+  const [startingTime, setStartingTime] = useState(0);
+  const [endingTime, setEndingTime] = useState(0);
+  const [confirmedDates, setConfirmedDates] = useState([]);
 
   useEffect(() => {
     (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
     getTeachersFromDB();
   }, [date, time, dateTypeId]);
+
+  useEffect(() => {
+    if (date != null && myTimetable !== '' && myTimetable != null) {
+      switch (date.getDay()) {
+        case 1:
+          if (myTimetable.monday !== null && myTimetable.monday !== '') {
+            const hours = myTimetable.monday.split('-');
+            if (hours.length === 2) generatePeriods(hours[0], hours[1]);
+          }
+
+          break;
+        case 2:
+
+          break;
+        case 3:
+          if (myTimetable.wednesday !== null && myTimetable.wednesday !== '') {
+            const hours = myTimetable.wednesday.split('-');
+            if (hours.length === 2) generatePeriods(hours[0], hours[1]);
+          }
+
+          break;
+        case 4:
+
+          break;
+        case 5:
+
+          break;
+
+        default:
+          break;
+      }
+
+      getConfirmedDatesFromDB();
+    }
+  }, [date]);
 
   useEffect(() => {
     const myArray = [0, 6]; // Hide weekends
@@ -44,12 +81,12 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   }, [myTimetable]);
 
   useEffect(() => {
-    console.log('Excluded Dates: ', excludedDates);
+    // console.log('Excluded Dates: ', excludedDates);
     generateExcludedCalendar();
   }, [excludedDates]);
 
   useEffect(() => {
-    console.log('Excluded Calendar: ', excludedCalendar);
+    // console.log('Excluded Calendar: ', excludedCalendar);
   }, [excludedCalendar]);
 
   const getTeachersFromDB = () => {
@@ -59,6 +96,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       if (res.data != null) {
         if (res.data.data != null) {
           if (res.data.data.length > 0) {
+            console.log(res.data.data[0]);
             const { timetable } = res.data.data[0];
             if (timetable != null) {
               setMyTimetable(timetable);
@@ -77,15 +115,40 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
     const today = new Date();
     for (let index = 0; index < 62; index++) {
       if (excludedDates.includes(today.getDay())) {
-        console.log('Today ', today);
-        const count = myExcludedCalendar.push(today.getTime());
-        console.log('count ', count);
-        console.log('myExcludedCalendar ', myExcludedCalendar);
+        myExcludedCalendar.push(today.getTime());
       }
       const tomorrow = today.getDate() + 1;
       today.setDate(tomorrow);
     }
     setExcludedCalendar(myExcludedCalendar);
+  };
+
+  const generatePeriods = (startingHour, endingHour) => {
+    const startingHourWithDateFormat = getDateFromStringWithTime(startingHour);
+    const endingHourWithDateFormat = getDateFromStringWithTime(endingHour);
+    setStartingTime(startingHourWithDateFormat);
+    setEndingTime(endingHourWithDateFormat);
+  };
+
+  const getDateFromStringWithTime = (time) => {
+    let dateWithHours = null;
+    let dateWithHoursAndMinutes = null;
+    const [hour, minutes] = time.split(':');
+
+    if (hour != null && minutes != null) {
+      dateWithHours = new Date(new Date().setHours(hour));
+      dateWithHoursAndMinutes = new Date(new Date(dateWithHours).setMinutes(minutes));
+    }
+    return dateWithHoursAndMinutes;
+  };
+
+  // STABAMO AKI LOKO
+  const getConfirmedDatesFromDB = () => {
+    if (date != null) {
+      const myDate = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+      console.log(date);
+      console.log(myDate, teacher);
+    }
   };
 
   return (
@@ -104,6 +167,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
             <DatePicker
               dateFormat='dd/MM/yyyy'
               selected={date}
+              withPortal
               minDate={new Date()}
               maxDate={addMonths(new Date(), 2)}
               excludeDates={excludedCalendar}
@@ -127,24 +191,28 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
-            <Form.Control
-              as='select'
-              className='form-control'
-              value={time}
-              name='department'
-              id='department'
-              onChange={handleInputChange}
-            >
-              <option value='0'>Todos</option>
-              {times.map(d => (
-                <option
-                  key={d.id}
-                  value={d.id}
-                >
-                  {d.name}
-                </option>
-              ))}
-            </Form.Control>
+            <DatePicker
+              selected={time}
+              onChange={date => {
+                if (date <= endingTime && date >= startingTime) {
+                  console.log('HORA PERMITIDA');
+                  handleInputChange(date, 'time');
+                } else {
+                  console.log('HORA NO PERMITIDA');
+                  // INTENTAR BLOQUEAR TECLADO PARA ESTE INPUT
+                }
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption='Hora'
+              minTime={startingTime}
+              maxTime={endingTime}
+              excludeTimes={confirmedDates}
+              dateFormat='h:mm aa'
+              disabled={(date == null)}
+              disabledKeyboardNavigation
+            />
           </Col>
         </Form.Group>
       </Form.Row>
