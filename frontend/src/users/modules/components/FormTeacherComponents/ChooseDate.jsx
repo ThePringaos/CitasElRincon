@@ -5,7 +5,10 @@ import { Form, Col } from 'react-bootstrap';
 import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
 import ProfessionalService from '../../../../services/professional.service';
+import DateService from '../../../../services/date.service';
+import DateTypeService from '../../../../services/dateType.service';
 import DatePicker from 'react-datepicker';
+import { get } from 'jquery';
 
 const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { teacher, date, time, dateTypeId } = values;
@@ -16,10 +19,14 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const [startingTime, setStartingTime] = useState(0);
   const [endingTime, setEndingTime] = useState(0);
   const [confirmedDates, setConfirmedDates] = useState([]);
+  const [dateTypesSelect, setDateTypesSelect] = useState([]);
 
   useEffect(() => {
     (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
+
     getTeachersFromDB();
+    getDateTypesFromDB();
+
   }, [date, time, dateTypeId]);
 
   useEffect(() => {
@@ -30,23 +37,34 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
             const hours = myTimetable.monday.split('-');
             if (hours.length === 2) generatePeriods(hours[0], hours[1]);
           }
-
           break;
+
         case 2:
-
+          if (myTimetable.tuesday !== null && myTimetable.tuesday !== '') {
+            const hours = myTimetable.tuesday.split('-');
+            if (hours.length === 2) generatePeriods(hours[0], hours[1]);
+          }
           break;
+
         case 3:
           if (myTimetable.wednesday !== null && myTimetable.wednesday !== '') {
             const hours = myTimetable.wednesday.split('-');
             if (hours.length === 2) generatePeriods(hours[0], hours[1]);
           }
-
           break;
+
         case 4:
-
+          if (myTimetable.thursday !== null && myTimetable.thursday !== '') {
+            const hours = myTimetable.thursday.split('-');
+            if (hours.length === 2) generatePeriods(hours[0], hours[1]);
+          }
           break;
-        case 5:
 
+        case 5:
+          if (myTimetable.friday !== null && myTimetable.friday !== '') {
+            const hours = myTimetable.friday.split('-');
+            if (hours.length === 2) generatePeriods(hours[0], hours[1]);
+          }
           break;
 
         default:
@@ -142,13 +160,27 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
     return dateWithHoursAndMinutes;
   };
 
-  // STABAMO AKI LOKO
-  const getConfirmedDatesFromDB = () => {
+  const getConfirmedDatesFromDB = async () => {
     if (date != null) {
       const myDate = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-      console.log(date);
-      console.log(myDate, teacher);
+      const info = await DateService.getDates({ day: myDate, id: teacher });
+
+      if (info.data.data != null) {
+        const datesArray = info.data.data;
+        const myConfirmedDates = datesArray.map(each => getDateFromStringWithTime(each.time));
+        setConfirmedDates(myConfirmedDates);
+      } else {
+        setConfirmedDates(null);
+      }
     }
+  };
+
+  const getDateTypesFromDB = () => {
+    new Promise((resolve, reject) => {
+      resolve(DateTypeService.getAll());
+    }).then((res) => {
+      if (res.data.data != null) setDateTypesSelect(res.data.data);
+    }).catch(err => console.error('Falló la consulta getDateTypesFromDB ', err));
   };
 
   return (
@@ -156,10 +188,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='date'
-              className='m-0'
-            >
+            <Form.Label htmlFor='date' className='m-0'>
               Fecha
             </Form.Label>
           </Col>
@@ -183,10 +212,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='date'
-              className='m-0'
-            >
+            <Form.Label htmlFor='date' className='m-0'>
               Hora
             </Form.Label>
           </Col>
@@ -209,7 +235,8 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
               minTime={startingTime}
               maxTime={endingTime}
               excludeTimes={confirmedDates}
-              dateFormat='h:mm aa'
+              dateFormat='HH:mm'
+              timeFormat='HH:mm'
               disabled={(date == null)}
               disabledKeyboardNavigation
             />
@@ -220,20 +247,26 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='date'
-              className='m-0'
-            >
+            <Form.Label htmlFor='date' className='m-0'>
               Atención
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
-              placeholder='DateTypeId'
-              name='dateTypeId'
-              onChange={handleInputChange}
+              as='select'
+              className='form-control'
               value={dateTypeId}
-            />
+              name='dateTypeId'
+              id='dateTypeId'
+              onChange={handleInputChange}
+            >
+              <option value='0' hidden='true'> Seleccionar opción </option>
+              {dateTypesSelect.map(d => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </Form.Control>
           </Col>
         </Form.Group>
       </Form.Row>
