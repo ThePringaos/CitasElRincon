@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Form, Col } from 'react-bootstrap';
 import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
+import validator from 'email-validator';
 
 const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { email, confirmEmail } = values;
@@ -11,12 +12,11 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
   const [isUndefined, setIsUndefined] = useState('disabled');
 
   useEffect(() => {
-    (
-      (email.trim() && confirmEmail.trim()) &&
-            (email.trim() === confirmEmail.trim())
-    )
-      ? setIsUndefined('')
-      : setIsUndefined('disabled');
+    if (validator.validate(email.trim())) {
+      ((email.trim() && confirmEmail.trim()) && (email.trim() === confirmEmail.trim()))
+        ? setIsUndefined('')
+        : setIsUndefined('disabled');
+    }
   }, [email, confirmEmail]);
 
   return (
@@ -24,11 +24,8 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='email'
-              className='m-0'
-            >
-            Email
+            <Form.Label htmlFor='email' className='m-0'>
+              Email
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
@@ -46,11 +43,8 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='date'
-              className='m-0'
-            >
-            Confirmar Email
+            <Form.Label htmlFor='date' className='m-0'>
+              Confirmar Email
             </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
