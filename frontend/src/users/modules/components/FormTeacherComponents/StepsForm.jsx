@@ -42,7 +42,6 @@ const StepsForm = ({ step, handleInputChange, values, nextStep, prevStep }) => {
       return (
 
         <Confirm
-          nextStep={nextStep}
           prevStep={prevStep}
           values={values}
         />

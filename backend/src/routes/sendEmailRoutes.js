@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Unknown
+ *  Copyright (C) 2020 ThePringaos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -15,35 +15,15 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import http from '../http-common';
+const express = require('express');
+const router = express.Router();
 
-class DateDataService {
-  // CREATE
-  add (data) {
-    return http.post('/date', data);
-  }
+const sendEmailController = require('../controllers/sendEmailController');
 
-  getAll () {
-    return http.get('/date/list');
-  }
+// Send email to client
+router.post('/email', sendEmailController.sendEmail);
 
-  // This is with Date ID
-  get (id) {
-    return http.get(`/date/${id}`);
-  }
+// Confirm email date
+router.post('/confirm-email', sendEmailController.confirm);
 
-  // This is with Professional ID and Day
-  getDates (data) {
-    return http.post('/date/get-date', data);
-  }
-
-  update (data) {
-    return http.put('/date/', data);
-  }
-
-  delete (id) {
-    return http.delete(`/date/${id}`);
-  }
-}
-
-export default new DateDataService();
+module.exports = router;

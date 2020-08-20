@@ -39,7 +39,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // routes
 app.use(require('./src/routes/imageRoutes'));
 app.use(require('./src/routes/departmentRoutes'));
@@ -50,6 +49,7 @@ app.use(require('./src/routes/professionalRoutes'));
 app.use(require('./src/routes/timetableRoutes'));
 app.use(require('./src/routes/dateRoutes'));
 app.use(require('./src/routes/tutorRoutes'));
+app.use(require('./src/routes/sendEmailRoutes'));
 
 const options = {
   swaggerOptions: {

@@ -8,7 +8,6 @@ import ProfessionalService from '../../../../services/professional.service';
 import DateService from '../../../../services/date.service';
 import DateTypeService from '../../../../services/dateType.service';
 import DatePicker from 'react-datepicker';
-import { get } from 'jquery';
 
 const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { teacher, date, time, dateTypeId } = values;
@@ -26,7 +25,6 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
 
     getTeachersFromDB();
     getDateTypesFromDB();
-
   }, [date, time, dateTypeId]);
 
   useEffect(() => {
@@ -142,13 +140,13 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   };
 
   const generatePeriods = (startingHour, endingHour) => {
-    const startingHourWithDateFormat = getDateFromStringWithTime(startingHour);
-    const endingHourWithDateFormat = getDateFromStringWithTime(endingHour);
+    const startingHourWithDateFormat = getDateTimeFromStringWithTime(startingHour);
+    const endingHourWithDateFormat = getDateTimeFromStringWithTime(endingHour);
     setStartingTime(startingHourWithDateFormat);
     setEndingTime(endingHourWithDateFormat);
   };
 
-  const getDateFromStringWithTime = (time) => {
+  const getDateTimeFromStringWithTime = (time) => {
     let dateWithHours = null;
     let dateWithHoursAndMinutes = null;
     const [hour, minutes] = time.split(':');
@@ -167,7 +165,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
 
       if (info.data.data != null) {
         const datesArray = info.data.data;
-        const myConfirmedDates = datesArray.map(each => getDateFromStringWithTime(each.time));
+        const myConfirmedDates = datesArray.map(each => getDateTimeFromStringWithTime(each.time));
         setConfirmedDates(myConfirmedDates);
       } else {
         setConfirmedDates(null);
