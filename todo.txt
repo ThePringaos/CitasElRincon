@@ -1,14 +1,16 @@
 npm modules to install
 - forever-service
 
-Redefine styles 
-- /definir-horario
-  - ancho de las tablas (igualar)
-  - alinear horizontal y vertical (días)
+- /********************
+
+hay que arreglar eso, el error este del email.
+comprobar que tengan un timetable los teachers en stepform
+error el las citas de administracion, donde se ven las citas SHOW DATES
+
+- ********************/
 
 - posibilidad de cancelar dias concretos 
 
-- hacer que el nombre(nav) sea el del perfil 
 
 - en imágenes (DDBB) añadir alt
 

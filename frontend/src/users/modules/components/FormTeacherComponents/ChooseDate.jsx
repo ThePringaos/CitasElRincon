@@ -258,7 +258,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
               id='dateTypeId'
               onChange={handleInputChange}
             >
-              <option value='0' hidden='true'> Seleccionar opción </option>
+              <option value='0' hidden> Seleccionar opción </option>
               {dateTypesSelect.map(d => (
                 <option key={d.id} value={d.id}>
                   {d.name}

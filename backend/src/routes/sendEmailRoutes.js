@@ -24,6 +24,6 @@ const sendEmailController = require('../controllers/sendEmailController');
 router.post('/email', sendEmailController.sendEmail);
 
 // Confirm email date
-router.post('/confirm-email', sendEmailController.confirm);
+router.get('/confirm-email/:id', sendEmailController.confirm);
 
 module.exports = router;

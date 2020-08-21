@@ -16,11 +16,14 @@
  */
 
 const nodemailer = require('nodemailer');
+const dateController = require('./dateController');
+const controller = 'sendEmailController';
 
 // Create a SMTP transporter object
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
+  secure: false,
   auth: {
     user: '',
     pass: ''
@@ -30,10 +33,10 @@ const transporter = nodemailer.createTransport({
 const sendMessage = (email, date, time, dateId) => {
   // Message object
   const message = {
-    from: 'IES EL RINCON',
+    from: '',
     to: email,
     subject: `CONFIRMAR CITA Ies El Rincón ✔ ${time} - ${date}`,
-    html: "<a href='http://localhost:8000/confirm-email/'>Pulse Aquí para confirmar la cita</a>"
+    html: `<a href='http://localhost:8000/confirm-email/${dateId}'>Pulse Aquí para confirmar la cita</a>`
   };
 
   transporter.sendMail(message, (err, info) => {
@@ -43,23 +46,38 @@ const sendMessage = (email, date, time, dateId) => {
       return process.exit(1);
     } else {
       console.log('NO ERRORS WITH EMAIL');
+      return 1;
     }
-
-    console.log('Message sent: %s', info.messageId);
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
 };
 
 const sendEmailController = {};
 
 sendEmailController.sendEmail = (req, res) => {
-  const { email, date, time, dateId } = req.body;
-  sendMessage(email, date, time, dateId);
+  const { email, date, time, id } = req.body;
+  const aux = sendMessage(email, date, time, id);
+  if (aux === 1) {
+    res.json({ success: true, message: 'Successfully sended' });
+  } else {
+    res.status(400).json({ status: `The ${controller} couldn't send the email` });
+  }
 };
 
 sendEmailController.confirm = (req, res) => {
+  const { id } = req.params;
+  console.log('RECIEVED DATEID ', id);
+  const confirmedDateValue = 1;
+  const data = dateController.modifyDateState(id, confirmedDateValue);
   console.log('CONFIRM-SEND EMAIL CONTROLLER');
+  if (data) {
+    if (data[0] === 1) {
+      res.json({ success: true, message: 'Succesfully deleted' });
+    } else {
+      res.status(400).json({ status: `The ${controller} couldn't be confirmed` });
+    }
+  } else {
+    console.error('ERROR WITH MODIFY DATE STATE');
+  }
 };
 
 module.exports = sendEmailController;
