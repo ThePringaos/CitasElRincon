@@ -122,23 +122,6 @@ dateController.edit = (req, res) => {
     });
 };
 
-dateController.modifyDateState = (id, dateStateId) => {
-  let data = null;
-  console.log('PARAMS', id, dateStateId);
-  Date.update({ dateStateId: dateStateId },
-    {
-      where: { id: id }
-    })
-    .then(each => {
-      data = JSON.parse(JSON.stringify(each));
-      console.log('MY DATA ', data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  return data;
-};
-
 dateController.delete = (req, res) => {
   const { id } = req.params;
   Date.destroy({ where: { id } })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Form, Col } from 'react-bootstrap';
@@ -8,24 +8,39 @@ import DateService from '../../../../services/date.service';
 import SendEmailService from '../../../../services/sendEmail.service';
 
 const Confirm = ({ prevStep, values }) => {
+<<<<<<< HEAD
   const [confirmHasAlreadyBeenPressed, setConfirmHasAlreadyBeenPressed] = useState(false);
 
+=======
+>>>>>>> parent of e515816... Working on sending confirm email
   const saveDateOnDB = async () => {
-    if (confirmHasAlreadyBeenPressed === false) {
-      const { department, teacher, email, confirmEmail, date, time, dateTypeId } = values;
-      if (department && teacher && email && confirmEmail && date && time && dateTypeId) {
-        const myDate = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-        const regexTime = /(2[0-3]|[01]?[0-9]):([0-5]?[0-9])/m;
-        const myTime = (regexTime.exec(time))[0];
+    const { department, teacher, email, confirmEmail, date, time, dateTypeId } = values;
+    if (department && teacher && email && confirmEmail && date && time && dateTypeId) {
+      const myDate = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+      const regexTime = /(2[0-3]|[01]?[0-9]):([0-5]?[0-9])/m;
+      const myTime = (regexTime.exec(time))[0];
 
-        const res = await DateService.add({
+      const res = await DateService.add({
+        professionalId: teacher,
+        email,
+        date: myDate,
+        time: myTime,
+        dateTypeId,
+        dateStateId: 2 // This means reserved date
+      });
+
+      if (res.data.success === true) {
+        console.log('PETICION CORRECTA');
+        console.log(res.data);
+
+        const result = SendEmailService.sendEmail({
           professionalId: teacher,
           email,
           date: myDate,
           time: myTime,
-          dateTypeId,
-          dateStateId: 2 // This means reserved date
+          id: res.data.id
         });
+<<<<<<< HEAD
 
         if (res.data.success === true) {
           console.log('PETICION CORRECTA');
@@ -50,6 +65,12 @@ const Confirm = ({ prevStep, values }) => {
           console.log('HA HABIDO UN ERROR');
           console.log(res.data);
         }
+=======
+        console.log(result);
+      } else {
+        console.log('HA HABIDO UN ERROR');
+        console.log(res.data);
+>>>>>>> parent of e515816... Working on sending confirm email
       }
     }
   };
