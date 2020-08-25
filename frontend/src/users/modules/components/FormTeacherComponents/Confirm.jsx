@@ -6,9 +6,12 @@ import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnSubmit from '../buttons/forms/BtnSubmit';
 import DateService from '../../../../services/date.service';
 import SendEmailService from '../../../../services/sendEmail.service';
+import Swal from 'sweetalert2';
+import { Redirect } from 'react-router-dom';
 
 const Confirm = ({ prevStep, values }) => {
   const [confirmHasAlreadyBeenPressed, setConfirmHasAlreadyBeenPressed] = useState(false);
+  const [redirect, setRedirect] = useState(null);
 
   const saveDateOnDB = async () => {
     if (confirmHasAlreadyBeenPressed === false) {
@@ -28,9 +31,6 @@ const Confirm = ({ prevStep, values }) => {
         });
 
         if (res.data.success === true) {
-          console.log('PETICION CORRECTA');
-          console.log(res.data.id);
-
           let result = null;
 
           SendEmailService.sendEmail({
@@ -38,17 +38,24 @@ const Confirm = ({ prevStep, values }) => {
             date: myDate,
             time: myTime,
             id: res.data.id
-          }).then((res) => {
+          }).then(async (res) => {
             result = res;
-            console.log('THEN ', result);
-          }).catch((err) => { console.log('SEND EMAIL ERROR', err); });
-          console.log('RESULT', result);
-          if (result.success) {
-            setConfirmHasAlreadyBeenPressed(true);
-          }
+            if (result) {
+              if (result.data.success) {
+                setConfirmHasAlreadyBeenPressed(true);
+                await Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: '¡Cita reservada, confírmela desde su correo!',
+                  showConfirmButton: true
+                }).then(() => {
+                  setRedirect(<Redirect to='/home' />);
+                });
+              }
+            }
+          }).catch((err) => { console.error('SENDING EMAIL ERROR', err); });
         } else {
-          console.log('HA HABIDO UN ERROR');
-          console.log(res.data);
+          console.error('ERROR ADDING DATE TO DB');
         }
       }
     }
@@ -56,6 +63,7 @@ const Confirm = ({ prevStep, values }) => {
 
   return (
     <>
+      {redirect}
       <Form.Row>
         <Col className='d-flex justify-content-center mt-2'>
           <BtnGoBack
