@@ -18,6 +18,7 @@
 const nodemailer = require('nodemailer');
 const dateController = require('./dateController');
 const controller = 'sendEmailController';
+const CryptoJS = require('crypto-js');
 
 // Create a SMTP transporter object
 const transporter = nodemailer.createTransport({
@@ -30,45 +31,61 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendMessage = (email, date, time, dateId) => {
+const sendMessage = async (email, date, time, dateId) => {
+  var ciphertext = CryptoJS.AES.encrypt(dateId.toString(), 'ieselrincon@xd.es');
+
   // Message object
   const message = {
     from: '',
     to: email,
     subject: `CONFIRMAR CITA Ies El Rincón ✔ ${time} - ${date}`,
-    html: `<a href='http://localhost:8000/confirm-email/${dateId}'>Pulse Aquí para confirmar la cita</a>`
+    html: `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+      </head>
+      <body>
+      <form action="http://localhost:8000/confirm-email" method="post">
+          <input type="hidden" name="id" value=${ciphertext}/>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>  
+      </body>
+    </html>`
   };
 
-  transporter.sendMail(message, (err, info) => {
-    console.log('SENDING EMAIL');
-    if (err) {
-      console.log('Error occurred. ' + err.message);
-      return process.exit(1);
-    } else {
-      console.log('NO ERRORS WITH EMAIL');
-      return 1;
-    }
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(message, (err, info) => {
+      if (err) {
+        console.error('Error occurred. ' + err.message);
+      } else {
+        resolve(1);
+      }
+    });
   });
 };
 
 const sendEmailController = {};
 
-sendEmailController.sendEmail = (req, res) => {
+sendEmailController.sendEmail = async (req, res) => {
   const { email, date, time, id } = req.body;
-  const aux = sendMessage(email, date, time, id);
-  if (aux === 1) {
-    res.json({ success: true, message: 'Successfully sended' });
-  } else {
-    res.status(400).json({ status: `The ${controller} couldn't send the email` });
-  }
+  sendMessage(email, date, time, id).then((aux) => {
+    if (aux === 1) {
+      res.json({ success: true, message: 'Successfully sended' });
+    } else {
+      res.status(400).json({ status: `The ${controller} couldn't send the email` });
+    }
+  });
 };
 
 sendEmailController.confirm = (req, res) => {
-  const { id } = req.params;
-  console.log('RECIEVED DATEID ', id);
+  let { id } = req.body;
+  var bytes = CryptoJS.AES.decrypt(id, 'ieselrincon@xd.es');
+  var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+  id = plaintext;
+
   const confirmedDateValue = 1;
   const data = dateController.modifyDateState(id, confirmedDateValue);
-  console.log('CONFIRM-SEND EMAIL CONTROLLER');
   if (data) {
     if (data[0] === 1) {
       res.json({ success: true, message: 'Succesfully deleted' });
