@@ -17,9 +17,9 @@
 
 const KeysDatabase = ({
   host: 'localhost',
-  user: 'root',
-  password: 'ylenia',
-  database: 'elrincon-project',
+  user: 'dates',
+  password: 'your_password',
+  database: 'dates-db',
   port: 3306,
   dialect: 'mysql'
 });
