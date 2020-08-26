@@ -16,38 +16,29 @@
  */
 
 const nodemailer = require('nodemailer');
-<<<<<<< HEAD
 const dateController = require('./dateController');
 const controller = 'sendEmailController';
-<<<<<<< Updated upstream
-=======
 const CryptoJS = require('crypto-js');
-=======
->>>>>>> parent of e515816... Working on sending confirm email
->>>>>>> Stashed changes
 
 // Create a SMTP transporter object
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
+  secure: false,
   auth: {
     user: '',
     pass: ''
   }
 });
 
-const sendMessage = (email, date, time, dateId) => {
+const sendMessage = async (email, date, time, dateId) => {
+  var ciphertext = CryptoJS.AES.encrypt(dateId.toString(), 'ieselrincon@xd.es');
+
   // Message object
   const message = {
-    from: 'IES EL RINCON',
+    from: '',
     to: email,
     subject: `CONFIRMAR CITA Ies El Rincón ✔ ${time} - ${date}`,
-<<<<<<< Updated upstream
-    html: `<a href='http://localhost:8000/confirm-email/${dateId}'>Pulse Aquí para confirmar la cita</a>`
-  };
-
-=======
-<<<<<<< HEAD
     html: `
     <!DOCTYPE html>
     <html lang="en">
@@ -71,55 +62,30 @@ const sendMessage = (email, date, time, dateId) => {
         resolve(1);
       }
     });
-=======
-    html: "<a href='http://localhost:8000/confirm-email/'>Pulse Aquí para confirmar la cita</a>"
-  };
-
->>>>>>> Stashed changes
-  transporter.sendMail(message, (err, info) => {
-    console.log('SENDING EMAIL');
-    if (err) {
-      console.log('Error occurred. ' + err.message);
-      return process.exit(1);
-    } else {
-      console.log('NO ERRORS WITH EMAIL');
-<<<<<<< Updated upstream
-      return 1;
-    }
-=======
-    }
-
-    console.log('Message sent: %s', info.messageId);
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
->>>>>>> parent of e515816... Working on sending confirm email
->>>>>>> Stashed changes
   });
 };
 
 const sendEmailController = {};
 
-<<<<<<< Updated upstream
-sendEmailController.sendEmail = (req, res) => {
-=======
-<<<<<<< HEAD
 sendEmailController.sendEmail = async (req, res) => {
->>>>>>> Stashed changes
   const { email, date, time, id } = req.body;
-  const aux = sendMessage(email, date, time, id);
-  if (aux === 1) {
-    res.json({ success: true, message: 'Successfully sended' });
-  } else {
-    res.status(400).json({ status: `The ${controller} couldn't send the email` });
-  }
+  sendMessage(email, date, time, id).then((aux) => {
+    if (aux === 1) {
+      res.json({ success: true, message: 'Successfully sended' });
+    } else {
+      res.status(400).json({ status: `The ${controller} couldn't send the email` });
+    }
+  });
 };
 
 sendEmailController.confirm = (req, res) => {
-  const { id } = req.params;
-  console.log('RECIEVED DATEID ', id);
+  let { id } = req.body;
+  var bytes = CryptoJS.AES.decrypt(id, 'ieselrincon@xd.es');
+  var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+  id = plaintext;
+
   const confirmedDateValue = 1;
   const data = dateController.modifyDateState(id, confirmedDateValue);
-  console.log('CONFIRM-SEND EMAIL CONTROLLER');
   if (data) {
     if (data[0] === 1) {
       res.json({ success: true, message: 'Succesfully deleted' });
@@ -129,15 +95,6 @@ sendEmailController.confirm = (req, res) => {
   } else {
     console.error('ERROR WITH MODIFY DATE STATE');
   }
-=======
-sendEmailController.sendEmail = (req, res) => {
-  const { email, date, time, dateId } = req.body;
-  sendMessage(email, date, time, dateId);
-};
-
-sendEmailController.confirm = (req, res) => {
-  console.log('CONFIRM-SEND EMAIL CONTROLLER');
->>>>>>> parent of e515816... Working on sending confirm email
 };
 
 module.exports = sendEmailController;
