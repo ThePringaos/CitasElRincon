@@ -16,14 +16,15 @@
  */
 
 import DateService from '../../services/date.service';
-import React from 'react';
+import ProfessionalService from '../../services/professional.service';
+import DateTypeService from '../../services/dateType.service';
 
 class ChooseDateController {
-  constructor() {
+  constructor () {
     this.totalDaysToCheck = 62; // Two months
   }
 
-  getConfirmedDatesFromDB = async (date, teacher) => {
+  async getConfirmedDatesFromDB (date, teacher) {
     if (date != null) {
       const myDate = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
       const info = await DateService.getDates({ day: myDate, id: teacher });
@@ -36,9 +37,9 @@ class ChooseDateController {
         return null;
       }
     }
-  };
+  }
 
-  getDateTimeFromStringWithTime = (time) => {
+  getDateTimeFromStringWithTime (time) {
     let dateWithHours = null;
     let dateWithHoursAndMinutes = null;
     const [hour, minutes] = time.split(':');
@@ -48,9 +49,9 @@ class ChooseDateController {
       dateWithHoursAndMinutes = new Date(new Date(dateWithHours).setMinutes(minutes));
     }
     return dateWithHoursAndMinutes;
-  };
+  }
 
-  generateExcludedCalendar = (excludedDates) => {
+  generateExcludedCalendar (excludedDates) {
     if (excludedDates.length === 0) return null;
 
     const myExcludedCalendar = [];
@@ -66,10 +67,11 @@ class ChooseDateController {
       today.setDate(tomorrow);
     }
 
+    console.log('EXCLUDED CALENDAR ', myExcludedCalendar);
     return myExcludedCalendar;
-  };
+  }
 
-  getWorkingHoursFromTimetable = (date, myTimetable) => {
+  getWorkingHoursFromTimetable (date, myTimetable) {
     if (date != null && myTimetable !== '' && myTimetable != null) {
       switch (date.getDay()) {
         case 1:
@@ -110,10 +112,10 @@ class ChooseDateController {
         default:
           break;
       }
-    };
+    }
   }
 
-  getFreeDays = (myTimetable) => {
+  getFreeDays (myTimetable) {
     const myArray = [0, 6]; // Hide weekends
     if (myTimetable !== '' && myTimetable != null) {
       if (myTimetable.monday == null || myTimetable.monday === '') {
@@ -131,14 +133,47 @@ class ChooseDateController {
       if (myTimetable.friday == null || myTimetable.friday === '') {
         myArray.push(5);
       }
-
+      console.log('GET FREE DAYS ', myArray);
       return myArray;
     } else {
       return null;
     }
-  };
+  }
 
-  addMonths = (dt, n) => new Date(dt.setMonth(dt.getMonth() + n));
+  addMonths (dt, n) {
+    return new Date(dt.setMonth(dt.getMonth() + n));
+  }
+
+  getTeachersFromDB (teacher) {
+    new Promise((resolve, reject) => {
+      resolve(ProfessionalService.get(teacher));
+    }).then((res) => {
+      if (res.data != null) {
+        if (res.data.data != null) {
+          if (res.data.data.length > 0) {
+            const { timetable } = res.data.data[0];
+            if (timetable != null) {
+              console.log('TIMETABLE ', timetable);
+              return timetable;
+            }
+          }
+        }
+      }
+    }).catch(err => {
+      console.error('ERROR getTeachersFromDB() [ChooseDateController]', err);
+    });
+  }
+
+  getDateTypesFromDB () {
+    new Promise((resolve, reject) => {
+      resolve(DateTypeService.getAll());
+    }).then((res) => {
+      if (res.data.data != null) {
+        console.log('DATE TYPES ', res.data.data);
+        return res.data.data;
+      }
+    }).catch(err => console.error('ERROR getDateTypesFromDB() [ChooseDateController] ', err));
+  }
 }
 
 export default new ChooseDateController();

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 
 const Confirm = ({ prevStep, values }) => {
+  const reservedDateId = 2; // This means reserved date
   const [confirmHasAlreadyBeenPressed, setConfirmHasAlreadyBeenPressed] = useState(false);
   const [redirect, setRedirect] = useState(null);
 
@@ -27,7 +28,7 @@ const Confirm = ({ prevStep, values }) => {
           date: myDate,
           time: myTime,
           dateTypeId,
-          dateStateId: 2 // This means reserved date
+          dateStateId: reservedDateId
         });
 
         if (res.data.success === true) {
@@ -55,7 +56,7 @@ const Confirm = ({ prevStep, values }) => {
             }
           }).catch((err) => { console.error('SENDING EMAIL ERROR', err); });
         } else {
-          console.error('ERROR ADDING DATE TO DB');
+          console.error('ERROR ADDING DATE TO DB [Confirm] ');
         }
       }
     }

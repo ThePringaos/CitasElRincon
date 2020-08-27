@@ -8,7 +8,6 @@ import validator from 'email-validator';
 
 const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { email, confirmEmail } = values;
-
   const [isUndefined, setIsUndefined] = useState('disabled');
 
   useEffect(() => {
@@ -24,9 +23,7 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='email' className='m-0'>
-              Email
-            </Form.Label>
+            <Form.Label htmlFor='email' className='m-0'> Email </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
@@ -43,9 +40,7 @@ const ConfirmEmail = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='date' className='m-0'>
-              Confirmar Email
-            </Form.Label>
+            <Form.Label htmlFor='date' className='m-0'> Confirmar Email </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
