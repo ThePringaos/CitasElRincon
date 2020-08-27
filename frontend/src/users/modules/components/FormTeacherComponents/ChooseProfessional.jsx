@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Form, Col } from 'react-bootstrap';
-
 import ProfessionalService from '../../../../services/professional.service';
 import DepartmentService from '../../../../services/department.service';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
@@ -11,17 +10,15 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
   const { department, teacher } = values;
   const [departmentValues, setDepartmentValues] = useState([]);
   const [teacherValues, setTeacherValues] = useState([]);
-
   const [isUndefined, setIsUndefined] = useState('disabled');
 
   useEffect(() => {
     getDepartmentsFromDB();
-    // Se le llama al cargar la página
     const valueDepartment = parseInt(department);
     if (valueDepartment === 0) {
       getAllTeachers();
     } else if (valueDepartment > 0) {
-      getTeachersFromDB(valueDepartment);
+      getTeachersWithDepartmentID(valueDepartment);
     }
   }, [department]);
 
@@ -29,17 +26,15 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
     teacher && setIsUndefined('');
   }, [teacher]);
 
-  // Devuelve todos los departamentos para pintarlos en el select
   const getDepartmentsFromDB = () => {
     new Promise((resolve, reject) => {
       resolve(DepartmentService.getAll());
     }).then((res) => {
       if (res.data.data != null) setDepartmentValues(res.data.data);
-    }).catch(err => console.error('Falló la consulta getDepartmentsFromDB ', err));
+    }).catch(err => console.error('ERROR getDepartmentsFromDB() [ChooseProfessional] ', err));
   };
 
-  // Devuelve todos los profesores que contengan el mismo departmentId que el id de department
-  const getTeachersFromDB = (ChosenDepartmentId) => {
+  const getTeachersWithDepartmentID = (ChosenDepartmentId) => {
     new Promise((resolve, reject) => {
       resolve(ProfessionalService.getWithDepartmentId(ChosenDepartmentId));
     }).then((res) => {
@@ -52,10 +47,9 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
           setTeacherValues(teachers);
         }
       }
-    }).catch(err => console.error('Falló la consulta getTeachersFromDB', err));
+    }).catch(err => console.error('ERROR getTeachersWithDepartmentID() [ChooseProfessional]', err));
   };
 
-  // Devuelve todos los profesores para pintarlos en los radio button
   const getAllTeachers = () => {
     new Promise((resolve, reject) => {
       resolve(ProfessionalService.getAll());
@@ -67,7 +61,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
           setTeacherValues(filteredTeachers);
         }
       }
-    }).catch(err => console.error('Falló la consulta getAllTeachers', err));
+    }).catch(err => console.error('ERROR getAllTeachers() [ChooseProfessional]', err));
   };
 
   return (
@@ -75,12 +69,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='department'
-              className='m-0'
-            >
-              DEPARTAMENTO
-            </Form.Label>
+            <Form.Label htmlFor='department' className='m-0'> DEPARTAMENTO </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
@@ -108,19 +97,11 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex'>
           <Col sm={12} lg={6}>
-            <Form.Label
-              htmlFor='teacher'
-              className='m-0'
-            >
-              PROFESORADO
-            </Form.Label>
+            <Form.Label htmlFor='teacher' className='m-0'> PROFESORADO </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='border p-2 my-auto'>
             {teacherValues.map(t => (
-              <Form.Check
-                className='p-0 d-flex'
-                key={t.id}
-              >
+              <Form.Check className='p-0 d-flex' key={t.id}>
                 <Col xs={4}>
                   <Form.Check
                     type='radio'
@@ -132,9 +113,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
                 </Col>
 
                 <Col xs={8} className='text-left'>
-                  <Form.Label htmlFor={t.id} checked>
-                    {t.name}
-                  </Form.Label>
+                  <Form.Label htmlFor={t.id} checked> {t.name} </Form.Label>
                 </Col>
               </Form.Check>
             ))}

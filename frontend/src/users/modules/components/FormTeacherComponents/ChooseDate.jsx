@@ -4,9 +4,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { Form, Col } from 'react-bootstrap';
 import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
-import ProfessionalService from '../../../../services/professional.service';
-import DateService from '../../../../services/date.service';
-import DateTypeService from '../../../../services/dateType.service';
 import DatePicker from 'react-datepicker';
 import ChooseDateController from '../../../controllers/ChooseDateController';
 
@@ -27,8 +24,12 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   useEffect(() => {
     (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
 
-    getTeachersFromDB();
-    getDateTypesFromDB();
+    setTimetable();
+
+    const dateTypes = ChooseDateController.getDateTypesFromDB();
+    console.log('SET DATE TYPES', dateTypes);
+    if (dateTypes != null) setDateTypesSelect(dateTypes);
+    // setDateTypesSelect(ChooseDateController.getDateTypesFromDB());
   }, [date, time, dateTypeId]);
 
   useEffect(() => {
@@ -49,23 +50,11 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
     setExcludedCalendar(ChooseDateController.generateExcludedCalendar(excludedDates));
   }, [excludedDates]);
 
-
-  // POR AKI 
-  const getTeachersFromDB = () => {
-    new Promise((resolve, reject) => {
-      resolve(ProfessionalService.get(teacher));
-    }).then((res) => {
-      if (res.data != null) {
-        if (res.data.data != null) {
-          if (res.data.data.length > 0) {
-            const { timetable } = res.data.data[0];
-            if (timetable != null) {
-              setMyTimetable(timetable);
-            }
-          }
-        }
-      }
-    }).catch(err => console.error('Falló la consulta getTeachersFromDB', err));
+  const setTimetable = async () => {
+    const timetable = await ChooseDateController.getTeachersFromDB(teacher);
+    console.log('SET TIMETABLE', timetable);
+    if (timetable != null) setMyTimetable(timetable);
+    // setMyTimetable(ChooseDateController.getTeachersFromDB(teacher));
   };
 
   const generatePeriods = (startingHour, endingHour) => {
@@ -73,14 +62,6 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
     const endingHourWithDateFormat = ChooseDateController.getDateTimeFromStringWithTime(endingHour);
     setStartingTime(startingHourWithDateFormat);
     setEndingTime(endingHourWithDateFormat);
-  };
-
-  const getDateTypesFromDB = () => {
-    new Promise((resolve, reject) => {
-      resolve(DateTypeService.getAll());
-    }).then((res) => {
-      if (res.data.data != null) setDateTypesSelect(res.data.data);
-    }).catch(err => console.error('Falló la consulta getDateTypesFromDB ', err));
   };
 
   return (

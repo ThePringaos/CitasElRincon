@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { Form, Jumbotron, Container, Row, Col, Card } from 'react-bootstrap';
-
 import StepsForm from './StepsForm';
+import Strings from '../../../../Strings';
 
 const ContainerF = styled.div`
     position: absolute;
@@ -22,28 +21,24 @@ const ContainerForm = ({ step, handleInputChange, values, nextStep, prevStep }) 
 
   let titleForm;
   if (step === 1) {
-    titleForm = 'Lista de profesores';
+    titleForm = Strings.titleTeacherList;
   } else if (step === 2) {
-    titleForm = 'Elegir fecha y hora';
+    titleForm = Strings.titleSelectDate;
   } else if (step === 3) {
-    titleForm = 'Confirmar Email';
+    titleForm = Strings.titleEmailConfirm;
   } else if (step === 4) {
-    titleForm = 'Confirmar la cita';
+    titleForm = Strings.titleDateConfirm;
   }
 
   return (
     <ContainerF>
       <Container>
-        <Jumbotron>
-          <h1>{titleForm}</h1>
-        </Jumbotron>
+        <Jumbotron> <h1>{titleForm}</h1> </Jumbotron>
         <Row>
           <Col lg={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
-                <Form
-                  onSubmit={handleSubmit}
-                >
+                <Form onSubmit={handleSubmit}>
                   <StepsForm
                     step={step}
                     handleInputChange={handleInputChange}
