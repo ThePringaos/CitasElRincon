@@ -15,16 +15,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class Strings {
-  constructor() {
-    // Strings ContainerForm.jsx
+class ContainerFormValues {
+  constructor () {
+    this.titleTeacherList = 'Lista de profesores';
     this.titleSelectDate = 'Elegir fecha y hora';
     this.titleEmailConfirm = 'Confirmar Email';
     this.titleDateConfirm = 'Confirme su cita';
   }
-  titleTeacherList = 'Lista de profesores';
 }
 
-// O hacer un fichero Strings para cada js
-
-export default new Strings();
+export default new ContainerFormValues();

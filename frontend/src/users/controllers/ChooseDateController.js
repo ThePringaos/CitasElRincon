@@ -16,8 +16,6 @@
  */
 
 import DateService from '../../services/date.service';
-import ProfessionalService from '../../services/professional.service';
-import DateTypeService from '../../services/dateType.service';
 
 class ChooseDateController {
   constructor () {
@@ -66,8 +64,6 @@ class ChooseDateController {
       const tomorrow = today.getDate() + 1;
       today.setDate(tomorrow);
     }
-
-    console.log('EXCLUDED CALENDAR ', myExcludedCalendar);
     return myExcludedCalendar;
   }
 
@@ -133,7 +129,6 @@ class ChooseDateController {
       if (myTimetable.friday == null || myTimetable.friday === '') {
         myArray.push(5);
       }
-      console.log('GET FREE DAYS ', myArray);
       return myArray;
     } else {
       return null;
@@ -142,37 +137,6 @@ class ChooseDateController {
 
   addMonths (dt, n) {
     return new Date(dt.setMonth(dt.getMonth() + n));
-  }
-
-  getTeachersFromDB (teacher) {
-    new Promise((resolve, reject) => {
-      resolve(ProfessionalService.get(teacher));
-    }).then((res) => {
-      if (res.data != null) {
-        if (res.data.data != null) {
-          if (res.data.data.length > 0) {
-            const { timetable } = res.data.data[0];
-            if (timetable != null) {
-              console.log('TIMETABLE ', timetable);
-              return timetable;
-            }
-          }
-        }
-      }
-    }).catch(err => {
-      console.error('ERROR getTeachersFromDB() [ChooseDateController]', err);
-    });
-  }
-
-  getDateTypesFromDB () {
-    new Promise((resolve, reject) => {
-      resolve(DateTypeService.getAll());
-    }).then((res) => {
-      if (res.data.data != null) {
-        console.log('DATE TYPES ', res.data.data);
-        return res.data.data;
-      }
-    }).catch(err => console.error('ERROR getDateTypesFromDB() [ChooseDateController] ', err));
   }
 }
 

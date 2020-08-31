@@ -6,6 +6,9 @@ import BtnGoBack from '../buttons/forms/BtnGoBack';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
 import DatePicker from 'react-datepicker';
 import ChooseDateController from '../../../controllers/ChooseDateController';
+import DateTypeService from '../../../../services/dateType.service';
+import ProfessionalService from '../../../../services/professional.service';
+import ChooseDateValues from '../../finalValues/ChooseDateValues';
 
 const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const { teacher, date, time, dateTypeId } = values;
@@ -18,18 +21,10 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
   const [confirmedDates, setConfirmedDates] = useState([]);
   const [dateTypesSelect, setDateTypesSelect] = useState([]);
 
-  const monthLimit = 2;
-  const dateTimeInterval = 15;
-
   useEffect(() => {
     (date && time && dateTypeId) ? setIsUndefined('') : setIsUndefined('disabled');
-
-    setTimetable();
-
-    const dateTypes = ChooseDateController.getDateTypesFromDB();
-    console.log('SET DATE TYPES', dateTypes);
-    if (dateTypes != null) setDateTypesSelect(dateTypes);
-    // setDateTypesSelect(ChooseDateController.getDateTypesFromDB());
+    getTeachersFromDB();
+    getDateTypesFromDB();
   }, [date, time, dateTypeId]);
 
   useEffect(() => {
@@ -50,11 +45,29 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
     setExcludedCalendar(ChooseDateController.generateExcludedCalendar(excludedDates));
   }, [excludedDates]);
 
-  const setTimetable = async () => {
-    const timetable = await ChooseDateController.getTeachersFromDB(teacher);
-    console.log('SET TIMETABLE', timetable);
-    if (timetable != null) setMyTimetable(timetable);
-    // setMyTimetable(ChooseDateController.getTeachersFromDB(teacher));
+  const getTeachersFromDB = () => {
+    new Promise((resolve, reject) => {
+      resolve(ProfessionalService.get(teacher));
+    }).then((res) => {
+      if (res.data != null) {
+        if (res.data.data != null) {
+          if (res.data.data.length > 0) {
+            const { timetable } = res.data.data[0];
+            if (timetable != null) setMyTimetable(timetable);
+          }
+        }
+      }
+    }).catch(err => {
+      console.error('ERROR getTeachersFromDB() [ChooseDate]', err);
+    });
+  };
+
+  const getDateTypesFromDB = () => {
+    new Promise((resolve, reject) => {
+      resolve(DateTypeService.getAll());
+    }).then((res) => {
+      if (res.data.data != null) setDateTypesSelect(res.data.data);
+    }).catch(err => console.error('ERROR getDateTypesFromDB() [ChooseDate] ', err));
   };
 
   const generatePeriods = (startingHour, endingHour) => {
@@ -69,7 +82,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='date' className='m-0'> Fecha </Form.Label>
+            <Form.Label htmlFor='date' className='m-0'> {ChooseDateValues.date} </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <DatePicker
@@ -77,7 +90,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
               selected={date}
               withPortal
               minDate={new Date()}
-              maxDate={ChooseDateController.addMonths(new Date(), monthLimit)}
+              maxDate={ChooseDateController.addMonths(new Date(), ChooseDateValues.monthLimit)}
               excludeDates={excludedCalendar}
               onChange={async (value) => { handleInputChange(value, 'date'); }}
             />
@@ -88,7 +101,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='date' className='m-0'> Hora </Form.Label>
+            <Form.Label htmlFor='date' className='m-0'> {ChooseDateValues.time} </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <DatePicker
@@ -98,8 +111,8 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
               }}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={dateTimeInterval}
-              timeCaption='Hora'
+              timeIntervals={ChooseDateValues.dateTimeInterval}
+              timeCaption={ChooseDateValues.time}
               minTime={startingTime}
               maxTime={endingTime}
               excludeTimes={confirmedDates}
@@ -115,7 +128,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='date' className='m-0'> Atención </Form.Label>
+            <Form.Label htmlFor='date' className='m-0'> {ChooseDateValues.dateType} </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
@@ -126,7 +139,7 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
               id='dateTypeId'
               onChange={handleInputChange}
             >
-              <option value='0' hidden='true'> Seleccionar opción </option>
+              <option value='0' hidden='true'> {ChooseDateValues.optionSelect} </option>
               {dateTypesSelect.map(d => (
                 <option key={d.id} value={d.id}>
                   {d.name}
