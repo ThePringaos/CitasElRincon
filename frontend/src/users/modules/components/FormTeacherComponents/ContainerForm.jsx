@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Form, Jumbotron, Container, Row, Col, Card } from 'react-bootstrap';
 import StepsForm from './StepsForm';
-import Strings from '../../../../Strings';
+import Strings from '../../finalValues/ContainerFormValues';
 
 const ContainerF = styled.div`
     position: absolute;

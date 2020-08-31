@@ -46,10 +46,10 @@ const sendMessage = async (email, date, time, dateId) => {
         <meta charset="UTF-8">
       </head>
       <body>
-      <form action="http://localhost:8000/confirm-email" method="post">
+        <form action="http://localhost:8000/confirm-email" method="post">
           <input type="hidden" name="id" value=${ciphertext}/>
           <button type="submit" class="btn btn-primary">Submit</button>
-      </form>  
+        </form>  
       </body>
     </html>`
   };
