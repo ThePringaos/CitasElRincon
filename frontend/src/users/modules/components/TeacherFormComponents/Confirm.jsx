@@ -7,6 +7,7 @@ import BtnSubmit from '../buttons/forms/BtnSubmit';
 import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 import ConfirmController from '../../../controllers/ConfirmController';
+import ConfirmValues from '../../finalValues/ConfirmValues';
 
 const Confirm = ({ prevStep, values }) => {
   const [confirmHasAlreadyBeenPressed, setConfirmHasAlreadyBeenPressed] = useState(false);
@@ -17,13 +18,9 @@ const Confirm = ({ prevStep, values }) => {
       {redirect}
       <Form.Row>
         <Col className='d-flex justify-content-center mt-2'>
-          <BtnGoBack
-            content='Volver'
-            prevStep={prevStep}
-            className='mx-1'
-          />
+          <BtnGoBack prevStep={prevStep} className='mx-1' />
           <BtnSubmit
-            content='Confirmar solicitud'
+            content={ConfirmValues.dateConfirm}
             onClick={async () => {
               const result = await ConfirmController.saveDateOnDB(confirmHasAlreadyBeenPressed, values);
               if (result != null) {
@@ -33,7 +30,7 @@ const Confirm = ({ prevStep, values }) => {
                     await Swal.fire({
                       position: 'center',
                       icon: 'success',
-                      title: '¡Cita reservada, confírmela desde su correo!',
+                      title: ConfirmValues.swalTitle,
                       showConfirmButton: true
                     }).then(() => {
                       setRedirect(<Redirect to='/home' />);

@@ -152,13 +152,8 @@ const ChooseDate = ({ values, handleInputChange, nextStep, prevStep }) => {
 
       <Form.Row>
         <Col className='d-flex justify-content-center mt-2'>
-          <BtnGoBack content='volver' prevStep={prevStep} />
-
-          <BtnGoOn
-            content='siguiente'
-            nextStep={nextStep}
-            isUndefined={isUndefined}
-          />
+          <BtnGoBack prevStep={prevStep} />
+          <BtnGoOn nextStep={nextStep} isUndefined={isUndefined} />
         </Col>
       </Form.Row>
     </>

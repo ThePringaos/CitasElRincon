@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
-const BtnGoBack = ({ content, prevStep }) => {
+const BtnGoBack = ({ prevStep }) => {
   const goBack = e => {
     e.preventDefault();
     prevStep();
@@ -18,7 +18,7 @@ const BtnGoBack = ({ content, prevStep }) => {
       className='mx-1'
     >
       <FontAwesomeIcon icon={faAngleLeft} className='mr-2 pt-1 fa-lg' />
-      {content}
+      Volver
     </Button>
   );
 };
