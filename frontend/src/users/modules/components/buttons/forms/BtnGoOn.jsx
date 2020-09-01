@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-export const BtnGoOn = ({ content, nextStep, isUndefined }) => {
+export const BtnGoOn = ({ nextStep, isUndefined }) => {
   const goOn = e => {
     e.preventDefault();
     !isUndefined && nextStep();
@@ -17,7 +17,7 @@ export const BtnGoOn = ({ content, nextStep, isUndefined }) => {
       variant='primary'
       className={`mx-1 ${isUndefined}`}
     >
-      {content}
+      Siguiente
       <FontAwesomeIcon icon={faAngleRight} className='ml-2 pt-1 fa-lg' />
     </Button>
   );

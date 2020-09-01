@@ -24,6 +24,7 @@ import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 
 import logoImg from '../../images/rincon-icon.png';
 import backImg from '../../images/fachada-rincon.jpg';
+import HomeValues from './finalValues/HomeValues';
 
 const ContainerHome = styled.div`
     height: 100vh;
@@ -77,17 +78,13 @@ const HomeComponent = () => {
               />
               <ContainerCard>
                 <Card.Header>
-                  <h1 className='h3 py-3 my-0 font-weight-normal'>Pedir cita</h1>
+                  <h1 className='h3 py-3 my-0 font-weight-normal'>{HomeValues.header}</h1>
                 </Card.Header>
                 <Card.Body className='d-flex flex-column'>
                   <BtnLink
                     content='Profesorado'
                     destiny='/profesorado-form'
                     style='mb-4'
-                  />
-                  <BtnLink
-                    content='Secretaría'
-                    destiny='/secretaria-form'
                   />
                 </Card.Body>
               </ContainerCard>

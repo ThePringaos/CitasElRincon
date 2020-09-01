@@ -5,6 +5,7 @@ import { Form, Col } from 'react-bootstrap';
 import ProfessionalService from '../../../../services/professional.service';
 import DepartmentService from '../../../../services/department.service';
 import BtnGoOn from '../buttons/forms/BtnGoOn';
+import ChooseProfessionalValues from '../../finalValues/ChooseProfessionalValues';
 
 const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
   const { department, teacher } = values;
@@ -69,7 +70,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex align-items-center'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='department' className='m-0'> DEPARTAMENTO </Form.Label>
+            <Form.Label htmlFor='department' className='m-0'> {ChooseProfessionalValues.department} </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='p-0'>
             <Form.Control
@@ -80,7 +81,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
               id='department'
               onChange={handleInputChange}
             >
-              <option value='0'>Todos</option>
+              <option value='0'>{ChooseProfessionalValues.all}</option>
               {departmentValues.map(d => (
                 <option
                   key={d.id}
@@ -97,7 +98,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
       <Form.Row>
         <Form.Group className='col d-lg-flex'>
           <Col sm={12} lg={6}>
-            <Form.Label htmlFor='teacher' className='m-0'> PROFESORADO </Form.Label>
+            <Form.Label htmlFor='teacher' className='m-0'> {ChooseProfessionalValues.teachers} </Form.Label>
           </Col>
           <Col sm={12} lg={6} className='border p-2 my-auto'>
             {teacherValues.map(t => (
@@ -123,11 +124,7 @@ const ChooseProfessional = ({ values, handleInputChange, nextStep }) => {
 
       <Form.Row>
         <Col className='d-flex justify-content-center mt-2'>
-          <BtnGoOn
-            content='siguiente'
-            nextStep={nextStep}
-            isUndefined={isUndefined}
-          />
+          <BtnGoOn nextStep={nextStep} isUndefined={isUndefined} />
         </Col>
       </Form.Row>
     </>

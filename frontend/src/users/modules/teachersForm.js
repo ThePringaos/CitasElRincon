@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
-import ContainerForm from './components/FormTeacherComponents/ContainerForm';
+import ContainerForm from './components/TeacherFormComponents/ContainerForm';
 
 const TeachersForm = () => {
   const [formFields, handleInputChange] = useForm({
