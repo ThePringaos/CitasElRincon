@@ -15,28 +15,15 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class AuthController {
-  constructor () {
-    this.authenticate = sessionStorage.getItem('authenticatedUser');
-  }
+const express = require('express');
+const router = express.Router();
 
-  login (cb) {
-    sessionStorage.authenticatedUser = true;
-    this.authenticate = sessionStorage.getItem('authenticatedUser');
-    cb();
-    // console.trace();
-  }
+const sendEmailController = require('../controllers/sendEmailController');
 
-  logout (cb) {
-    sessionStorage.authenticatedUser = false;
-    this.authenticate = sessionStorage.getItem('authenticatedUser');
-    cb();
-    // console.trace();
-  }
+// Send email to client
+router.post('/email', sendEmailController.sendEmail);
 
-  isAuthenticated () {
-    return this.authenticate;
-  }
-}
+// Confirm email date
+router.post('/confirm-email', sendEmailController.confirm);
 
-export default new AuthController();
+module.exports = router;

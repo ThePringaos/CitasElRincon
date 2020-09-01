@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 ThePringaos
+ *  Copyright (C) 2020  Unknown
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -15,19 +15,16 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Swal from 'sweetalert2';
-class TeachersFormController {
-  constructor () {
-    this.state = {};
+import http from '../http-common';
+
+class SendEmailService {
+  sendEmail (data) {
+    return http.post('/email', data);
   }
 
-  handleSubmit (e) {
-    if (!this.validate()) {
-      e.preventDefault();
-    } else {
-      // error
-    }
+  confirm (id) {
+    return http.post('/confirm-email', id);
   }
 }
 
-export default new TeachersFormController();
+export default new SendEmailService();

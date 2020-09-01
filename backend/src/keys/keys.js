@@ -17,7 +17,7 @@
 
 const KeysDatabase = ({
   host: 'localhost',
-   user: 'dates',
+  user: 'dates',
   password: 'your_password',
   database: 'dates_db',
   port: 3306,

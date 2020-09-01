@@ -18,6 +18,11 @@
 import http from '../http-common';
 
 class DateDataService {
+  // CREATE
+  add (data) {
+    return http.post('/date', data);
+  }
+
   getAll () {
     return http.get('/date/list');
   }
